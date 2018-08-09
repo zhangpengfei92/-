@@ -1,0 +1,94 @@
+package com.jcl.pojo;
+
+import java.util.Date;
+
+public class News {
+    private Integer nid; /* 主键ID 自增 */
+
+    private String title; /* 新闻标题 */
+
+    private String summary; /* 内容描述 */
+
+    private String contenturl; /* 内容地址 --对应生成的html地址*/
+
+    private Integer ntype; /* 新闻类型  1.最新专题 2.公司新闻  3.市场动态   4.常见答疑*/
+
+    private Integer status;//新闻状态  1.可显示  2.不可显示
+
+    private Date modifytime; /* 更新时间 */
+
+    private String imgurl;/* 封面图地址 */
+
+    private String keywords;/* 关键字*/
+    
+    public Integer getNid() {
+        return nid;
+    }
+
+    public void setNid(Integer nid) {
+        this.nid = nid;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title == null ? null : title.trim();
+    }
+
+    public String getSummary() {
+        return summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary == null ? null : summary.trim();
+    }
+
+    public String getContenturl() {
+        return contenturl;
+    }
+
+    public void setContenturl(String contenturl) {
+        this.contenturl = contenturl == null ? null : contenturl.trim();
+    }
+
+    public Integer getNtype() {
+        return ntype;
+    }
+
+    public void setNtype(Integer ntype) {
+        this.ntype = ntype;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public Date getModifytime() {
+        return modifytime;
+    }
+
+    public void setModifytime(Date modifytime) {
+        this.modifytime = modifytime;
+    }
+
+    public String getImgurl() {
+        return imgurl;
+    }
+
+    public void setImgurl(String imgurl) {
+        this.imgurl = imgurl == null ? null : imgurl.trim();
+    }
+    public String getKeywords() {
+        return keywords;
+    }
+
+    public void setKeywords(String keywords) {
+        this.keywords = keywords == null ? null : keywords.trim();
+    }
+}

@@ -1,0 +1,257 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>中金宸大</title>
+<link href="${path}/css/css.css" rel="stylesheet" type="text/css" />
+<script src="${path}/js/jquery1.42.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(document).ready(function () {	
+	$(".Newtab ul li").click(function(){
+		
+		var index=$(".Newtab ul li").index(this);
+		$(this).addClass("select hover").siblings().removeClass("select hover");
+		$(".Newtab .hide").eq(index).show().siblings(".Newtab .hide").hide();
+	})
+	//去掉所有的导航栏高亮显示样式
+	$(".Zlogo ul li a ").each(function () {  
+		$(this).removeClass("on");  
+	}); 
+	//被导航栏选中高亮显示
+	$("#homepage").addClass("on");
+	
+	window.location.href = "${path}/homepagecontroller/showHomepage";
+});
+
+
+
+</script>
+</head>
+<body>
+<%@include file="top.jsp"%>
+<!-- banner start-->
+<div class="banner">
+    <div class="flexslider">
+        <ul class="slides">
+            <li style="background:url(${path}/images/BANNER.png) 50% 0 no-repeat;"></li>
+        </ul>
+    </div> 
+</div> 
+<!-- banner end--> 
+<div class="main">
+     <div class="Howd">
+         <div class="Howimg">
+            <img src="${path}/images/help.png" />
+         </div>
+         <div class="Howz">
+            <p class="red">家庭如何实现资产保值增值?</p>
+            <p>如何利用各种金融投资理财工具，保证资产的保值和增值，是众多高净值家庭考虑核心问题之一。</p>
+            <p class="red" style="padding-top:20px;">企业资金如何抵御通货膨胀?</p>
+            <p>企业似乎难以找到优质资产配置投资标的，如今陷入“理财难寻高收益，不理财难抗通胀”的谜团。</p>
+            <p class="redb">让专业的人为你创造财富</p>
+         </div>
+     </div>
+     <div class="boxone">
+          <h3>
+            <p><img src="${path}/images/tit01.png" /></p>
+            <p>让您投资有道，引领先机</p>
+          </h3>
+          <ul class="one">
+              <li>
+                  <a href="javascript:;">
+                     <p class="bicon"><span class="icon01"></span></p>
+                     <p class="tit">与知名券商深度合作 </p>
+                     <p>中金宸大与国泰君安、海通证券、鹏华基金等国内知名券商、基金公司开展深度合作</p>
+                  </a>
+              </li>
+              <li>
+                  <a href="javascript:;">
+                     <p class="bicon"><span class="icon02"></span></p>
+                     <p class="tit">拓展新兴投资领域</p>
+                     <p>专业的金融科技业务团队，致力于金融科技的创新，抢占金融理财产品的市场先机。</p>
+                  </a>
+              </li>
+              <li style="border-right:none;">
+                  <a href="javascript:;">
+                     <p class="bicon"><span class="icon03"></span></p>
+                     <p class="tit">打造专属风控体系</p>
+                     <p>实时风控，保障本金安全。系统实时风控，触预警线图像与声音提醒，触平仓线一键平仓/减仓或自动平仓。</p>
+                  </a>
+              </li>
+              <li>
+                  <a href="javascript:;">
+                     <p class="bicon"><span class="icon04"></span></p>
+                     <p class="tit">金融服务遍及全国 </p>
+                     <p>中金宸大隶属集团拥有多家公司，金融资产及科技业务目前已经遍及全国范围。</p>
+                  </a>
+              </li>
+              <li>
+                  <a href="javascript:;">
+                     <p class="bicon"><span class="icon05"></span></p>
+                     <p class="tit">个性化资产配置方案</p>
+                     <p>对客户进行分级管理制度，为不同投资偏好客户，提供更有针对性的服务！</p>
+                  </a>
+              </li>
+              <li style="border-right:none;">
+                  <a href="javascript:;">
+                     <p class="bicon"><span class="icon06"></span></p>
+                     <p class="tit">帮助投资者提升能力</p>
+                     <p>股票、期货、期权资管系统一站式解决方案，操作简单，功能强大，对接交易软件。</p>
+                  </a>
+              </li>
+          </ul>
+     </div>
+</div>
+    <div class="boxone" style="margin-bottom:0;">
+          <h3>
+            <p><img src="${path}/images/tit01.png" /></p>
+            <p>积极拥护金融监管 筑建安全投资平台</p>
+          </h3>
+     </div>
+<div class="product">
+     <div class="stock">
+     <div style="display:none">
+         <h3>股票配资</h3>
+         <p>专业的股票配资平台、股票配资公司-按天、按月配资炒股配资，方案灵活，单笔高达600万，致力于
+         为广大用户提供最安全、最稳定、最专业的股票配资、期货配资1对1服务。在线股票配资,线上配资平台,
+         按天配资 按月配资 灵活快捷 超低费用。</p>
+         <a href="javascript:">了解详情</a>
+       </div>
+         <ul>
+           <li><img src="${path}/images/fl01.png" /></li>
+           <li><img src="${path}/images/fl02.png" /></li>
+           <li><img src="${path}/images/fl03.png" /></li>
+           <li><img src="${path}/images/fl04.png" /></li>
+           <li><img src="${path}/images/fl05.png" /></li>
+         </ul>
+     </div>
+</div>
+<div class="main">
+     <div class="boxone" style="margin-bottom:0;">
+          <h3>
+            <p><img src="${path}/images/tit03.png" /></p>
+            <p>引领诚信 甄别行业优质合作伙伴</p>
+          </h3>
+          <ul class="two">
+              <li>
+                 <a href="javascript:;" class="Tlogo01"></a>
+              </li>
+              <li>
+                 <a href="javascript:;" class="Tlogo02"></a>
+              </li>
+              <li>
+                 <a href="javascript:;" class="Tlogo03"></a>
+              </li>
+              <li>
+                 <a href="javascript:;" class="Tlogo04"></a>
+              </li>
+              <li style="border-right:0;">
+                 <a href="javascript:;" class="Tlogo05"></a>
+              </li>
+              <li>
+                 <a href="javascript:;" class="Tlogo06"></a>
+              </li>
+              <li>
+                 <a href="javascript:;" class="Tlogo07"></a>
+              </li>
+              <li>
+                 <a href="javascript:;" class="Tlogo08"></a>
+              </li>
+              <li>
+                 <a href="javascript:;" class="Tlogo09"></a>
+              </li>
+              <li style="border-right:0;">
+                 <a href="javascript:;" class="Tlogo10"></a>
+              </li>
+          </ul>
+     </div>
+     <div class="boxone" style="margin-bottom:0;">
+          <h3>
+            <p><img src="${path}/images/tit04.png" /></p>
+            <p>全方位报到最新、最热的资讯内容</p>
+          </h3>
+          <div class="Newtab">
+              <ul class="tit">
+                 <li class="select">最新专题</li>
+                 <li>公司新闻</li>
+                 <li>市场动态</li>
+                 <li>常见答疑</li>
+              </ul>
+              <div class="hide" style="display:block;">
+                   <ul class="Newleft">
+                       <li>
+                          <div class="Nimg">
+                             <img src="${path}/images/newimg.png" />
+                          </div>
+                          <div class="Ncontent">
+                               <p class="tit">联交所刊发上市委员会报告 借壳上市</p>
+                               <p>月20日讯，19日，香港交易及结算所有限公司（香港交易所）全资附属公司香港联合交易所有限公司（联交所）刊发《2017年上市委员会报告》，回顾上市委员会去年以后的政策议程。</p>
+                               <a href="javascript:;">查看详细&nbsp ></a>
+                          </div>
+                       </li>
+                       <li>
+                          <div class="Nimg Date">
+                             <span class="Day">26</span>
+                             <em>2018-03</em>
+                          </div>
+                          <div class="Ncontent DNcont">
+                               <p class="tit">联交所刊发上市委员会报告 借壳上市</p>
+                               <p>月20日讯，19日，香港交易及结算所有限公司（香港交易所）全资附属公司香港联合交易所有限公司（联交所）刊发《2017年上市委员会报告》，回顾上市委员会去年以后的政策议程。</p>
+                               <a href="javascript:;">查看详细&nbsp ></a>
+                          </div>
+                       </li>
+                       <li>
+                          <div class="Nimg Date">
+                             <span class="Day">26</span>
+                             <em>2018-03</em>
+                          </div>
+                          <div class="Ncontent DNcont">
+                               <p class="tit">联交所刊发上市委员会报告 借壳上市</p>
+                               <p>月20日讯，19日，香港交易及结算所有限公司（香港交易所）全资附属公司香港联合交易所有限公司（联交所）刊发《2017年上市委员会报告》，回顾上市委员会去年以后的政策议程。</p>
+                               <a href="javascript:;">查看详细&nbsp ></a>
+                          </div>
+                       </li>
+                   </ul>
+                   <ul class="Newleft" style="padding-left:120px;">
+                       <li>
+                          <div class="Nimg">
+                             <img src="${path}/images/newimg.png" />
+                          </div>
+                          <div class="Ncontent">
+                               <p class="tit">联交所刊发上市委员会报告 借壳上市</p>
+                               <p>月20日讯，19日，香港交易及结算所有限公司（香港交易所）全资附属公司香港联合交易所有限公司（联交所）刊发《2017年上市委员会报告》，回顾上市委员会去年以后的政策议程。</p>
+                               <a href="javascript:;">查看详细&nbsp ></a>
+                          </div>
+                       </li>
+                       <li>
+                          <div class="Nimg Date">
+                             <span class="Day">26</span>
+                             <em>2018-03</em>
+                          </div>
+                          <div class="Ncontent DNcont">
+                               <p class="tit">联交所刊发上市委员会报告 借壳上市</p>
+                               <p>月20日讯，19日，香港交易及结算所有限公司（香港交易所）全资附属公司香港联合交易所有限公司（联交所）刊发《2017年上市委员会报告》，回顾上市委员会去年以后的政策议程。</p>
+                               <a href="javascript:;">查看详细&nbsp ></a>
+                          </div>
+                       </li>
+                       <li>
+                          <div class="Nimg Date">
+                             <span class="Day">26</span>
+                             <em>2018-03</em>
+                          </div>
+                          <div class="Ncontent DNcont">
+                               <p class="tit">联交所刊发上市委员会报告 借壳上市</p>
+                               <p>月20日讯，19日，香港交易及结算所有限公司（香港交易所）全资附属公司香港联合交易所有限公司（联交所）刊发《2017年上市委员会报告》，回顾上市委员会去年以后的政策议程。</p>
+                               <a href="javascript:;">查看详细&nbsp ></a>
+                          </div>
+                       </li>
+                   </ul>
+              </div>
+          </div>
+    </div>
+</div>
+<%@include file="foot.jsp"%>
+</body>
+</html>

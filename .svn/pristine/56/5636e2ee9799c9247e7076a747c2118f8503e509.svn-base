@@ -1,0 +1,32 @@
+/**
+ * Copyright (C) 2009 武汉金策略信息科技有限公司
+ *
+ * 版权所有。
+ *
+ * 类名　　  : @NewsService.java
+ * 功能概要  : 
+ * 做成日期  : @2018年5月22日
+ * 修改日期  :
+ */
+package com.jcl.service;
+
+import java.util.List;
+import java.util.Map;
+
+import com.jcl.pojo.News;
+import com.jcl.vo.NewsVo;
+
+
+/** 
+ * @author zpf
+ * @version 1.0
+ */
+public interface NewsService {
+
+	Map<Integer, List<NewsVo>>queryAll();
+
+	NewsVo queryByID(Integer nid);
+
+	List<News> queryNewsByType(int num);
+
+}

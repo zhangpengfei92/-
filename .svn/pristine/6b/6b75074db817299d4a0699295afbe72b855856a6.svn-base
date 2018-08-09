@@ -1,0 +1,87 @@
+/**
+ * Copyright (C) 2009 武汉金策略信息科技有限公司
+ *
+ * 版权所有。
+ *
+ * 类名　　  : @TestController.java
+ * 功能概要  : 
+ * 做成日期  : @2018年5月16日
+ * 修改日期  :
+ */
+package com.jcl.controller;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+
+
+
+/** 
+ * @author zpf
+ * @version 1.0
+ */
+@Controller
+@RequestMapping("/test")
+public class MainController {
+	
+	@RequestMapping("/homePage")
+	public String homePage() {
+		return "index";	
+	}
+	@RequestMapping("/stockAllocation")
+	public String stockAllocation() {
+		System.out.println("--stockAllocation");
+		return "stockAllocation";	
+	}
+	@RequestMapping("/futuresAllocation")
+	public String futuresAllocation() {
+		
+		System.out.println("--futuresAllocation");
+		return "futuresAllocation";	
+	}
+	@RequestMapping("/outOptions")
+	public String outOptions() {
+		
+		System.out.println("--outOptions");
+		return "outOptions";	
+	}
+	@RequestMapping("/internationalFutures")
+	public String internationalFutures() {
+		System.out.println("--internationalFutures");
+		return "internationalFutures";	
+	}
+	@RequestMapping("/surrogate")
+	public String surrogate() {
+		System.out.println("--surrogate");
+		return "surrogate";	
+	}
+	@RequestMapping("/aboutus")
+	public String aboutus() {
+		System.out.println("--aboutus");
+		return "aboutus";	
+	}
+	
+	@RequestMapping("/news")
+	public String news() {
+		System.out.println("--news");
+		return "news";	
+	}
+	
+	@RequestMapping("/tonews")
+	public String tonews(Integer num,Model model) {
+		model.addAttribute("num", num);
+		return "news";	
+	}
+	
+	
+	@RequestMapping("/toaboutus")
+	public String toaboutus(Integer id){
+		System.out.println("xxxx");
+	
+		if(id==1) {
+			return "aboutus.jsp#div1";
+		}else {
+			return "aboutus.jsp#div2";
+			}
+	}
+}

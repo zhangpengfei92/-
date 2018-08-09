@@ -1,0 +1,73 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+  
+    
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<script type="text/javascript">
+
+//首页
+function homepage() {
+	  window.location.href = "${path}/index";
+}
+
+//股票配资
+ function stockAllocation() {
+	window.location.href = "${path}/gppz";
+} 
+
+//期货配资
+function futuresAllocation() {
+	window.location.href = "${path}/qhpz";
+}
+
+//场外期权
+function outOptions() {
+	window.location.href = "${path}/cwqq";
+}
+
+//国际期货
+function internationalFutures() {
+	window.location.href = "${path}/gjqh";
+}
+
+//代理加盟
+function surrogate(){
+	window.location.href = "${path}/dljm";
+}
+
+//关于我们
+function aboutus() {
+	window.location.href = "${path}/gywm";
+}
+
+//新闻中心
+function news() {
+	window.location.href = "${path}/news";
+}
+
+
+
+</script>
+
+</head>
+<body>
+<div class="Zhead">
+     <div class="Hmain">
+          <p class="Zlogo"><a href="javascript:;"><img src="${staticpath}/images/LOGO.png"/></a></p>
+          <ul class="nav">
+             <li><a href="${path}" id="homepage">首页</a></li>
+             <li><a href="javascript:;" id="stockAllocation" onclick="stockAllocation()">股票配资</a></li>
+             <li><a href="javascript:;" id="futuresAllocation" onclick="futuresAllocation()">期货配资</a></li>
+             <li><a href="javascript:;" id="outOptions" onclick="outOptions()">场外期权</a></li>
+             <li><a href="javascript:;" id="internationalFutures" onclick="internationalFutures()">国际期货</a></li>
+             <li><a href="javascript:;" id="surrogate" onclick="surrogate()">代理加盟</a></li>
+             <li><a href="javascript:;" id="aboutus" onclick="aboutus()">关于我们</a></li>
+             <li><a href="javascript:;" id="news" onclick="news()">新闻中心</a></li>
+          </ul>
+     </div>
+</div>
+</body>
+</html>

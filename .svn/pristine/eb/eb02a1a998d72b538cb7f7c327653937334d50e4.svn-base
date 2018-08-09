@@ -1,0 +1,44 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link href="${path}/css/css.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+	<div class="footbox">
+    <div class="foot">
+         <ul>
+            <li class="tit"><a href="javscript:;">关于我们</a></li>
+            <li><a href="javscript:;">公司介绍</a></li>
+            <li><a href="javscript:;">联系我们</a></li>
+         </ul>
+         <ul>
+            <li class="tit"><a href="javscript:;">方案中心</a></li>
+            <li><a href="javscript:;">股票配资</a></li>
+            <li><a href="javscript:;">期货配资</a></li>
+            <li><a href="javscript:;">场外期权</a></li>
+            <li><a href="javscript:;">国际期权</a></li>
+         </ul>
+         <ul>
+            <li class="tit"><a href="javscript:;">新闻资讯</a></li>
+            <li><a href="javscript:;">最热专题</a></li>
+            <li><a href="javscript:;">公司新闻</a></li>
+            <li><a href="javscript:;">市场动态</a></li>
+            <li><a href="javscript:;">常见答疑</a></li>
+         </ul>
+         <div class="call">
+            <p class="tit">联系我们</p>
+            <p>武汉中金宸大网络科技有限公司</p>
+            <p>服务热线<span>400-969-8296</span><span>027-87887360</span></p>
+            <p>E-Mail<i>service@jincelue.net</i></p>
+         </div>
+         <div class="ewm">
+           <img src="${path}/images/ewm.png" />
+         </div>
+    </div>
+    <div class="footb">版权所有：武汉中金宸大网络科技有限公司©2018<i></i>鄂ICP备07020913号 鄂公海网备1101085123号</div>
+</div>
+</body>
+</html>

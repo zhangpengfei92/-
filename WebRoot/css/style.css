@@ -1,0 +1,25 @@
+.imfor_top div,.imfor div {float: left;text-align: center;}
+.imfor_top,.imfor {width:1200px; overflow:hidden; background:#f2f2f2;}
+.imfor_top div {height:40px;line-height:40px;}
+.imfor div {line-height:120px;}
+.imfor{ background:#fff;}
+.check_top {width: 100px;}
+.check{ padding-top:40px; width:100px;}
+.pudc_top {width:540px;}
+.pudc{ width:440px; padding:30px 50px;}
+.pudc p{ float:left; display:block;}
+.pudc p.goodstp{ width:60px; height:60px; border:1px solid #ddd; background:#fff;}
+.pudc p.goodstp img{width:100%;}
+.pudc p.goodsmc{ width:200px; padding-left:10px; }
+.pudc p.goodsmc span{ display:block;line-height:150%; text-align:left; color:#999;font-size:14px;}
+.pudc p.goodsmc span.stype{color:#06C; }
+.pices,.pices_top {width:300px;}
+.pices span{ font-size:28px; padding-right:5px;color:#cfb175;}
+.num_top,num{ float:left; width:340px; text-align:center;}
+.num{margin:45px 0 auto 110px; height:26px; border:1px solid #f0f0f0;}
+.num input {width:40px; padding:0 10px; height:24px; line-height:24px; text-align:center; border:none;}
+.num span {height:24px; line-height:24px;border:4px solid #f0f0f0;background: #f0f0f0;text-align: center;color: #444;cursor: pointer;}
+.Dnum{ float:left; margin:10px 0;}
+.totle,.totle_top {width:169px;}
+.totle {color: red;}
+.del,.del_top {width:120px;cursor: pointer;}

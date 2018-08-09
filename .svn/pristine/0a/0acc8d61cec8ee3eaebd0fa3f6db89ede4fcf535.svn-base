@@ -1,0 +1,538 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>中金宸大</title>
+<link rel="stylesheet" type="text/css"  href="${staticpath}/css/css.css" />
+<script type="text/javascript" src="${staticpath}/js/jquery1.42.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function () {	
+	$(".Newtab ul li").click(function(){
+		
+		var index=$(".Newtab ul li").index(this);
+		$(this).addClass("select hover").siblings().removeClass("select hover");
+		$(".Newtab .hide").eq(index).show().siblings(".Newtab .hide").hide();
+	})
+	//去掉所有的导航栏高亮显示样式
+	$(".Zlogo ul li a ").each(function () {  
+		$(this).removeClass("on");  
+	}); 
+	//被导航栏选中高亮显示
+	$("#homepage").addClass("on");
+});
+
+function select(num) {
+	if(num==1){
+		$(".stock div").attr("style","display:none")
+		$("#div1").attr("style","")
+		$("#bgdiv").removeClass();
+		$("#bgdiv").addClass("product3");
+	}else if(num==2){
+		$(".stock div").attr("style","display:none")
+		$("#div2").attr("style","")
+		$("#bgdiv").removeClass();
+		$("#bgdiv").addClass("product");
+	}else if(num==3){
+		$(".stock div").attr("style","display:none")
+		$("#div3").attr("style","")
+		$("#bgdiv").removeClass();
+		$("#bgdiv").addClass("product2");
+	}else if(num==4){
+		$(".stock div").attr("style","display:none")
+		$("#div4").attr("style","")
+		$("#bgdiv").removeClass();
+		$("#bgdiv").addClass("product");
+	}else{
+		$(".stock div").attr("style","display:none")
+		$("#div5").attr("style","")
+		$("#bgdiv").removeClass();
+		$("#bgdiv").addClass("product1");
+	}
+}
+
+function  go(index) {
+	if(index==1){
+		window.location.href = "${path}/gppz.action";
+	}else if(index==2){
+		window.location.href = "${path}/qhpz.action";
+	}else if(index==3){
+		window.location.href = "${path}/cwqq.action";
+	}else if(index==4){
+		window.location.href = "${path}/gjqh.action";
+	}else{
+		window.location.href = "${path}/dljm.action";
+	}
+}
+
+function selectNew(index) {
+	if(index==1){
+		$(".hide").attr("style","display:none")
+		$("#news1").attr("style","")
+	}else if(index==2){
+		$(".hide").attr("style","display:none")
+		$("#news2").attr("style","")
+	}else if(index==3){
+		$(".hide").attr("style","display:none")
+		$("#news3").attr("style","")
+	}else if(index==4){
+		$(".hide").attr("style","display:none")
+		$("#news4").attr("style","")
+	}
+}
+//查看新闻详情
+function querydetails(nid) {
+	window.open("${path}/news.action/"+nid);
+}
+
+//图片轮播js
+$(function() {
+    var index = 0;
+    var lis = $(".list").find("li");
+    var t;
+    t = setInterval(play, 3000);
+
+    function play() {
+        index++;
+        if (index > $(".lbview li").length - 1) {
+            index = 0;
+        }
+        $(".lbview li").eq(index).fadeIn(1000).siblings().fadeOut();
+        lis.eq(index).addClass("zi").siblings().removeClass("zi");
+    }
+    $(".btn-prev").click(function() {
+        index--;
+        $(".lbview li").eq(index).fadeIn(1000).siblings().fadeOut();
+        lis.eq(index).addClass("zi").siblings().removeClass("zi");
+    });
+
+    $(".btn-prev").hover(function() {
+        $(".btn-next").animate({
+            opacity: 0
+        }, 300);
+    }, function() {
+        $(".btn-next").animate({
+            opacity: 1
+        }, 300);
+    });
+
+    $(".btn-next").hover(function() {
+        $(".btn-prev").animate({
+            opacity: 0
+        }, 300);
+    }, function() {
+        $(".btn-prev").animate({
+            opacity: 1
+        }, 300);
+    });
+
+    $(".btn-next").click(function() {
+        index++;
+        $(".lbview li").eq(index).fadeIn(1000).siblings().fadeOut();
+        lis.eq(index).addClass("zi").siblings().removeClass("zi");
+    });
+
+    $(".Imgbox").hover(function() {
+        clearInterval(t);
+    }, function() {
+        t = setInterval(play, 3000);
+    });
+
+    lis.click(function() {
+        index = $(this).index();
+        $(".lbview li").eq(index).fadeIn(1000).siblings().fadeOut();
+        lis.eq(index).addClass("zi").siblings().removeClass("zi");
+    })
+
+})
+
+//关于我们
+function aboutus() {
+	window.location.href = "${path}/gywm.action";
+}
+
+//股票配资
+function stockAllocation() {
+	window.location.href = "${path}/gppz.action";
+} 
+
+//场外期权
+function outOptions() {
+	window.location.href = "${path}/cwqq.action";
+}
+
+
+</script>
+</head>
+<body>
+<%@include file="../../top.jsp"%>
+<!-- banner start-->
+<div class="banner">
+	<div class="Imgbox">
+    <div class="lbview">
+        <ul>
+            <!--轮播图-->
+            <li class="lunbo">
+                <a href="javascript:void(0)" onclick="aboutus()"><img src="${staticpath}/images/BANNER.png"></a>
+            </li>
+            <li class="lunbo">
+                <a href="javascript:void(0)" onclick="futuresAllocation()"><img src="${staticpath}/images/banner2.png"></a>
+            </li>
+            <li class="lunbo">
+                <a href="javascript:void(0)" onclick="outOptions()"><img src="${staticpath}/images/banner3.png"></a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="btn btn-prev"><i class="iconfont icon-fanhui7"></i></div>
+    <!-- 左右箭头-->
+    <div class="btn btn-next"><i class="iconfont icon-fanhui7"></i></div>
+
+    <div class="list">
+        <ul>
+            <li class="zi"></li>
+            <!--小圆点-->
+            <li></li>
+            <li></li>
+        </ul>
+    </div>
+    </div> 
+</div> 
+<!-- banner end--> 
+<div class="main">
+     <div class="Howd">
+         <div class="Howimg">
+            <img src="${staticpath}/images/help.png" />
+         </div>
+         <div class="Howz">
+            <p class="red">家庭如何实现资产保值增值?</p>
+            <p>如何利用各种金融投资理财工具，保证资产的保值和增值，是众多高净值家庭考虑核心问题之一。</p>
+            <p class="red" style="padding-top:20px;">企业资金如何抵御通货膨胀?</p>
+            <p>企业似乎难以找到优质资产配置投资标的，如今陷入“理财难寻高收益，不理财难抗通胀”的谜团。</p>
+            <p class="redb">让专业的人为你创造财富</p>
+         </div>
+     </div>
+     <div class="boxone">
+          <h3>
+            <p><img src="${staticpath}/images/tit01.png" /></p>
+            <p>让您投资有道，引领先机</p>
+          </h3>
+          <ul class="one">
+              <li>
+                  <a href="javascript:;">
+                     <p class="bicon"><span class="icon01"></span></p>
+                     <p class="tit">与知名券商深度合作 </p>
+                     <p>中金宸大与国泰君安、海通证券、鹏华基金等国内知名券商、基金公司开展深度合作</p>
+                  </a>
+              </li>
+              <li>
+                  <a href="javascript:;">
+                     <p class="bicon"><span class="icon02"></span></p>
+                     <p class="tit">拓展新兴投资领域</p>
+                     <p>专业的金融科技业务团队，致力于金融科技的创新，抢占金融理财产品的市场先机。</p>
+                  </a>
+              </li>
+              <li style="border-right:none;">
+                  <a href="javascript:;">
+                     <p class="bicon"><span class="icon03"></span></p>
+                     <p class="tit">打造专属风控体系</p>
+                     <p>实时风控，保障本金安全。系统实时风控，触预警线图像与声音提醒，触平仓线一键平仓/减仓或自动平仓。</p>
+                  </a>
+              </li>
+              <li>
+                  <a href="javascript:;">
+                     <p class="bicon"><span class="icon04"></span></p>
+                     <p class="tit">金融服务遍及全国 </p>
+                     <p>中金宸大隶属集团拥有多家公司，金融资产及科技业务目前已经遍及全国范围。</p>
+                  </a>
+              </li>
+              <li>
+                  <a href="javascript:;">
+                     <p class="bicon"><span class="icon05"></span></p>
+                     <p class="tit">个性化资产配置方案</p>
+                     <p>对客户进行分级管理制度，为不同投资偏好客户，提供更有针对性的服务！</p>
+                  </a>
+              </li>
+              <li style="border-right:none;">
+                  <a href="javascript:;">
+                     <p class="bicon"><span class="icon06"></span></p>
+                     <p class="tit">帮助投资者提升能力</p>
+                     <p>股票、期货、期权资管系统一站式解决方案，操作简单，功能强大，对接交易软件。</p>
+                  </a>
+              </li>
+          </ul>
+     </div>
+</div>
+    <div class="boxone" style="margin-bottom:0;">
+          <h3>
+            <p><img src="${staticpath}/images/tit01.png" /></p>
+            <p>积极拥护金融监管 筑建安全投资平台</p>
+          </h3>
+     </div>
+<div class="product3" id="bgdiv">
+     <div class="stock">
+     <div style="" id="div1">
+     <h3>股票配资</h3>
+         <p>专业的股票配资平台、股票配资公司-按天、按月配资炒股，配资方案灵活，
+         单笔高达600万，致力于为广大用户提供最安全、最稳定、最专业的股票配资、
+         期货配资1对1服务。在线股票配资，线上配资平台，按天配资，按月配资，灵活快捷，超低费用。</p>
+         <a href="javascript:" onclick="go('1')">了解详情</a>
+     </div>
+     
+     <div style="display:none;" id="div2">
+     <h3>期货配资</h3>
+         <p>期货配资是一种创新的资金融资工具，为具备丰富交易经验及风险控制能力较强的投资者，
+         提供放大其操作资金的工具，很多有良好风控意识和盈利能力的投资者在资金得到保障的前提下，
+         就是通过配资扩大投资操作的可用资金，进而大幅放大投资收益。</p>
+         <a href="javascript:" onclick="go('2')">了解详情</a>
+     </div>
+     
+        <div style="display:none;" id="div3">
+     <h3>场外期权</h3>
+         <p>场外期权是在沪深证券交易所之外期权。它是买方与卖方之间订立合约，
+         期权买方有权利，但无义务在合约有效期内，以合约约定的价格，
+         购买或出售合约约定数量标的股票。期权买方需要支付权利金，
+         而期权卖方需在买方行权时承担履行合约条款义务。</p>
+         <a href="javascript:" onclick="go('3')">了解详情</a>
+     </div>
+     
+    <div style="display:none;" id="div4">
+     <h3>国际期货</h3>
+         <p>保证金交易，只需1.5%投入。以美国原油为例。每标准手美国原油交易为1000桶，
+         以50美元/桶计算，价值$50000。客户交易1个标准手美国原油，只需支付1.5%保证金，
+         即$750保证金。当日原油每桶涨2美元，1000桶原油则盈利$2000，盈利高达266%</p>
+         <a href="javascript:" onclick="go('4')">了解详情</a>
+     </div>
+     
+     <div style="display:none;" id="div5">
+     <h3>代理加盟</h3>
+         <p>诚邀代理加盟，为合作商提供最前沿的产品和最新的信息，
+         提供完整营销体系培训服务，提供全程售后客服和权益保护。
+         您的投入：代理费、销售；我们支持：产品支持、商机提供、
+         区域保护；您的收获：价格优势、技术支持和可观盈利，期待您的加入。</p>
+         <a href="javascript:" onclick="go('5')">了解详情</a>
+     </div>
+         <ul>
+           <li><img src="${staticpath}/images/fl01.png" onclick="select('1')" /></li>
+           <li><img src="${staticpath}/images/fl02.png" onclick="select('2')"/></li>
+           <li><img src="${staticpath}/images/fl03.png" onclick="select('3')"/></li>
+           <li><img src="${staticpath}/images/fl04.png" onclick="select('4')"/></li>
+           <li><img src="${staticpath}/images/fl05.png" onclick="select('5')"/></li>
+         </ul>
+     </div>
+</div>
+<div class="main">
+     <div class="boxone" style="margin-bottom:0;">
+          <h3>
+            <p><img src="${staticpath}/images/tit03.png" /></p>
+            <p>引领诚信 甄别行业优质合作伙伴</p>
+          </h3>
+          <ul class="two">
+              <c:forEach items="${clist}" var="sn" varStatus="st">
+               <c:if test="${st.count<=10}">
+               <li>
+              	 	<a href="javascript:;" class="Tlogo01">
+                	 	<img style="width: 100%" src="${sn.curl}">
+             		</a>
+             	</li>
+             	</c:if>
+              </c:forEach>        
+          </ul>
+     </div>
+     
+     <div class="boxone" style="margin-bottom:0;">
+          <h3>
+            <p><img src="${staticpath}/images/tit04.png" /></p>
+            <p>全方位报到最新、最热的资讯内容</p>
+          </h3>
+          <div class="Newtab">
+              <ul class="tit">
+                 <li class="select" onclick="selectNew('1')">最新专题</li>
+                 <li onclick="selectNew('2')">公司新闻</li>
+                 <li onclick="selectNew('3')">市场动态</li>
+                 <li onclick="selectNew('4')">常见答疑</li>
+              </ul>
+              <!-- 最新专题 -->
+              <div class="hide" id=news1 >
+		            <ul class="Newleft">
+		              <c:forEach items="${nlist1}" var="sn" varStatus="st">
+		              <c:if test="${st.count<=3}">
+		              	<li onclick="querydetails(${sn.nid})">                     
+		                          <div class="Nimg Date">
+		                              <span class="Day">${sn.newsday}</span>
+		                             <em>${sn.newsyear}-${sn.newsmonth}</em>
+		                          </div>
+		                          
+		                          <div class="Ncontent DNcont">
+		                               <p class="tit">${sn.title}</p>
+		                               <p>${sn.summary}</p>		                             
+		                               <a href="javascript:;" onclick="querydetails(this.id)" id="${sn.nid}">查看详细&nbsp ></a>
+		                          </div>
+		                       </li>     		
+		              </c:if>
+					</c:forEach>
+		           </ul>
+		
+					<ul class="Newleft" style="padding-left:120px;">
+					<c:forEach items="${nlist1}" var="sn" varStatus="st">
+					<c:if test="${st.count>3&&st.count<=6}">
+						       <li onclick="querydetails(${sn.nid})">      
+		                          <div class="Nimg Date">
+		                               <span class="Day">${sn.newsday}</span>
+		                             <em>${sn.newsyear}-${sn.newsmonth}</em>
+		                          </div>
+		                          
+		                          <div class="Ncontent DNcont">
+		                               <p class="tit">${sn.title}</p>
+		                               	<p>${sn.summary}</p>
+		                               <a href="javascript:;" onclick="querydetails(this.id)" id="${sn.nid}">查看详细&nbsp ></a>
+		                          </div>
+		
+		                       </li>  
+						</c:if>
+					</c:forEach>
+            
+                   </ul>
+              </div>
+              
+                <div class="hide" id="news2" style="display:none;">
+		             <ul class="Newleft">
+		              <c:forEach items="${nlist2}" var="sn" varStatus="st">
+		              <c:if test="${st.count<=3}">
+		              	<li onclick="querydetails(${sn.nid})">                          
+		                          <div class="Nimg Date">
+		                             <span class="Day">${sn.newsday}</span>
+		                             <em>${sn.newsyear}-${sn.newsmonth}</em>
+		                          </div>
+		                          
+		                          <div class="Ncontent DNcont">
+		                               <p class="tit">${sn.title}</p>
+		                               <p>${sn.summary}</p>
+		                               <a href="javascript:;" onclick="querydetails(this.id)" id="${sn.nid}">查看详细&nbsp ></a>
+		                          </div>
+		                       </li>     		
+		              </c:if>
+					</c:forEach>
+		           </ul>
+		
+					<ul class="Newleft" style="padding-left:120px;">
+					<c:forEach items="${nlist2}" var="sn" varStatus="st">
+					<c:if test="${st.count>3&&st.count<=6}">
+						   <li onclick="querydetails(${sn.nid})">      
+		                          <div class="Nimg Date">
+		                              <span class="Day">${sn.newsday}</span>
+		                             <em>${sn.newsyear}-${sn.newsmonth}</em>
+		                          </div>
+		                          
+		                          <div class="Ncontent DNcont">
+		                               <p class="tit">${sn.title}</p>
+		                               	<p>${sn.summary}</p>
+		                               <a href="javascript:;" onclick="querydetails(this.id)" id="${sn.nid}">查看详细&nbsp ></a>
+		                          </div>
+		
+		                       </li>  
+						</c:if>
+					</c:forEach>
+		        </ul>
+              </div>
+              
+              
+                <div class="hide" id="news3" style="display:none;">
+              
+                    <ul class="Newleft">
+		              <c:forEach items="${nlist3}" var="sn" varStatus="st">
+		              <c:if test="${st.count<=3}">
+		              	<li onclick="querydetails(${sn.nid})">                      
+		                          <div class="Nimg Date">
+		                              <span class="Day">${sn.newsday}</span>
+		                             <em>${sn.newsyear}-${sn.newsmonth}</em>
+		                          </div>
+		                          
+		                          <div class="Ncontent DNcont">
+		                               <p class="tit">${sn.title}</p>
+		                               <p>${sn.summary}</p>
+		                               <a href="javascript:;" onclick="querydetails(this.id)" id="${sn.nid}">查看详细&nbsp ></a>
+		                          </div>
+		                       </li>     		
+		              </c:if>
+					</c:forEach>
+		           </ul>
+		
+					<ul class="Newleft" style="padding-left:120px;">
+					<c:forEach items="${nlist3}" var="sn" varStatus="st">
+					<c:if test="${st.count>3&&st.count<=6}">
+						       <li onclick="querydetails(${sn.nid})">      
+		                          <div class="Nimg Date">
+		                               <span class="Day">${sn.newsday}</span>
+		                             <em>${sn.newsyear}-${sn.newsmonth}</em>
+		                          </div>
+		                          
+		                          <div class="Ncontent DNcont">
+		                               <p class="tit">${sn.title}</p>
+		                               	<p>${sn.summary}</p>
+		                               <a href="javascript:;" onclick="querydetails(this.id)" id="${sn.nid}">查看详细&nbsp ></a>
+		                          </div>
+		
+		                       </li>  
+						</c:if>
+					</c:forEach>
+		        </ul>
+              </div>
+              
+                <div class="hide" id="news4" style="display:none;">
+              
+                           <ul class="Newleft">
+		              <c:forEach items="${nlist4}" var="sn" varStatus="st">
+		              <c:if test="${st.count<=3}">
+		              	<li>                     
+		                          <div class="Nimg Date">
+		                              <span class="Day">${sn.newsday}</span>
+		                             <em>${sn.newsyear}-${sn.newsmonth}</em>
+		                          </div>
+		                          
+		                          <div class="Ncontent DNcont">
+		                               <p class="tit">${sn.title}</p>
+		                               <p>${sn.summary}</p>
+<%-- 		                               <a href="javascript:;" onclick="querydetails(this.id)" id="${sn.nid}">查看详细&nbsp ></a>
+ --%>		                          </div>
+		                       </li>     		
+		              </c:if>
+					</c:forEach>
+		           </ul>
+		
+					<ul class="Newleft" style="padding-left:120px;">
+					<c:forEach items="${nlist4}" var="sn" varStatus="st">
+					<c:if test="${st.count>3&&st.count<=6}">
+						         <li>
+		                          <div class="Nimg Date">
+		                             <span class="Day">${sn.newsday}</span>
+		                             <em>${sn.newsyear}-${sn.newsmonth}</em>
+		                          </div>
+		                          
+		                          <div class="Ncontent DNcont">
+		                               <p class="tit">${sn.title}</p>
+		                               	<p>${sn.summary}</p>
+		                          </div>
+		
+		                       </li>  
+						</c:if>
+					</c:forEach>
+		        </ul>
+              </div>
+          </div>
+         <div class="link">
+			<span>友情链接:</span>
+			<c:forEach items="${wlist}" var="sn"> 
+				<a href="${sn.wurl}" target="_blank" title="">${sn.wname}</a>
+			</c:forEach>
+
+					
+		</div>
+    </div>
+</div>
+<%@include file="../../foot.jsp"%>
+</body>
+</html>

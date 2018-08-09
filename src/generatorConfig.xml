@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+	<!--导入属性配置-->
+    <properties resource="db.properties"></properties>
+     <!--指定特定数据库的jdbc驱动jar包的位置-->
+    <classPathEntry location="${driverLocation}"/>
+  <context id="context1">
+  	<commentGenerator>  
+        <property name="suppressAllComments" value="true" /><!-- 是否取消注释 -->  
+        <property name="suppressDate" value="false" /> <!-- 是否生成注释代时间戳 -->  
+    </commentGenerator>  
+    <jdbcConnection connectionURL="${url}" driverClass="${driver}" password="${password}" userId="${user}" />
+    <javaModelGenerator targetPackage="com.jcl.entity" targetProject="hqmall" />
+    <sqlMapGenerator targetPackage="com.jcl.mapper" targetProject="hqmall" />
+    <javaClientGenerator targetPackage="com.jcl.dao" targetProject="hqmall" type="XMLMAPPER" />
+    <!-- <table tableName="tb_user" domainObjectName="User" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" >
+      <columnOverride column="???" property="???" />
+    </table> -->
+    <!-- <table tableName="tb_order" domainObjectName="Order" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" ></table> -->
+    <table tableName="tb_admin" domainObjectName="Admin" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" ></table>
+    <!-- 
+    <table tableName="good" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" ></table>
+    <table tableName="order_good"  enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" ></table>
+    <table tableName="shipping_address" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" ></table>
+    <table tableName="user_address" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" ></table>
+    <table tableName="good_category" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" ></table>
+    <table tableName="brand" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false" ></table>
+    -->
+  </context>
+</generatorConfiguration>

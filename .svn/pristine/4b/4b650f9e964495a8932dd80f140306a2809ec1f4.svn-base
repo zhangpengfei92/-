@@ -1,0 +1,90 @@
+/**
+ * Copyright (C) 2009 武汉金策略信息科技有限公司
+ *
+ * 版权所有。
+ *
+ * 类名　　  : @CooperationPartnerController.java
+ * 功能概要  : 
+ * 做成日期  : @2018年5月21日
+ * 修改日期  :
+ */
+package com.jcl.controller;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.jcl.pojo.CooperationPartner;
+import com.jcl.pojo.News;
+import com.jcl.pojo.Weblink;
+import com.jcl.service.CooperationPartnerService;
+import com.jcl.service.NewsService;
+import com.jcl.service.WeblinkService;
+import com.jcl.vo.NewsVo;
+
+/** 
+ * @author zpf
+ * @version 1.0
+ * 响应首页的controller
+ */
+@Controller
+
+public class HomePageController {
+	
+	public static Logger log = Logger.getLogger(HomePageController.class);
+	
+	@Autowired
+	private CooperationPartnerService cooperationPartnerService;
+	
+	@Autowired
+	private  NewsService newsserviceimpl;
+	
+	@Autowired
+	private WeblinkService weblinkService;
+	//展示首页的内容
+	@RequestMapping("/index")
+	public String showHomepage(Model model) {
+		try {
+			
+			
+			//查询合作伙伴
+			List<CooperationPartner> clist = cooperationPartnerService.queryAll();
+			
+			//查询新闻列表
+			Map<Integer, List<NewsVo>> nmap= newsserviceimpl.queryAll();
+			
+			//查询友情链接列表
+			List<Weblink> wlist=weblinkService.selectAll();
+			
+			model.addAttribute("wlist", wlist);
+			model.addAttribute("clist", clist);
+			model.addAttribute("nlist1", nmap.get(1));
+			model.addAttribute("nlist2", nmap.get(2));
+			model.addAttribute("nlist3", nmap.get(3));
+			model.addAttribute("nlist4", nmap.get(4));
+		} catch (Exception e) {
+			log.error("showHomepage-查询合作伙伴列表异常", e);
+		}
+		return "index";	
+	}
+	
+	@RequestMapping("/news/{nid}")
+	public String queryByID(@PathVariable Integer nid,Model model) {
+		
+		try {
+		NewsVo nvo=newsserviceimpl.queryByID(nid);
+		model.addAttribute("nvo", nvo);
+		} catch (Exception e) {
+			log.error("queryByID-查询单个新闻异常", e);
+		}
+		
+		return "newsdetail";
+	}
+}

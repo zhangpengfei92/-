@@ -1,0 +1,187 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>中金宸大</title>
+<link href="${path}/css/css.css" rel="stylesheet" type="text/css" />
+<script src="${path}/js/jquery.SuperSlide.2.1.1.js"></script>
+<script src="${path}/js/jquery1.42.min.js"></script>
+<script type="text/javascript" src="http://api.map.baidu.com/api?key=&v=1.1&services=true"></script>
+<script type="text/javascript">
+$(document).ready(function () {	
+	//去掉所有的导航栏高亮显示样式
+	$(".Zlogo ul li a ").each(function () {  
+			$(this).removeClass("on");  
+		}); 
+	//被导航栏选中高亮显示
+	$("#aboutus").addClass("on");
+});
+</script>
+
+
+</head>
+<body>
+<%@include file="../../top.jsp"%>
+<!-- banner start-->
+<div class="banner">
+    <div class="flexslider" style="height:523px;">
+        <ul class="slides">
+            <li style="background:url(${path}/images/Abanner.png) 50% 0 no-repeat;" style="height:523px;"></li>
+        </ul>
+    </div> 
+</div> 
+<!-- banner end--> 
+<div class="main" >
+   <div class="Abox" id="div1">
+      <h3><span class="red">关于我们</span><span>ABOUT US</span></h3>
+      <div class="about" id="div1">
+          <p>中金宸大有限公司位于上海浦东新区祖冲之路2277号世和商务中心1号楼1118室。公司成立于2015年，旗下有2家子公司——上海双沃资本、哈尔滨信立投资，业务覆盖全国。自成立以来，业务不断扩大，致力5年内
+          全国每个省份都有豪极的身影。我们一直本着“让投资感动人生”的宗旨脚踏实地的一路走来。同时也参与了红杉资本、硅谷天堂、九鼎投资等等几大知名投行的合作，并有着深度往来。</p>
+          <p>公司的经营范围有：新三板股权（黑马企业深度挖掘、明星企业，直冲ipo）私募股权（优质TMT、医疗独角兽股权项目）、境外VIE拆分（优质境外上市红筹企业
+          VIE拆分回归股权投资）、股权FOF（优质PE/VC机构基金产品零投跟投）、债权类（寻找优秀债权标的通过创新设计及机构化，提供安全可靠的稳定收益回报）海外资产置
+          业（通过自有团队和渠道了解境外优质地块购置房产投资）、海外保险(全方位的针对性的给与客户量身定制的保障)、教育移民（给与客户完整的个人留学移民规划）等等。着力于资本的安全
+          考虑，公司还配有专业风控体系，产品研究部、立项会、评审会等。</p>
+          <p>我们的研究中心依托于自身庞大的数据库资源，来自券商、私募、FOF机构等行业专业研究团队，通过自下而上的资产配置研究、自下而上的资产热点追踪，结合自身系统的智能筛选，力求让我们的每一个产品都能
+          带给每一位客户全方位的、前瞻性的综合金融服务。</p>
+          <p>中金宸大以理财规划为核心，为客户提供专业的资产配置方案，每一个客户在豪极都可以实现资产的保值增值，“海纳百川，有容乃大”豪极资本必将汇聚四方智慧，为客户创造持续增长的价值！</p>
+      </div>
+      <ul class="lnian">
+         <li>
+           <p class="tit">企业服务</p>
+           <p>为用户提供新三板股权、私募股权、境外VIE拆分、股权FOF、债权类、海外资产置业、海外保险、教育移民等服务</p>
+         </li>
+         <li>
+           <p class="tit">企业文化</p>
+           <p style="line-height:30px;">
+             <span>简单、 规范、 高效、 创新</span>
+             <span>诚信、 协作、 奉献、 超越</span>
+             <span>以人为本、知人善任的人才观</span>
+           </p>
+         </li>
+         <li>
+           <p class="tit">企业理念</p>
+           <p>与客户一同成长，不断完善产品和服务，助力客户企业不断发展</p>
+         </li>
+      </ul>
+      <div class="Map" id="div2">
+          <h3><span class="red">联系我们</span><span>CONTACT US</span></h3>
+          <div class="w1200 clearfix">
+			<ul class="leftmenu">
+				<li><p class="call">服务热线: 400-969-8296   027-87887360</p></li>
+				<li><p class="QQ">公司QQ: 487887360</p></li>
+                <li><p class="email">公司邮箱: service@jincelue.net</p></li>
+                <li><p class="address">公司地址:武汉市光谷大道与珞瑜路交汇处以北
+                                     100米未来之光大厦6号楼11楼</p></li>
+			</ul>
+			
+			<div class="conright">
+				<div class="padd">
+						 <div style="width:670px;height:290px;border:#ccc solid 1px;" id="dituContent"></div>
+					<script type="text/javascript">
+					    //创建和初始化地图函数：
+					    function initMap(){
+					        createMap();//创建地图
+					        setMapEvent();//设置地图事件
+					        addMapControl();//向地图添加控件
+					        addMarker();//向地图中添加marker
+					    }
+					    
+					    //创建地图函数：
+					    function createMap(){
+					        var map = new BMap.Map("dituContent");//在百度地图容器中创建一个地图
+					        var point = new BMap.Point(114.438383,30.511029);//定义一个中心点坐标
+					        map.centerAndZoom(point,18);//设定地图的中心点和坐标并将地图显示在地图容器中
+					        window.map = map;//将map变量存储在全局
+					    }
+					    
+					    //地图事件设置函数：
+					    function setMapEvent(){
+					        map.enableDragging();//启用地图拖拽事件，默认启用(可不写)
+					        map.enableScrollWheelZoom();//启用地图滚轮放大缩小
+					        map.enableDoubleClickZoom();//启用鼠标双击放大，默认启用(可不写)
+					        map.enableKeyboard();//启用键盘上下左右键移动地图
+					    }
+					    
+					    //地图控件添加函数：
+					    function addMapControl(){
+					        //向地图中添加缩放控件
+						var ctrl_nav = new BMap.NavigationControl({anchor:BMAP_ANCHOR_TOP_LEFT,type:BMAP_NAVIGATION_CONTROL_LARGE});
+						map.addControl(ctrl_nav);
+					        //向地图中添加缩略图控件
+						var ctrl_ove = new BMap.OverviewMapControl({anchor:BMAP_ANCHOR_BOTTOM_RIGHT,isOpen:1});
+						map.addControl(ctrl_ove);
+					        //向地图中添加比例尺控件
+						var ctrl_sca = new BMap.ScaleControl({anchor:BMAP_ANCHOR_BOTTOM_LEFT});
+						map.addControl(ctrl_sca);
+					    }
+					    
+					    //标注点数组
+					    var markerArr = [{title:"武汉中金宸大网络科技有限公司",content:"武汉市光谷大道与珞喻路交汇处以北100米未来之光大厦6号楼11楼",point:"114.438792|30.510835",isOpen:1,icon:{w:23,h:25,l:0,t:21,x:9,lb:12}}
+							 ];
+					    //创建marker
+					    function addMarker(){
+					        for(var i=0;i<markerArr.length;i++){
+					            var json = markerArr[i];
+					            var p0 = json.point.split("|")[0];
+					            var p1 = json.point.split("|")[1];
+					            var point = new BMap.Point(p0,p1);
+								var iconImg = createIcon(json.icon);
+					            var marker = new BMap.Marker(point,{icon:iconImg});
+								var iw = createInfoWindow(i);
+								var label = new BMap.Label(json.title,{"offset":new BMap.Size(json.icon.lb-json.icon.x+10,-20)});
+								marker.setLabel(label);
+					            map.addOverlay(marker);
+					            label.setStyle({
+					                        borderColor:"#808080",
+					                        color:"#333",
+					                        cursor:"pointer"
+					            });
+								
+								(function(){
+									var index = i;
+									var _iw = createInfoWindow(i);
+									var _marker = marker;
+									_marker.addEventListener("click",function(){
+									    this.openInfoWindow(_iw);
+								    });
+								    _iw.addEventListener("open",function(){
+									    _marker.getLabel().hide();
+								    })
+								    _iw.addEventListener("close",function(){
+									    _marker.getLabel().show();
+								    })
+									label.addEventListener("click",function(){
+									    _marker.openInfoWindow(_iw);
+								    })
+									if(!!json.isOpen){
+										label.hide();
+										_marker.openInfoWindow(_iw);
+									}
+								})()
+					        }
+					    }
+					    //创建InfoWindow
+					    function createInfoWindow(i){
+					        var json = markerArr[i];
+					        var iw = new BMap.InfoWindow("<b class='iw_poi_title' title='" + json.title + "'>" + json.title + "</b><div class='iw_poi_content'>"+json.content+"</div>");
+					        return iw;
+					    }
+					    //创建一个Icon
+					    function createIcon(json){
+					        var icon = new BMap.Icon("http://app.baidu.com/map/${path}/images/us_mk_icon.png", new BMap.Size(json.w,json.h),{imageOffset: new BMap.Size(-json.l,-json.t),infoWindowOffset:new BMap.Size(json.lb+5,1),offset:new BMap.Size(json.x,json.h)})
+					        return icon;
+					    }
+					    
+					    initMap();//创建和初始化地图
+					</script>
+				</div>
+			</div>
+		</div>
+      </div>
+   </div>
+</div>
+<%@include file="../../foot.jsp"%>
+</body>
+</html>

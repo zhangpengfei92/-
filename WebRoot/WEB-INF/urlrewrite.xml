@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE urlrewrite PUBLIC "-//tuckey.org//DTD UrlRewrite 3.2//EN" "http://tuckey.org/res/dtds/urlrewrite3.2.dtd">
+<rewrite>
+	<rule>
+		<from>^/index</from>
+		<to>index.action</to>
+	</rule>
+	
+	<rule>
+		<from>^/gppz</from>
+		<to>/gppz.action</to>
+	</rule>
+	
+	<rule>
+		<from>^/qhpz</from>
+		<to>/qhpz.action</to>
+	</rule>
+	
+	<rule>
+		<from>^/cwqq</from>
+		<to>/cwqq.action</to>
+	</rule>
+	
+	<rule>
+		<from>^/gjqh</from>
+		<to>/gjqh.action</to>
+	</rule>
+	
+	<rule>
+		<from>^/dljm</from>
+		<to>/dljm.action</to>
+	</rule>
+	
+	<rule>
+		<from>^/gywm</from>
+		<to>/gywm.action</to>
+	</rule>
+	
+	<rule>
+		<from>^/news</from>
+		<to>/news.action</to>
+	</rule> 
+		
+</rewrite>
+

@@ -1,0 +1,55 @@
+package com.jcl.pojo;
+
+import java.util.Date;
+
+public class CooperationPartner {
+    private Integer cid;
+
+    private String cname;
+
+    private String curl;
+
+    private Integer status;
+
+    private Date modifytime;
+
+    public Integer getCid() {
+        return cid;
+    }
+
+    public void setCid(Integer cid) {
+        this.cid = cid;
+    }
+
+    public String getCname() {
+        return cname;
+    }
+
+    public void setCname(String cname) {
+        this.cname = cname == null ? null : cname.trim();
+    }
+
+    public String getCurl() {
+        return curl;
+    }
+
+    public void setCurl(String curl) {
+        this.curl = curl == null ? null : curl.trim();
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public Date getModifytime() {
+        return modifytime;
+    }
+
+    public void setModifytime(Date modifytime) {
+        this.modifytime = modifytime;
+    }
+}

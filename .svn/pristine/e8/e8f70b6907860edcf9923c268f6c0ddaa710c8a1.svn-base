@@ -1,0 +1,117 @@
+/**
+ * Copyright (C) 2009 武汉金策略信息科技有限公司
+ *
+ * 版权所有。
+ *
+ * 类名　　  : @NewController.java
+ * 功能概要  : 
+ * 做成日期  : @2018年5月23日
+ * 修改日期  :
+ */
+package com.jcl.controller;
+/** 
+ * @author zpf
+ * @version 1.0
+ */
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.beanutils.BeanUtils;
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.jcl.comm.PaginationContext;
+import com.jcl.pojo.CooperationPartner;
+import com.jcl.pojo.News;
+import com.jcl.service.CooperationPartnerService;
+import com.jcl.service.NewsService;
+import com.jcl.util.DateUtil;
+import com.jcl.vo.NewsVo;
+
+@RequestMapping("/newscontroller")
+@Controller
+public class NewsController {
+	
+	public static Logger log = Logger.getLogger(HomePageController.class);
+	
+	@Autowired
+	private  NewsService newsserviceimpl;
+	
+	//展示首页的内容
+	@RequestMapping("/queryNew")
+	@ResponseBody
+	public Map<String, Object> queryNew(Model model,Integer ntype) {
+		Map<String, Object> map=new HashMap<String, Object>();
+		try {
+			//使用PageHelper的分页----设置分页参数
+			PageHelper.startPage(PaginationContext.getPageNum(),PaginationContext.getPageSize());
+			
+			//查询最热专题
+			List<News> list=newsserviceimpl.queryNewsByType(ntype);
+			List<NewsVo> nlist =poTovo(list);
+			PageInfo<News> userpage = new PageInfo<News>(list);
+			map.put("nlist",nlist);
+			map.put("userpage",userpage);
+			map.put("ntype",ntype);
+			
+		} catch (Exception e) {
+			log.error("showHomepage-查询新闻列表异常", e);
+		}
+		return map;
+	
+	}
+	
+	@RequestMapping("/queryByID")
+	public String queryByID(Integer nid,Model model) {
+		
+		try {
+		NewsVo nvo=newsserviceimpl.queryByID(nid);		
+		model.addAttribute("nvo", nvo);
+		model.addAttribute("contenturl", nvo.getContenturl());
+		} catch (Exception e) {
+			log.error("queryByID-查询单个新闻异常", e);
+		}
+		
+		return "newsdetail";
+	}
+	
+	
+	//动态加载freemaker生成的html页面
+	@RequestMapping("toHtml")
+	@ResponseBody
+	public String toHtml(String curl) {
+		
+		return curl;	
+	}
+	
+	public List<NewsVo> poTovo(List<News> list){
+		List<NewsVo> nlist= new ArrayList<>();
+		 for (News news : list) {
+			 NewsVo newsVo= new NewsVo();
+			 try {
+				
+				BeanUtils.copyProperties(newsVo, news);
+				} catch (Exception e) {
+					
+					e.printStackTrace();
+				} 
+			 String [] dateString=DateUtil.getYearandMonthandDay(news.getModifytime());
+			newsVo.setNewsyear(dateString[0]);
+			newsVo.setNewsmonth(dateString[1]);
+			newsVo.setNewsday(dateString[2]); 
+			nlist.add(newsVo);
+		}
+		return nlist;
+	}
+}

@@ -1,0 +1,65 @@
+/**
+ * Copyright (C) 2009 武汉金策略信息科技有限公司
+ *
+ * 版权所有。
+ *
+ * 类名　　  : @CooperationPartnerServiceImpl.java
+ * 功能概要  : 
+ * 做成日期  : @2018年5月18日
+ * 修改日期  :
+ */
+package com.jcl.service.impl;
+
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.jcl.dao.CooperationPartnerMapper;
+import com.jcl.pojo.CooperationPartner;
+import com.jcl.service.CooperationPartnerService;
+
+/** 
+ * @author zpf
+ * @version 1.0
+ */
+@Service
+public class CooperationPartnerServiceImpl implements CooperationPartnerService{
+
+	//注入合作伙伴的mapper
+	@Autowired
+	private CooperationPartnerMapper cooperationPartnerMapper;
+	@Override
+	public List<CooperationPartner> queryAll() {
+		return cooperationPartnerMapper.selectByExample(null);
+	}
+	@Override
+	public List<CooperationPartner> queryByName(String keywords) {
+		if(null != keywords ){
+			if(keywords != "" && !keywords.equals("")){
+				keywords = "%"+keywords+"%";
+			}else{
+				keywords = null;
+			}
+		}
+		return cooperationPartnerMapper.selectByName(keywords);
+	}
+	@Override
+	public CooperationPartner queryByid(Integer cid) {
+		
+		return cooperationPartnerMapper.selectByPrimaryKey(cid);
+	}
+	@Override
+	public int add(CooperationPartner cooperationPartner) {
+		cooperationPartner.setModifytime(new Date());
+		return cooperationPartnerMapper.insertSelective(cooperationPartner);
+	}
+	@Override
+	public int updateCooperationPartner(CooperationPartner cooperationPartner) {
+		cooperationPartner.setModifytime(new Date());
+		return cooperationPartnerMapper.updateByPrimaryKeySelective(cooperationPartner);
+	}
+	
+	
+}

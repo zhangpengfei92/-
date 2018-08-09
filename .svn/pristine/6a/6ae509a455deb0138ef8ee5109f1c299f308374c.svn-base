@@ -1,0 +1,105 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>中金宸大</title>
+<link href="${path}/css/css.css" rel="stylesheet" type="text/css" />
+<script src="${path}/js/jquery1.42.min.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(document).ready(function () {	
+	//去掉所有的导航栏高亮显示样式
+	$(".Zlogo ul li a ").each(function () {  
+			$(this).removeClass("on");  
+		}); 
+	//被导航栏选中高亮显示
+	$("#surrogate").addClass("on");
+});
+</script>
+
+</head>
+<body>
+<%@include file="../../top.jsp"%>
+<!-- banner start-->
+<div class="banner">
+    <div class="flexslider" style="height:295px;">
+        <ul class="slides">
+            <li style="background:url(${path}/images/jmbanner.png) 50% 0 no-repeat;" style="height:295px;"></li>
+        </ul>
+    </div> 
+</div> 
+<!-- banner end--> 
+<div class="main">
+   <div class="Mbox">
+       <h3>我们的优势</h3>
+       <div class="adul">
+          <ul>
+             <li>
+                <p class="tit">专业</p>
+                <p>专业的金融科技业务团队致力于金融科技的创新抢占金融理财产品的市场先机</p>
+             </li>
+             <li>
+                <p class="tit">实力</p>
+                <p>与知名券商深度合作  中金宸大与国泰君安、海通证券、鹏华基金等国内知名券商、基金公司开展深度合作</p>
+             </li>
+             <li>
+                <p class="tit">团队</p>
+                <p>具有强大的风险控制团队和客服团队，为你保驾护航</p>
+             </li>
+             <li>
+                <p class="tit">产品</p>
+                <p>个性化资产配置方案  对客户进行分级管理制度，为不同投资偏好客户，提供更有针对性的服务</p>
+             </li>
+          </ul>
+       </div>
+   </div>
+   <div class="Mbox">
+       <h3>提供服务</h3>
+       <div class="Service">
+          <ul>
+             <span>产品</span>
+             <li>
+               <p>为合作商提供行业前沿的产品</p>
+             </li>
+          </ul>
+          <ul>
+             <span>产品</span>
+             <li>
+               <p>为合作商提供最新的信息</p>
+             </li>
+          </ul>
+          <ul>
+             <span>培训</span>
+             <li>
+               <p>提供完整的营销体系培训服务</p>
+             </li>
+          </ul>
+          <ul>
+             <span>售后</span>
+             <li>
+               <p>为合作商提供全程售后客服</p>
+             </li>
+          </ul>
+          <ul>
+             <span>权益</span>
+             <li>
+               <p>为合作商提供权益保护</p>
+             </li>
+          </ul>
+          <ul>
+             <span>产品</span>
+             <li>
+               <p>为合作商提供行业前沿的产品</p>
+             </li>
+          </ul>
+       </div>
+       <div class="Mbox">
+       	   <h3>期待您的加入</h3>
+           <p class="join"><img src="${path}/images/jm.png" /></p>
+       </div>
+   </div>
+</div>
+<%@include file="../../foot.jsp"%>
+</body>
+</html>
