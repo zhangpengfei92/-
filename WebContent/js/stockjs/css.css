@@ -1,0 +1,925 @@
+﻿@charset "utf-8";
+*{ margin:0; padding:0;}
+a{text-decoration:none; color:#333;}
+ul,li{list-style-type:none;}
+img{ border:0; vertical-align:middle;}
+em,i{ font-style:normal;}
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,br,pre,form,fieldset,input,textarea,p,blockquote,th,td,img,select,input,a,div,strong,span{ margin: 0;
+padding: 0; font-weight:normal; }
+body{ width:100%;font-family:"微软雅黑",Arial; font-size:12px;  }
+table {padding: 0;border: 0px;border-collapse: collapse;}
+.grey{ background-color:#fafafa;}
+/* top */
+.topbox{ background:#fff;}
+.top{ overflow:hidden; width:1200px; height:101px; margin:0 auto;}
+.top img{ display:block;}
+.top_logo{ float:left; padding:28px 0 0 0;}
+.reslog{ float:right; overflow:hidden; font-size:14px; color:#666; padding:40px 0 0 0; }
+.reslog a{padding-left:20px; color:#333; }
+
+/* nav */
+.nav{width:100%; background:#3974c4; clear:both; position:relative;z-index:98;}
+.navSub{ width:1200px;overflow:hidden;margin:0 auto; }
+#nav .main{ float:left; width:165px;/*IE6 only*/ background:url(../images/icon.png) no-repeat 98px -171px; font-size:14px;}
+#nav .main a{color:#fff; line-height:40px; height:40px; display:block;width:165px; text-align:center;}
+#nav .main a.shover{color:#fff; background:#275faf;}
+#nav .main a:hover{color:#fff; background:#275faf;}
+/* banner */
+.banner{ max-width:100%; min-width:1120px; clear:both; }
+.flexslider { position: relative;z-index:2; height: 360px; overflow: hidden; background: url(../images/loading.gif) 50% no-repeat;}
+.slides { position: relative; z-index: 10;}
+.slides li { height: 360px;}
+.flex-control-nav { position: absolute; bottom: 10px; z-index: 20; width: 100%; text-align: center;}
+.flex-control-nav li { display: inline-block; width: 11px; height: 11px; margin: 0 5px; *display: inline; zoom: 1;}
+.flex-control-nav a { display: inline-block; width: 11px; height: 11px; line-height: 40px; overflow: hidden; 
+background: url(../images/dot.png) right 0 no-repeat; cursor: pointer;}
+.flex-control-nav .flex-active { background-position: 0 0;}
+
+/*首页main*/
+.Mainw{width:1200px; margin:20px auto; overflow:hidden;min-height: 420px;}
+.colleges h1{font-size:18px; border-bottom:1px solid #e9e9e9;padding-bottom:6px;position:relative;}
+.colleges h1 a.tit{ color:#3265ad; border-bottom:3px solid #3265ad;padding:0 12px 6px;}
+.colleges h1 a.more{position:absolute;font-size:14px; color:#999; top:10px; right:10px;}
+.cgame{width:103%; overflow:hidden;min-height: 240px;}
+.cgame li{border:1px solid #e9e9e9;width:267px; float:left;margin:15px 40px 25px 0; }
+.cgame li .clist h2{ background:url(../images/tit.png) no-repeat; width:267px; height:68px; text-align:center; color:#fff; line-height:50px; 
+font-size:20px; overflow:hidden; position:relative;}
+/*图片效果start*/
+.citem {width: 267px;background: #fff;float: left;margin-right: 20px;position:relative;overflow: hidden; }
+.citem .citemtxt {background:#;height:274px; width:267px;position: absolute;bottom: -600px;transition: bottom ease .3s;
+                  background-color:rgba(50,101,173,0.8); text-align:center;
+				  /* For IE 8 IE7*/
+				  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#803265ad,endColorstr=#803265ad);
+				  /* For IE 5.5 - 7 */}
+.citem .color {background-color:rgba(244,67,54,0.8); text-align:center;
+				  /* For IE 8 IE7*/
+				  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#80f44336,endColorstr=#80f44336);
+				  /* For IE 5.5 - 7 */}
+.citem .citemtxt span{ display:block; color:#fff;}
+.boxcaption{float: left; position: absolute; height: 100px; width: 100%; }
+.citem .citemtitle {width: 267px;display: block;color: #3a3a3a;font-size: 16px;font-weight: 500;overflow: hidden; text-align:center; padding-top:50px;}
+.citem h2{ background:url(../images/tit.png) no-repeat; width:267px; height:68px; text-align:center; color:#fff; line-height:50px; font-size:20px; 
+overflow:hidden;}
+/*图片效果end*/
+.selist h2{ background:url(../images/tit2.png) no-repeat;}
+.palist{padding:10px;font-size:12px; overflow:hidden;}
+.palist p{color:#999;padding-bottom:15px;}
+.palist p em{color:#d10919;}
+.alist{ border-top:1px solid #e9e9e9; padding-top:15px;}
+.alist a{color:#111; padding-right:28px;}
+.alist a.sign{ background:url(../images/sign.png) no-repeat 0 center;padding-left:25px;}
+.alist a.intro{ background:url(../images/intro.png) no-repeat 0 center;padding-left:25px;}
+.alist a.list{ background:url(../images/list.png) no-repeat 0 center;padding-left:25px;}
+.secur h1{font-size:18px; border-bottom:1px solid #e9e9e9;padding-bottom:6px; position:relative;}
+.secur h1 a.tit{ color:#f44336; border-bottom:3px solid #f44336;padding:0 12px 6px;}
+.secur h1 a.more{position:absolute;font-size:14px; color:#999; top:10px; right:10px;}
+.Rankbox{ overflow:hidden;padding:15px 0;min-height:410px;}
+.Rankl{ float:left; width:888px;}
+.Rankl h1{font-size:18px; border-bottom:1px solid #e9e9e9;padding-bottom:6px; height:30px; position:relative; background:#fff; }
+.Rankl h1 a.tit{ color:#3265ad; border-bottom:3px solid #3265ad;padding:0 12px 6px; float:left; padding-bottom:9px;}
+.Rankl h1 a.more{position:absolute;font-size:14px; color:#999; top:10px; right:10px;cursor: pointer;}
+.Rankl h1 a.Relay{position:absolute; background:url(../images/zfbut.png) no-repeat 0 center; width:55px; height:20px; top:10px; right:10px;}
+.tab_box ul{ overflow:hidden; background:#fff; width:1198px; padding-bottom:10px;}
+.tab_box li {padding: 2px 10px;line-height: 28px;text-align: center;float: left;cursor: pointer;font-size:16px;color:#333; 
+margin:10px 20px 0 20px;}
+.tab_box li.selected {background:#3265ad;color:#fff;}
+.tab{ border:1px solid #e9e9e9; background:#fff;}
+.tab tr{ text-align:center; font-size:16px; height:52px; line-height:40px;}
+.tab td{ border-top:1px solid #e9e9e9;}
+.tab .Htit{background:#f8f8f8; height:55px;}
+.tab .Sline{font-size:14px; border-top:1px solid #e9e9e9;}
+.red{color:#d41a29;cursor: pointer;}
+.green{color:#07ae32;}
+.But{ background:#f44336;color:#fff;padding:5px 20px;cursor: pointer;}
+.Rankban{ float:right; width:281px;}
+.Rankban h1{font-size:18px; border-bottom:1px solid #e9e9e9;padding-bottom:6px;position:relative;}
+.Rankban h1 a.tit{ color:#3265ad; border-bottom:3px solid #3265ad;padding:0 12px 6px;}
+.Rankban .Ban{padding-top:52px; display:block;}
+.Rankban h1 a.more{position:absolute;font-size:14px; color:#999; top:10px; right:10px;}
+.Master{ overflow:hidden;padding-top:5px;}
+.Master li{ overflow:hidden; border-bottom:1px solid #e9e9e9;padding:6px 0; position:relative;}
+.Master a.spanA{ float:left;width:20%; display:block;cursor: pointer;}
+.Mlist{ float:left; overflow:hidden; width:79%;}
+.Mlist p{color:#666; font-size:14px;padding-bottom:5px; width:60%;cursor: pointer;}
+.Mlist p.earbox{color:#666; font-size:14px;padding-bottom:5px; width:50%;}
+.Buton{ background:#f44336;color:#fff;padding:5px 15px; position:absolute; top:5px; right:0;cursor: pointer;}
+.BottonC{background:#feae64;color:#fff;height:26px; line-height:26px; width:70px; text-align:center; display:inline-block; float:left; margin-right:10px;}
+.Mlist div i{ line-height:26px; font-size:14px; color:#999; width:140px; display:inline-block;white-space:nowrap;text-overflow: ellipsis; overflow:hidden;}
+.Lookbox{ overflow:hidden;padding-top:15px; border-bottom:1px solid #e9e9e9; margin-bottom:20px;}
+.Lookbox h1{font-size:18px; border-bottom:1px solid #e9e9e9;padding-bottom:6px; position:relative;}
+.Lookbox h1 a.tit{ color:#3265ad; border-bottom:3px solid #3265ad;padding:0 12px 6px;}
+.Lookbox h1 a.more{position:absolute;font-size:14px; color:#999; top:10px; right:10px;}
+.stub{ overflow:hidden; padding-top:2px; width:380px; float:left; margin-right:15px;}
+.stub p{ display:block; float:left;width:50px; height:188px; color:#fff; font-size:18px;}
+.stub p.Ospan{ background:#fd827a;}
+.stub p.tcolor{ background:#8eccf1;}
+.stub p.thcolor{ background:#feae64;}
+.stub p.Ospan span{word-wrap:break-word;word-break:nomal; width:18px; display:block; overflow:hidden; margin:30px auto;}
+.stub ul{float:left; margin-left:10px; font-size:14px; width:300px;}
+.stub ul li{ padding-top:15px;}
+.stub ul li a{color:#333;border-bottom:1px solid #999;white-space:nowrap;text-overflow: ellipsis; overflow:hidden; width:300px; display:block;}
+.stub ul li a:hover{ color:#d41a29;}
+.stub ul li a.on{ color:#d41a29;}
+/*底部*/
+.footer{ background:#4a4a4a; overflow:hidden; color:#d6d6d6; font-size:16px; }
+.footbox{ width:1000px; padding:30px 0; margin:0 auto;overflow:hidden;}
+.footbox a{color:#d6d6d6;}
+.navfoot{ float:left; margin-right:200px;}
+.navfoot li{padding-bottom:8px;}
+.navfoot li.About{padding-bottom:25px;}
+.Call{ float:left; margin-right:30px;}
+.Call h1{color:#d6d6d6;font-size:16px; padding-bottom:25px; padding-left:40px;}
+.Callbox{ border-left:1px solid #5e5e5e; padding-left:40px;}
+.Callbox li{ padding-bottom:10px;}
+.Callbox li a.consult{ background:url(../images/phone.png) no-repeat 0 center; padding-left:25px;}
+.Callbox li a.Qbox{ background:url(../images/QQ.png) no-repeat 0 center; padding-left:25px;}
+.Callbox li a.serbox{ background:url(../images/infor.png) no-repeat 0 center; padding-left:25px;}
+.Callbox li a span{ font-size:18px;}
+.Callbox li a.zxbut{ border:1px solid #d6d6d6;padding:1px 8px; border-radius:5px; margin-left:20px;}
+.copybox{ border-top:1px solid #5e5e5e; padding-bottom:20px;}
+.copybox p{ text-align:center;padding-top:10px; font-size:14px; color:#7a7a7a;}
+
+/*高校赛场*/
+/*--翻页--*/
+.page{overflow:hidden;margin:50px 0; text-align:center; clear:both;}
+.page a{display:inline-block; padding:3px 10px; font-size:12px;color:#333; border-radius:3px; border:1px solid #dbdbdb;cursor: pointer;}
+.page a.on{color:#fff; background:#669acc;}
+.page a:hover{ color:#fff; background:#669acc;}
+.searchbox01{width:1200px; overflow:hidden; margin-bottom:15px;}
+.search{float:left;overflow:hidden; width:550px;}
+#searchform{ position:relative;}
+#searchform label{ font-size:16px; line-height:30px; display:inline-block; vertical-align:top;}
+#searchform label.SF{ margin-top:15px;}
+#searchform fieldset {padding: 0px;border: none;margin: 0px;}
+#searchform input[type="text"] {background: #fff;border:1px solid #dbdbdb;padding: 0px 10px 0px 35px;margin: 0px;width:225px;height: 30px;
+line-height: 30px;color: #b2b2b2;font-size:12px; margin-right:150px;}
+#searchform input[type="button"] {background:url(../images/search.png) center 7px no-repeat;cursor: pointer;margin: 0px;width: 32px;height: 30px;
+	line-height: 100px;font-size:0px; position:absolute; left:50px; top:0;border:none;}
+input[type="submit"] {padding: 4px 17px;text-transform: uppercase;border: none;font-size: 20px;cursor: pointer;float: left;}
+.znum{ float:right; height:35px; font-size:16px;color:#333; line-height:35px; padding-right:20px;}
+.znum i{color:#f64136;}
+/*更多下拉开始*/
+.tabbox{ width:1198px; overflow:hidden; background:#fff; border:1px solid #dbdbdb;}
+.Giftrecord {position: relative;overflow: hidden;}
+.Giftrecord dt { height:175px;}
+.Giftrecord dt p.dtright {color: #9d9d9d; height:40px; line-height:40px;position:absolute; top:20px; right:10px;}
+.Giftrecord dt p.dtright i {font-style: normal;font-size:16px;color:#f64136;border:1px solid #f64136; cursor:pointer; height:25px; width:70px; 
+display:block;text-align:center; line-height:25px;}
+.schoolbox{ float:left; overflow:hidden;}
+.schoolbox p{ float:left; display:block; width:100px; font-size:18px; color:#3365ae; line-height:175px; text-align:center; background:#f7f7f7;}
+.SCname{overflow:hidden; padding:10px;}
+.SCname li{ font-size:16px; float:left; width:180px; margin:8px 10px; text-align:left;}
+.SCname li a{ color:#111;}
+.menu_chioce{ background:#fff;}
+.Thover{ overflow:hidden; background:#f7f7f7;}
+.dtleft{color:#f7f7f7}
+.proarea{ float:left; margin-left:100px; background:#fff; width:1098px;}
+.proarea ul{ padding:10px;}
+.proarea ul li{ font-size:16px; float:left; width:180px; margin:8px 10px 0; text-align:left; padding-bottom:10px;}
+.proarea ul li a{ color:#111;}
+/*更多下拉结束*/
+/*证券赛场*/
+label{ display:block;}
+/*select开始*/
+.select-outer { display:inline-block; *display:inline; zoom:1; border:1px solid #dbdbdb; }  
+.select-inner { display:inline-block; *display:inline; zoom:1; height:19px; overflow:hidden; position:relative; }  
+.select-h {height:21px; font-size:14px; position:relative; zoom:1; margin:-1px;}  
+.select-wh200 { padding:3px; margin-top:15px; background:#fff; margin-right:15px;}  
+.select-wh200 .select-inner { width:150px; }  
+.select-wh200 select { width:152px; }
+/*select结束*/
+.but{ background:#f54337; width:60px; height:28px; color:#fff; line-height:20px; font-size:14px; text-align:center; border:none;}
+.Rankgame{ width:100%;}
+/*排行榜*/
+.navtab{ margin:15px 0;}
+.navtab ul{ overflow:hidden; border:1px solid #f54337; background:#fff; height:40px; line-height:40px;  font-size:16px;}
+.navtab ul li{ float:left; width:399px; text-align:center;}
+.navtab ul li a{color:#f54337; display:inline-block;width:399px;}
+.navtab ul li a.Gselect{ background:#f54337; color:#fff;}
+.navtab ul li a:hover{ background:#f54337; color:#fff;}
+h1.h1gd{ background:#fff; padding-top:10px; border:1px solid #e9e9e9; border-bottom:none;}
+.borderU{border:1px solid #e9e9e9;border-bottom:none;}
+.tabrank{border:1px solid #e9e9e9; width:1198px; border-top:none; margin:0; padding:0; overflow:hidden;}
+.tabrank ul{ width:85px; background:#fff; float:left;}
+.tabrank ul li{background:#fff; font-size:16px; color:#111; height:81px; text-align:center; line-height:18px; width:75px; text-align:center; 
+               background:#f0f0f0; border-top:1px solid #fff; }
+.tabrank ul li.Rselected{ background:url(../images/choice.png) no-repeat 0 center; width:85px; color:#fff;}
+.tabrank ul li p{word-wrap:break-word;word-break:nomal; width:18px; display:block; overflow:hidden; margin:0 auto;padding-top:10px; cursor:pointer;}
+.Rhide{ background:#fff; float:left; width:1083px; padding:0 15px; height:411px; font-size:14px; margin:0;}
+.Rankline{width:1000px;}
+.Rankline td{ padding:0 10px; border-top:1px solid #e9e9e9; text-align:center;}
+.Rankline img{ padding:5px 0;}
+.Rankline span{ padding:0 30px 0  8px;border-right:1px solid #dbdbdb; display:inline-block; height:30px;}
+.Rankline i{color:#999; padding-left:10px;}
+.Rankline em{border-right:1px solid #dbdbdb;padding:0 40px 0  8px; display:inline-block; height:30px; width:85px; line-height:30px;}
+.Rankline strong{ background:#fe7902; height:30px; display:inline-block; width:50px; text-align:center; line-height:30px; color:#fff;}
+.redup{ background:url(../images/up.png) no-repeat 80px center;}
+/*高校赛场-滑动*/
+.gamebox{ background:#fff; border:1px solid #e9e9e9; margin-bottom:20px;}
+.cmargin li{margin: 15px 15px 25px 15px;}
+.newsbox{ border:1px solid #e9e9e9; overflow:hidden; background:#fff; margin:20px 0;}
+.imgbox{float:right;height:269px;width:775px; padding:1px;}
+.slides {position: relative; z-index: 10;}
+.flex-control-nav { position: absolute; bottom: 10px; z-index: 20; width: 100%; text-align: center;}
+.flex-control-nav li { display: inline-block; width: 11px; height: 11px; margin: 0 5px; *display: inline; zoom: 1;}
+.flex-control-nav a { display: inline-block; width: 11px; height: 11px; line-height: 40px; overflow: hidden; background: url(../images/dot.png) right 0 no-repeat; cursor: pointer;}
+.flex-control-nav .flex-active { background-position: 0 0;}
+.newscon{float:left;margin: 0 20px;width:360px;overflow:hidden;height:268px;}
+.newscon dl dd{padding-bottom:15px;}	 
+.newscon ul li{border-bottom:1px dashed #dbdbdb;float:left;width:345px;height:75px;padding-bottom:15px;border-bottom:1px dashed #bfbdbd; overflow:hidden; vertical-align:top;}			   
+.newscon ul li h3 ,.newscon dl dd h2{color:#000;font-size:18px;font-weight:bold;padding:7px 0px;overflow:hidden;text-overflow: ellipsis;
+                  white-space:nowrap;display:block;clear:both;}				  
+.newscon ul li span ,.newscon dl dd em{color:#999;font-size:14px;display:inline;width:345px;}					
+.newscon ul li span a ,.newscon dl dd em a{color:#df4941;padding-left:5px;}
+/*滚动特效*/
+.slideBox{ width:1198; height:355px; overflow:hidden; position:relative;margin-bottom:20px; }
+.slideBox .hd{overflow:hidden; position:absolute;bottom:0; z-index:1; width:100%; text-align:center}
+.slideBox .hd ul{ overflow:hidden; zoom:1; float:left; text-align:center;margin:0 530px;}
+.slideBox .hd ul li{height:5px; width:60px;float:left; margin-right:10px;line-height:14px;background:#ccc; cursor:pointer; overflow:hidden; border-radius:5px;}
+.slideBox .hd ul li.on{ background:#206cdc; color:#fff; }
+.slideBox .bd{ position:relative; height:100%; z-index:0;}
+.slideBox .bd li.cut{ zoom:1; vertical-align:middle; }
+/*end*/
+.sucbox{ float:left;width:390px; background:#fff; border:1px solid #e9e9e9; margin-right:10px;}
+.sucbox h1{font-size:18px; border-bottom:1px solid #e9e9e9;padding-bottom:6px; position:relative;}
+.sucbox h1 a.tit{ color:#3265ad; border-bottom:3px solid #3265ad;padding:0 12px 6px;}
+.sucbox h1 a.more{position:absolute;font-size:14px; color:#999; top:10px; right:10px;}
+.newlist{padding:0 10px; overflow:hidden;}
+.newlist dl{padding:10px 0; overflow:hidden; position:relative; border-bottom:1px solid #e9e9e9;}
+.newlist dl span {float: left;width: 20%;display: block;}
+.Mlist div strong{ line-height:26px; font-size:14px; color:#999; width:280px; display:inline-block;white-space:nowrap;text-overflow: ellipsis; overflow:hidden;}
+.Mlist p.earbox2{color:#666; font-size:14px;padding-bottom:5px; width:40%; float:left;}
+.Mlist p.tenear{ width:45%;}
+/*高手看盘*/
+.highnews{ background:#fff; border:1px solid #dbdbdb;min-height: 690px;}
+.highnews ul{ overflow:hidden; padding:30px 25px;}
+.highnews ul li{ overflow:hidden; border-bottom:1px solid #e9e9e9; padding:15px 0;}
+.Hpic{ float:left;}
+.Hnews{ float:left; padding-left:15px;color:#111; font-size:14px;width: 1080px;}
+.Hnews p.newstit{ font-size:22px; font-weight:600; padding-bottom:5px;overflow:hidden;text-overflow: ellipsis;white-space:nowrap;}
+.Hnews a.news{color:#111; width:70%; display:block;width: 80%;}
+.Hnews a.news span{ color:#cf3825;cursor: pointer;}
+.Htime{ padding-top:15px; color:#ccc; overflow:hidden;}
+.Htime span{ display:inline-block; float:left;}
+.Htime .Hnewsbut{ float:right;}
+.Htime .Hnewsbut em{ background:url(../images/xx.png) no-repeat 0 center; padding-left:30px; margin-right:25px;}
+/*高手看盘详情*/
+.Detit{border-bottom:1px solid #e9e9e9;width:1000px;margin:0 auto; padding-bottom:10px; }
+.Detit h3{ text-align:center;font-size:24px;padding:30px 0;}
+.Detit .subrit{ font-size:14px; color:#ccc; padding:0 100px; overflow:hidden;}
+.Detit .subrit em{ display:inline-block; float:left;}
+.Detit .subrit p{ float:right;}
+.Detit .subrit p em{ background:url(../images/xx.png) no-repeat 0 center; padding-left:30px; margin-right:20px;}
+.Detxt{ padding:20px 60px; font-size:16px; text-indent:2em;word-wrap:break-word;}
+.Detxt p{ padding-bottom:20px; line-height:180%;}
+.Detxt p.ewmbox{padding:50px; text-align:center;}
+.Detxt p.ewmbox span{ font-size:18px; color:#dd2813; font-weight:bold; margin-bottom:50px; display:block;}
+/*高手看盘详情-用户*/
+.remarkbox{ background:#fff; border:1px solid #dbdbdb; margin-top:20px; width:1198px; font-family:"微软雅黑";}
+.remarkbox h1{border-bottom:2px solid #3974c4; width:100px; text-align:center;padding-top:20px; font-size:20px; color:#3974c4; padding-bottom:10px; margin-bottom:10px;}
+.commentbox{padding:50px;}
+.commentbox .comarea h2{ overflow:hidden; font-size:14px;color:#999; margin-bottom:15px;}
+.commentbox .comarea h2 a{ display:inline-block; float:left;}
+.commentbox .comarea h2 p{ float:right; display:inline-block;}
+.comarea .com{ width:1100px; border:1px solid #e9e9e9; padding:10px 5px; height:120px;}
+.comarea .combg{ background:#f5f5f5; height:40px;width:1110px;border:1px solid #e9e9e9; border-top:none; padding:0; margin:0;}
+.comarea .combg input.combut{ float:right; height:40px; border:none; background:#f54343; color:#fff; font-size:16px; width:90px; text-align:center; 
+                              cursor:pointer;}
+.comarea .comlogin{ padding:10px 0; display:block;}
+.comlist{ padding:15px 0;}
+.comlist h3{ border-bottom:1px solid #e9e9e9; padding-bottom:5px; color:#f54343; font-size:16px;}
+.comlist ul{ padding:20px 0;}
+.comlist ul li{ overflow:hidden; border-bottom:1px solid #e9e9e9; padding:20px 0;}
+.comlist ul li .comimg{ float:left;}
+.comlist ul li .Comment{ float:left; padding-left:15px; font-size:14px; width:1000px;}
+.Comment p{ line-height:150%;}
+.Comment .Comuser{ font-size:14px; color:#999;}
+.Comment .Comuser a{color:#206cdc; padding-right:15px;}
+.Comment p.comtab{ font-size:12px; color:#c3c3c3; padding-top:10px;}
+.Comment p.comtab i{ background:url(../images/dz.png) no-repeat 0 center; padding-left:25px; cursor:pointer; padding-right:10px;}
+.Comment p.comtab a{color:#c3c3c3;}
+.Comment p.comtab a.coman{ background:url(../images/answer.png) no-repeat 0 center; padding-left:20px;padding-right:10px;}
+.Comment p.comtab a.comlook{ background:url(../images/look.png) no-repeat 0 center; padding-left:20px;}
+
+/*冠军榜更多*/
+.chambox{background: #fff;border: 1px solid #dbdbdb; overflow:hidden; border-bottom:none; margin:20px auto;}
+.chambox .chamtit{ border-bottom:1px solid #e9e9e9; position:relative; height:30px; padding-bottom:6px; font-size:18px; padding-top:10px;}
+.chambox .chamtit a.tit{color: #3265ad;border-bottom: 3px solid #3265ad;padding: 0 12px 6px;padding-bottom: 9px;}
+.chambox .chamtit a.Relay{position: absolute;background: url(../images/zfbut.png) no-repeat 0 center;width: 55px;height: 20px;top: 10px;right: 10px;}
+.chambox li{ float:left; border-bottom:1px solid #e9e9e9; border-right:1px solid #e9e9e9; width:378px; padding:20px 10px;}
+.chambox li .chamimg{ float:left; width:13%;}
+.chambox li .chamlist{ float:left; padding-left:10px; width:84%; position:relative;}
+.chambox li .chamlist p{ font-size:14px; line-height:180%; color:#333; overflow:hidden;text-overflow: ellipsis;white-space:nowrap;cursor: pointer;}
+.chambox li .chamlist p.chamz{ width:36%;}
+.chambox li .chamlist p.chamum{ float:left;width:35%;padding-right:5px;}
+.chambox li .chamlist p.numwidth{ width:40%;}
+.chambox li .chamlist p.chamj{ color:#999; }
+.chambox li .chamlist p.chamum span{ padding:0 30px 0 0; background:url(../images/up.png) no-repeat 35px center;}
+
+/*排行榜全部*/
+.chambox h1{ position:relative;}
+.chambox h1 a.more{position:absolute;font-size:14px; color:#999; top:10px; right:10px;}
+.moodbox{ background:#fff; border:1px solid #e9e9e9; margin:20px auto; overflow:hidden; border-bottom:none;}
+.moodbox h1{ border-bottom:1px solid #e9e9e9; position:relative; height:30px; padding-bottom:6px; font-size:18px; padding-top:10px;}
+.moodbox h1 a.tit{color: #3265ad;border-bottom: 3px solid #3265ad;padding: 0 12px 6px;padding-bottom: 9px;}
+.moodbox h1 a.more{position:absolute;font-size:14px; color:#999; top:10px; right:10px;}
+.moodbox li{ float:left; border-bottom:1px solid #e9e9e9; border-right:1px solid #e9e9e9; width:378px; padding:20px 10px;}
+.moodbox li .chamimg{ float:left; width:13%;}
+.moodbox li .chamlist{ float:left; padding-left:10px; width:84%; position:relative;}
+.moodbox li .chamlist p{ font-size:14px; line-height:180%; color:#333; overflow:hidden;text-overflow: ellipsis;white-space:nowrap;}
+.moodbox li .chamlist p.chamz{ width:36%;}
+.moodbox li .chamlist p.chamj{ color:#999; }
+.Moodw{ background:#ff7900; width:40px;}
+.moodbox div i{line-height: 26px;font-size: 14px;color: #999;width:260px;display: inline-block;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;}
+/*大赛交易查询*/
+.Mainlr{ margin:0 auto; width:1200px; overflow:hidden;}
+.mainl{ width:163px; border:1px solid #dbdbdb; border-top:none;border-right:none;float:left;  margin-bottom:50px; height:700px;}
+.probox{ overflow:hidden; background:#fff;}
+.probox p.proimg{ text-align:center; border-bottom:1px solid #dbdbdb; padding:10px 0;}
+.probox p.proimg span{ display:block; text-align:center; font-size:14px; padding:5px; color:#333;}
+.probox p.action{ display:block; width:49%;  font-size:14px; margin:8px 0; float:left; border-right:1px solid #dbdbdb;}
+.probox p.fan{ border-right:none;}
+.probox p.action em{ display:block;text-align:center;}
+.probox p.action span{ display:block;text-align:center;}
+.prolnav{ border-top:1px solid #dbdbdb; background:#f9f9f9; font-size:14px; line-height:300%; }
+.prolnav li{ text-align:center;border-bottom:1px solid #dbdbdb;}
+.prolnav li a{ border-left:2px solid #f9f9f9; display:block;}
+.prolnav li a.selected{ border-left:2px solid #3a74c5; background:#fff;}
+.prolnav li a:hover{ border-left:2px solid #3a74c5; background:#fff;}
+.mainr{ float:left; width:1035px;font-size:14px; margin-bottom:50px;}
+.mainrup{ border-left:1px solid #dbdbdb;}
+.mainrup h3{ border-left:3px solid #3a74c5; border-right:1px solid #dbdbdb; height:35px; line-height:35px; color:#111; padding-left:20px; font-size:16px;}
+.inforbox .infor{ border-top:1px solid #dbdbdb;border-bottom:1px solid #dbdbdb; width:100%; background:#fff;}
+.inforbox .infor2{ border-top:none;}
+.inforbox .infor tr{ height:50px; line-height:50px;}
+.inforbox .infor tr td{ width:33.3%; text-align:center;border-right:1px solid #dbdbdb; border-bottom:1px solid #dbdbdb;}
+.inforbox i{ font-size:20px;}
+.inforbox .pronum{ background:#fff; border-bottom:1px solid #dbdbdb;width:100%;}
+.inforbox .pronum tr{ height:70px; line-height:70px;}
+.inforbox .pronum tr td{ border-bottom:1px solid #dbdbdb; border-right:1px solid #dbdbdb; text-align:center; padding:10px 0; overflow:hidden;}
+.inforbox .pronum tr td p.pleft{ border-right:1px solid #dbdbdb; width:49%; float:left; }
+.inforbox .pronum tr td p.pright{ border-right:none;}
+.mainrd{margin:15px 0;}
+/*买入-卖出-撤单-查询start*/
+.searchbox{ width:1034px;border-top:1px solid #dbdbdb;;}
+.searchbox ul.sear{overflow:hidden;border-bottom:1px solid #cb2a00; padding-top:20px; background:#fff; border-right:1px solid #dbdbdb;border-left:1px solid #dbdbdb;}
+.searchbox ul.sear li{ float:left; width:25%; font-size:16px; text-align:center; height:40px; line-height:40px;cursor:pointer;}
+.searchbox ul.sear li.selectchx{ background:#cb2a00; color:#fff; }
+.buycon {padding:20px 0;overflow: hidden; border:1px solid #dbdbdb; background:#fff; border-top:none;}
+.fl {float: left;padding-left:20px;}
+.zqlist li {margin-bottom: 15px;position: relative;}
+.zqlist li label {padding-right: 10px;display: inline-block;width: 66px;}
+.zqlist li input[type="text"] {line-height:30px; height:30px;border: 1px solid #C7C7C7;padding: 0 5px;width: 180px;}
+.Abut{width: 60px;background: #fbfbfb;line-height: 27px; height:27px;border: 1px solid #C7C7C7;padding: 0 5px;color: #666;cursor: pointer;}
+.aniuBuy{padding-left: 73px;}
+.aniuBuy a {width: 70px;height: 35px;line-height: 33px;text-align: center;display: inline-block;
+background-color: #CB2A00;color: #fff;margin-right: 30px;text-decoration: none;font-size: 14px;vertical-align: top;cursor: pointer;}
+.aniuBuy > input {width: 70px;height: 35px;line-height: 33px;text-align: center;display: inline-block;
+background-color: #5B5B5B;border: none;color: #fff;font-size: 14px;cursor: pointer;}
+.Mtakbox {float:right;width:496px;padding-right:50px;z-index: 9;}
+.comInfoM{border: 1px solid #dbdbdb; background:#fcfcfc;}
+.comInfoM td {height:35px;line-height:35px;font-size: 14px;color: #333; text-align:center;}
+.marketColor {color:RGB(20,130,140)!important;}
+.comInfoM td.takct{ background:#fff;border-bottom:1px solid #dbdbdb; color:#000;}
+.comInfoM tr.tab01{ border-top:1px solid #dbdbdb; height:40px; line-height:40px;}
+.tab01 strong {padding: 0px 10px; width:90px; display:inline-block;}
+.hold{ margin:20px 0;}
+.hold h3{ border-top:1px solid #dbdbdb; border-right:1px solid #dbdbdb;border-left:3px solid #3a74c5;height:35px; line-height:35px; color:#111; padding-left:20px; font-size:16px; background:#f9f9f9;}
+.holdtab{border:1px solid #dbdbdb;width:100%; background:#fff;}
+.holdtab tr.holdbg{background:#f9f9f9;}
+.holdtab tr.holdbg td{border-right:1px solid #dbdbdb;}
+.holdtab tr td{ border-top:1px solid #dbdbdb; text-align:center; height:40px; line-height:40px;}
+.holdtab .thead {background: #fbfbfb;border-bottom: 1px solid #e9e9e9;}
+.chartabs ul{ margin:10px 80px; overflow:hidden;}
+.chartabs li{ float:left; width:150px; text-align:center; line-height:35px;color:#333;border:1px solid #e9e9e9; cursor:pointer; background:#f5f5f5;}
+.chartabs li.chover{ background:#d41a29;color:#fff;}
+/*查询*/
+.tabs{ position:relative;}
+.tabs ul.tabul{ position:absolute; top:10px; left:10px; overflow:hidden;}
+.tabs ul.tabul li{ float:left; display:inline-block; width:80px; height:35px; line-height:35px; text-align:center;cursor: pointer;}
+.tabs ul.tabul li.hover{ background:#666666; color:#fff;}
+.comInfoS{width:100%; background:#fff;}
+.comInfoS tr{ height:35px; line-height:35px;border:1px solid #dbdbdb; border-top:none;}
+.comInfoS tr.thead{border:1px solid #dbdbdb;}
+.comInfoS tr.holdbg{background:#f9f9f9; border-top:1px solid #dbdbdb;}
+.comInfoS tr.holdbg td{background:#f9f9f9;border-right:1px solid #dbdbdb;}
+.comInfoS .rl{float: right;padding: 10px 20px; height:35px;}
+.comInfoS tr td{ text-align:center;border-top:1px solid #dbdbdb;}
+.comInfoS .mh_date {width:100px;height:15px;line-height:15px;padding: 5px;border: 1px solid #E0E0E0;cursor: pointer;background: #fff;}
+.comInfoS .xian {color: #E0E0E0;width: 25px;}
+.comInfoS .chaxun {height:25px;width: 45px;line-height: 20px;text-align: center;color: #6f6f70;border: 1px solid #E0E0E0;background-color: #f7f7f7;
+                  margin-left: 10px;display: inline-block;cursor: pointer;}
+.crbox{overflow:hidden;width:268px;}
+.actiontit{ display:block; width:66px; padding-right:10px; float:left;}
+.rsbox{ float:left;display:block; width:180px;}
+.Cradio{ display:block;padding-bottom:10px; float:left; padding-right:10px;}
+.txtarea{ padding-left:76px; padding-bottom:10px;}
+.areabox{ width:180px; border:1px solid #e9e9e9;height:50px; padding-left:5px; font-size:12px;z-index: 10;}
+/*我的大赛买入-卖出-撤单-查询end*/
+/*消息-订阅消息*/
+.Rmain{border:1px solid #dbdbdb;margin-bottom:100px; background:#fff;min-height: 699px;}
+.Rmain h3{border-left:3px solid #3a74c5; height:40px; border-bottom:1px solid #dbdbdb; border-right:1px solid #dbdbdb; line-height:40px; 
+          background:#f9f9f9; padding-left:15px; font-size:16px;}
+.Rmain .gamelist{ padding:10px 30px 500px; overflow:hidden;}
+.Rmain .gamelist li{ float:left; margin-right:30px;}
+.Rmain .gamelist li .gameone{ border:1px solid #e9e9e9; width:270px;}
+.Rmain .gamelist li .gameone h4.h4tit{height:60px; line-height:60px; text-align:center; color:#fff; font-size:18px; background:#3365ae; border-bottom:1px solid #e9e9e9;}
+.Rmain .gamelist li .gameone h4.h4bg01{background:#f54337;}
+.Rmain .gamelist li .gameone h4.h4bg02{background:#f9f9f9; color:#111;}
+.Rmain .gamelist li .gameone .Detailm{margin:10px 15px; border-bottom:1px solid #e9e9e9;}
+.Rmain .gamelist li .gameone .Detailm p{ padding:5px 0; color:#666;}
+.Rmain .gamelist li .gameone .gamebut{ padding:0 40px 10px 40px; overflow:hidden;}
+.Rmain .gamelist li .gameone .gamebut2{ padding:0 95px 10px 95px;}
+.Rmain .gamelist li .gameone .gamebut a.Enterb{ background:#f54337; width:80px; text-align:center; height:30px; line-height:30px; color:#fff; display:inline-block; float:left;}
+.Rmain .gamelist li .gameone .gamebut a.exitb{ background:#676767;float:right;cursor: pointer;}
+.tabx{font-size:16px;}
+.tabx ul.tabul{border-left:3px solid #3a74c5;overflow:hidden;border-bottom:1px solid #dbdbdb; background:#f9f9f9;}
+.tabx ul.tabul li{ float:left;  display:block; width:100px; height:40px; text-align:center; line-height:40px; cursor:pointer;}
+.tabx ul.tabul li.hover{ background:#fff;}
+.hideDiv{display:none}
+.hide ul{ padding:20px;}
+.hide ul li{ border-bottom:1px dashed #e9e9e9;overflow:hidden; padding:20px 10px;}	
+.hide ul li p{display:inline-block; width:80%; float:left; padding-left:10px;word-wrap:break-word;}
+.hide ul li p.subcr{  overflow:hidden;white-space:nowrap;text-overflow: ellipsis;}
+.hide ul li p.subcr a{color:#3a74c5; text-decoration:underline; padding:0 5px;}	
+.hide ul li span{display:inline-block; width:10%; float:right; font-size:14px; color:#999;}	
+.hide ul li p.systimg{ display:inline-block; width:5%;}
+
+/*个人中心-个人信息*/
+.hidepro{ position:relative;}
+.hidepro a.actbut{ background:#f6413a; position:absolute; top:0; right:0; height:65px; line-height:65px; width:90px; text-align:center; color:#fff; display:block;}
+.hidepro ul{padding:15px;overflow:hidden;border-bottom:1px solid #e9e9e9;}
+.hidepro ul li{ float:left; padding:0 50px; border-right:1px solid #e9e9e9;}
+.hidepro ul li i.name{ background:url(../images/proname.png) no-repeat 0 center; padding:0 35px; display:inline-block; height:35px; line-height:35px; }
+.hidepro ul li i.projf{ background:url(../images/projf.png) no-repeat 0 center;display:inline-block; height:35px; line-height:35px; padding-left:30px; }
+.hidepro ul li i.phone{ background:url(../images/phoner.png) no-repeat 0 center;display:inline-block; height:35px; line-height:35px;padding-left:30px; }
+.hidepro ul li a.probut{ background:#f6413a; display:inline-block; width:80px; height:25px; line-height:25px; text-align:center; color:#fff;cursor: pointer;}
+.inprobox{ margin:40px 30px 200px 30px; overflow:hidden;}
+.inprobox p{ border-bottom:1px solid #e9e9e9; padding-bottom:10px; margin-bottom:30px;}
+.inprobox .pinput{ padding-bottom:20px; overflow:hidden; line-height:30px;}
+.inprobox input[type="checkbox"]{margin-top:10px;}
+.inprobox label{ display:block; float:left; width:100px; text-align:right; color:#999; font-size:14px; height:30px; line-height:30px; padding-right:10px;}
+.inprobox i{ padding-right:50px; padding-left:10px; font-size:14px;}
+.datei{ float:left; position:relative; padding-right:30px;}
+.datei em{ font-size:14px; color:#999; position:absolute; top:5px;}
+/*select开始*/
+.select-outer { display:inline-block; *display:inline; zoom:1; border:1px solid #dbdbdb; }  
+.select-inner { display:inline-block; *display:inline; zoom:1; height:19px; overflow:hidden; position:relative; }  
+.select-h {height:21px; font-size:14px; position:relative; zoom:1; margin:-1px; }  
+.select-wh200i { padding:3px; margin-top:0; background:#fff; margin-right:10px;}  
+.select-wh200i .select-inner { width:150px; }  
+.select-wh200i select { width:152px; }
+/*修改密码 */
+.passwords{ padding:50px 70px 500px; overflow:hidden; color:#111;}
+.passwords div{ overflow:hidden; padding-bottom:20px;}
+.passwords div label{ width:150px;text-align:justify; font-size:18px; float:left; height:30px; line-height:30px; text-align:right; 
+                       padding-right:10px; letter-spacing:10px;}
+.passwords div input[type="password"]{ height:40px; border:1px solid #dbdbdb; width:300px; font-size:14px; padding:0 10px; line-height:40px;}
+.passwords p{ float:right; padding-right:240px;}	
+.passwords p i{color:#008de7; font-size:14px; padding-left:10px;}
+.buttonsure{ border:none;height:40px; width:322px;line-height:40px; text-align:center; display:block; color:#fff; font-size:20px;
+ background:#008de7; margin-left:160px;cursor: pointer;}
+/*我的观点*/
+.hideid ul{ overflow:hidden; padding:20px 10px; margin:0 10px;}
+.hideid ul li{ border-bottom:1px dashed #dbdbdb;font-size:14px; color:#666; padding:15px;}
+.hideid ul li p.idtit{overflow:hidden;white-space:nowrap;text-overflow: ellipsis; font-size:18px; color:#000; padding-bottom:10px;}
+.hideid ul li a{ line-height:180%;word-wrap:break-word;}
+.hideid ul li p.idtime{ padding-top:10px;color:#999; position:relative}
+.hideid ul li p.idtime em{ background:url(../images/xx.png) no-repeat 0 center; padding:0 25px; margin-left:30px;}
+.hideid ul li p.idtime i.Remove{position:absolute; background:url(../images/b.png) no-repeat 0 center; color:#d41a29;
+                                padding:0 18px; text-decoration:underline; top:0; right:5px;}
+/*我的观点详情*/
+.ideabox{ padding:30px 20px;}
+.ideabox h1 {text-align: center;font-size: 24px;padding-bottom:30px;}
+.ideabox .subrit{ border-bottom:1px solid #e9e9e9;font-size: 14px;color: #ccc;padding:10px 100px;overflow: hidden;}
+.ideabox .subrit em {display: inline-block;float: left;}
+.ideabox .subrit p.timetit {float: right; }
+.ideabox .subrit p.timetit em {background: url(../images/xx.png) no-repeat 0 center;padding-left: 30px;margin-right: 20px;}
+.ideabox p.Didea{ line-height:180%; padding-top:20px; font-size:16px;text-indent: 2em;}
+.Rmain2{ margin-bottom:0;}
+.remarkbox2{width:1034px; margin-bottom:30px;}
+.comarea .com2{width:924px;}
+.comarea .combg2{width:934px;}
+.comlist ul li .Comment2{width:840px;}
+.replybox{ position:relative; padding-top:10px;}
+.replybox span{ position:absolute; left:40px; top:4px;}
+.bub{ background:#fefef4; border:1px solid #f3ddb6; padding:10px;}
+.bub p a{color:#206cdc;}
+
+/*关注-粉丝*/
+.gzbut{ background:#f54337; display:block; height:30px; width:90px; text-align:center; line-height:30px; margin:5px auto; font-size:14px; color:#fff;cursor: pointer;}
+.hidefan ul{ overflow:hidden; padding:40px 80px 400px; width:88%;}
+.hidefan ul li{ float:left; margin-right:60px; text-align:center; margin-bottom:50px; overflow:hidden; width:90px;}
+.hidefan ul li span{ padding-bottom:10px; display:block;}
+.mainsear{ margin-top:20px;}
+
+/*模版公告*/
+.gameact{border:1px solid #dbdbdb; margin-bottom:50px;background:#fff;}
+.gameact h3{border-left: 3px solid #3a74c5;height: 35px;line-height: 35px;color: #111;padding-left: 20px;font-size: 16px;
+            border-bottom:1px solid #dbdbdb;background:#f9f9f9;}
+.gameact ul{padding:30px;}
+.gameact ul li{ border-bottom:1px dashed #e9e9e9; padding:20px 5px; font-size:18px; overflow:hidden;}
+.gameact ul li a{ float:left; color:#111; display:block; width:80%;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;}
+.gameact ul li span{ float:right; display:block; color:#999; width:10%; font-size:14px;}
+.gameIntro{ padding:0 30px 100px;}
+.gameIntro p{ font-size:16px; line-height:200%; color:#666;}
+.gameIntro p.tit{ color:#000; font-size:18px; font-weight:bold; padding-top:30px;}
+.gameIntro p.line{border-bottom:1px solid #f9f9f9; padding-bottom:30px;}
+/*发帖*/
+.Postbox{padding:30px 100px 50px; font-size:16px; color:#111;min-height: 583px;}
+.Postbox .labelbox{ margin-bottom:20px;}
+.Postbox .labelbox label{ float:left; width:80px; display:block; line-height:30px; text-align:right;}
+.Postbox .labelbox input[type="text"]{ height:30px; border:1px solid #e9e9e9; line-height:30px; padding:0 10px; width:350px;}
+.Postbox .labelbox textarea{ width:750px;border:1px solid #e9e9e9; line-height:30px; padding:0 10px 50px;height:200px;}
+.fbbuttom {padding: 20px 0px;width: 746px;margin: 0 auto;}
+.fbbuttom .pubboxt {background: #e4393c;color: #fff;width: 80px;text-align: center;font-size: 16px;line-height: 40px;
+display: block;padding: 0px 40px;margin: 0px 300px;cursor: pointer;}
+.school{ overflow:hidden; margin:5px 0; background:#fff; border:1px solid #dbdbdb; line-height:68px;}
+.school p.scimg{ float:left; padding:15px 10px;}
+.school p.scimg span{ padding-left:15px; font-size:20px; color:#111;}
+.school p.scbutbox{ float:right; padding:60px 0;}
+.school p.scbutbox .scbut{ display:inline-block; width:120px; height:40px; line-height:40px; font-size:18px; color:#fff; background:#3a74c5; 
+                           text-align:center; margin-right:20px;cursor: pointer;}
+.school p.scbutbox .scbutc{ background:#f54337;}
+.scgame{ overflow:hidden; margin-top:15px;margin-bottom:20px; }
+.scintro{width:670px; float:left;}
+.scintro h1 {font-size: 18px;padding-bottom: 6px;height: 30px;position: relative;}
+.scintro h1 a.tit {color: #3265ad;border-bottom: 3px solid #3265ad;padding: 0 12px 6px;float: left;padding-bottom: 9px;}
+.scintro h1 a.more {position: absolute;font-size: 14px;color: #999;top: 10px;right: 10px;}
+.gintro{ background:#fff;border: 1px solid #e9e9e9; overflow:hidden; width:670px; height:320px;}
+.gintro h2{ color:#3875c5; font-size:18px; text-align:center; padding:15px 0;}
+.gintro .scapbox{ overflow:hidden;}
+.gintro .scapbox p.scap{height:45px; line-height:45px;padding-left:20px; width:300px;float:left; 
+               border:1px solid #dbdbdb; border-left:none; font-size:16px; font-weight:bold;}
+.gintro .scapbox p.scap span{ font-weight:normal; padding-left:15px; color:#999;}
+.gintro .scrules{ padding:20px; font-size:16px; }
+.gintro .scrules p{ color:#666; line-height:180%;word-wrap:break-word;}
+.gintro .scrules p.tit{font-weight:bold; padding-bottom:10px; color:#111;}
+.scnews{ float:left; margin-left:15px; width:514px;}
+.scnews h1 {font-size: 18px;padding-bottom: 6px;height: 30px;position: relative;}
+.scnews h1 a.tit {color: #3265ad;border-bottom: 3px solid #3265ad;padding: 0 12px 6px;float: left;padding-bottom: 9px;}
+.scnews h1 a.more {position: absolute;font-size: 14px;color: #999;top: 10px;right: 10px;}
+.scnews .scnewsbox{background:#fff;border: 1px solid #e9e9e9; height:320px;}
+.scnews .scnewsbox ul{padding:15px;}
+.scnews .scnewsbox ul li{ padding-bottom:15px;}
+.scnews .scnewsbox ul li p{ font-size:14px; color:#999; line-height:150%;}
+.scnews .scnewsbox ul li p.tit{ font-size:18px; padding-bottom:5px; font-weight:bold; color:#111;}
+.Rankgame2{width:100%;}
+.botbox{ margin-bottom:20px; overflow:hidden;}
+.supor{width:670px; float:left;}
+.supor h1 {font-size: 18px;padding-bottom: 6px;height: 30px;position: relative;}
+.supor h1 a.tit {color: #3265ad;border-bottom: 3px solid #3265ad;padding: 0 12px 6px;float: left;padding-bottom: 9px;}
+.supor h1 a.more {position: absolute;font-size: 14px;color: #999;top: 10px;right: 10px;}
+.supor .suptab{border:1px solid #e9e9e9; background:#fff; border-top:none; }
+.supor .suptab tr{ border-top:1px solid #e9e9e9;}
+.supor .suptab td{ padding:10px 5px; text-align:center; font-size:15px; color:#111;}
+.supor .suptab td a{color:#3875c5;  text-decoration:underline;}
+.scview{width:514px; float:left;margin-left:15px;}
+.scview h1 {font-size: 18px;padding-bottom: 6px;height: 30px;position: relative;}
+.scview h1 a.tit {color: #3265ad;border-bottom: 3px solid #3265ad;padding: 0 12px 6px;float: left;padding-bottom: 9px;}
+.scview h1 a.more {position: absolute;font-size: 14px;color: #999;top: 10px;right: 10px;}
+.scview ul{border:1px solid #e9e9e9; background:#fff; padding:10px; height:316px;}
+.scview ul li{ border-bottom:1px solid #e9e9e9; padding:20px; font-size:16px; color:#111; overflow:hidden; }
+.scview ul li a{ display:block; float:left; width:80%;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;}
+.scview ul li span{ display:block; float:right;color:#999; font-size:14px; width:15%;}
+
+.text_1{
+	width: 243px;
+	height: 38px;
+	line-height: 35px;
+	color: #a9a9a9;
+	border: 1px solid #cccccc;
+	padding-left: 10px;
+}
+
+/*首页弹框*/
+#Tindex{width: 478px;background: #fff;z-index: 111;display: none;}
+#Tindex h3{background-color:#c71c00;height:34px;line-height:34px;color:#fff;;font-size:18px;padding-left:20px;font-size:14px;}		  
+#closeboxI{position:absolute;right:10px;top:10px;}
+.Tinform{ margin:20px 30px;overflow:hidden;text-align:center;}
+.Tinform div{ padding-bottom:20px;overflow:hidden;}
+.Tinform div label{padding-right:10px;}
+.Tinform span{display:block;padding-bottom:10px; color:#333;}	 
+.yield{ border:1px solid #e6e6e6;line-height:32px;width: 240px;padding-left:10px;height:32px;}
+.Ibut{background:#fbfbfb;display:block;border-radius:3px; border:1px solid #e6e6e6;color:#c71c00;text-align:center;font-size:14px;padding:8px 20px;
+	float:left;  margin-right:170px;margin-left:170px;cursor: pointer;}
+.Ibut2{background:#fbfbfb;display:block;border-radius:3px; border:1px solid #e6e6e6;color:#c71c00;text-align:center;font-size:14px;padding:8px 20px;
+	 float:left;  margin-right:20px;margin-left:30px;cursor: pointer;}
+	 
+/*首页弹框*/
+#floatbox{width: 478px;background: #fff;z-index: 121;display: none;}
+#floatbox h3{background-color:#c71c00;height:34px;line-height:34px;color:#fff;;font-size:18px;padding-left:20px;font-size:14px;}		  
+#closeboxI{position:absolute;right:10px;top:10px;}
+#closeboxI a{cursor: pointer;}
+	 
+#twicebox{width: 478px;background: #fff;z-index: 111;display: none;}
+#twicebox h3{background-color:#c71c00;height:34px;line-height:34px;color:#fff;;font-size:18px;padding-left:20px;font-size:14px;}
+
+/*首页弹框*/
+#Tindex{width: 478px;background: #fff;z-index: 111;display: none;}
+#Tindex h3{background-color:#c71c00;height:34px;line-height:34px;color:#fff;;font-size:18px;padding-left:20px;font-size:14px;}		  
+#closeboxI{position:absolute;right:10px;top:10px;}
+.acTinform{ padding:15px 0; overflow:hidden;font-size:16px;}
+		  
+.IDHsure{background:#fbfbfb;
+			 display:block;
+			 border-radius:3px;
+			 border:1px solid #e6e6e6;
+			 color:#c71c00;
+			 font-size:14px;
+			 width:80px;
+			 text-align:center; height:40px; line-height:40px; margin:0 168px;}
+	 
+/*大赛交易弹框 */
+.paction{margin:20px 0;padding-left:80px;}
+.paction p.Pline{ line-height:240%;font-size:14px;}	 
+/*-遮罩--*/
+.maskBg{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background: #000000;
+    opacity: 0.65;
+	filter:alpha(opacity=65);
+	-moz-opacity:0.65;   
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#30000000,endColorstr=#30000000);
+    z-index:99;
+    display: none;
+ }
+
+.maskBg2{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background: #000000;
+    opacity: 0.65;
+	background-color: rgba(0,0,0,0.65);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#30000000,endColorstr=#30000000);
+    z-index: 10;
+    display: none;
+ }
+ 
+ /*-提示*/
+ .combox1{
+	position:fixed;
+	border-radius: 5px;
+	border: solid 1px #C5B4B4;
+	background-color: #fff;
+	box-shadow: 0 0 13px #C3B8B8;
+	padding: 47px 22px;
+	width: 319px;
+	margin: -180px 0 0 -70px;
+	display:none;
+}
+
+.wtts{
+    margin-bottom: 24px;
+}
+
+.fcpos{  margin-left: 135px;
+  padding: 3px 12px;}
+.abtn{
+	text-align:center;
+}
+
+.abtn input{
+	margin-right:20px;
+	padding: 5px 10px;
+	cursor: pointer;
+}
+
+.img_sp{width: 177px;height:99px}
+
+.dialog-bg{
+	position: fixed;
+	left: 0;
+	top: 0;
+	background: #3F3D3D;
+	opacity: 0.5;
+	width: 100%;
+	height: 100%;
+	z-index: 1000;
+	display: none;
+}
+
+.text_1{
+	width: 243px;
+	height: 38px;
+	line-height: 35px;
+	color: #a9a9a9;
+	border: 1px solid #cccccc;
+	padding-left: 10px;
+}
+
+#submitform{ 
+	background-color: #CB2A00!important;
+	margin-right: 35px;
+}
+
+/*大赛规则*/		 
+.wrap01{width:1025px;margin:0 auto;background:#FFF;padding-top:20px; overflow:hidden;}
+/*--积分兑换--*/
+.Wlist h5{ border-bottom:2px solid #bc2536; padding:20px 0 10px 5px; color:#111;fong-size:14px; font-weight: bold;font-size:24px;}
+.Wlist ul.Pul{ width:105%; margin:20px 0;}
+.Wlist ul li.probox{font-size:12px; overflow:hidden; float:left; margin-right:55px; margin-bottom:30px;}
+.product{width:160px;}
+.product img{ width:160px; height:113px; display:block;}
+.product p{ line-height:200%; font-family:"宋体";padding-left:5px;}
+.product p.Pnum{color:#666;}
+.product p.Pnum span{color:#bc2536;font-weight:bold;}
+.DHlookOver{margin:5px 0;border:1px solid #e6e6e6; background:#fbfbfb; width:158px; height:30px; line-height:30px; text-align:center; color:#bc2536; font-size:14px; display:block;}
+.jfaction{ font-size:16px; color:#111; font-weight:bold;padding-top:50px;}
+.Pname{text-align:center;}
+
+/*兑换弹框提示2*/
+#DHbox2{width: 478px;
+       background: #fff;
+       z-index: 111;
+       display: none;}
+	   
+#DHbox2 h3{background-color:#c71c00;
+          height:34px;
+		  line-height:34px;
+		  color:#fff;;
+		  font-size:18px;
+		  padding-left:20px;
+		  font-size:14px;}
+		  
+#closebox04{position:absolute;
+			right:10px;
+			top:10px;}
+			
+.DHinform2{ margin:20px 30px;
+           overflow:hidden;
+		   text-align:center;}
+.acword2{ padding:15px 0 30px; overflow:hidden;}
+.acword2 img{ display:block;float:left;width:50px;height:50px;}
+
+.acword3{ float:left;padding-left:15px;padding-top:5px;}
+.acword3 span{ color:#ff6501; display:block;}
+.acword3 em{ font-size:14px; text-align:left;}
+
+.DHinform2 p.acword2 span{ color:#ff6501;}
+.DHinform2 p.Tbut{ margin:0 80px; overflow:hidden;}
+
+.aniuBuySubmit{padding-left: 363px;}
+.aniuBuySubmit a {width: 70px;height: 35px;line-height: 33px;text-align: center;display: inline-block;
+background-color: #CB2A00;color: #fff;margin-right: 30px;text-decoration: none;font-size: 14px;vertical-align: top;cursor: pointer;}
+
+.pagelist{text-align: right;}
+.pagelist a{background: #E9E7E8;padding: 3px 9px;color: #5D5B73;cursor: pointer;}
+.at{background: #CB2F06!important;color: #fff!important;}
+
+#Softbox{width:478px;background: #fff;z-index:110;display: none; border-radius:8px;}
+#closeSoft{float:right; padding-top:10px; padding-right:10px;}
+.Softform{margin:50px 70px;overflow:hidden;text-align:center;}
+.login_1 h3{overflow:hidden; font-size:16px;}
+.login_1 h3 span{ display:block; float:left;}
+.login_1 h3 p{ float:right; display:block;color:#888;}
+.login_1 h3 p a{ text-decoration:underline;color:#f54337;}
+.login_1 input[type="text"]{ border:none;line-height:42px;width:100%;padding-left:38px;height:42px;}
+.login_1 p{ margin-bottom:15px; overflow:hidden;}
+.login_1 p.dline{ background:url(../images/dline.png) no-repeat center;color:#999; font-size:12px; text-align:center; }
+.login_1 p a.forgot{ float:right; color:#999; text-decoration:underline;cursor: pointer;}
+.login_1 p a.padd{ padding-right:10px;}
+.phone {background:url(../images/pname.png) no-repeat 5px center #ebebeb;}
+.psw{background:url(../images/passw.png) no-repeat 5px center #ebebeb;line-height:42px;width:100%;padding-left:38px;height:42px;border: none;}
+.bton {color: #fff;background: #e63e3e;cursor: pointer;font-size: 16px; text-align:center;height:42px;border:none;line-height:42px;width:100%; border-radius:5px;}
+
+.tab_menu { clear:both;}
+.tab_menu li { float:left; text-align:center; cursor:pointer; list-style:none; padding: 0px 20px; margin-right: 7px; background: #FFFFFF; border: 1px solid #EBEBEB; border-bottom:none; border-radius: 6px 6px 0px 0px; font-size: 15px;height: 30px;line-height: 30px;margin: 5px;}
+.tab_menu li.hover { background:#DFDFDF;}
+.tab_menu li.selected { color:#FFF; background: #E43A3D;}
+.shang{position: absolute; top: 3px;cursor: pointer; right:0;}
+.xia{position: absolute; right: 0;bottom: 0;cursor: pointer;}
+
+/*兑换弹框提示*/
+#DHbox{width: 478px;
+       background: #fff;
+       z-index: 111;
+       display: none;}
+	   
+#DHbox h3{background-color:#c71c00;
+          height:34px;
+		  line-height:34px;
+		  color:#fff;;
+		  font-size:18px;
+		  padding-left:20px;
+		  font-size:14px;}
+		  
+#closebox03{position:absolute;
+			right:10px;
+			top:10px;}
+			
+.DHinform{ margin:20px 30px;
+           overflow:hidden;
+		   text-align:center;}
+.DHinform p.acword{ padding:15px 0 30px;}
+
+.DHinform p.acword span{ color:#ff6501;}
+		   		  
+.DHsurebox{background:#fbfbfb;
+			 display:block;
+			 border-radius:3px; 
+			 border:1px solid #e6e6e6;
+			 color:#c71c00;
+			 text-align:center;
+			 width:40px;
+			 font-size:14px;
+			 padding:8px 20px;
+			 margin:0 auto;}
+		  
+/*兑换弹框提示2*/
+#DHbox2{width: 478px;
+       background: #fff;
+       z-index: 111;
+       display: none;}
+	   
+#DHbox2 h3{background-color:#c71c00;
+          height:34px;
+		  line-height:34px;
+		  color:#fff;;
+		  font-size:18px;
+		  padding-left:20px;
+		  font-size:14px;}
+		  
+#closebox04{position:absolute;
+			right:10px;
+			top:10px;}
+			
+.DHinform2{ margin:20px 30px;
+           overflow:hidden;
+		   text-align:center;}
+.acword2{ padding:15px 0 30px; overflow:hidden;}
+.acword2 img{ display:block;float:left;width:50px;height:50px;}
+
+.acword3{ float:left;padding-left:15px;padding-top:5px;}
+.acword3 span{ color:#ff6501; display:block;}
+.acword3 em{ font-size:14px; text-align:left;}
+
+.DHinform2 p.acword2 span{ color:#ff6501;}
+.DHinform2 p.Tbut{ margin:0 80px; overflow:hidden;}
+		   		  
+.DHsurebox2{background:#fbfbfb;
+			 display:block;
+			 border-radius:3px; 
+			 border:1px solid #e6e6e6;
+			 color:#c71c00;
+			 text-align:center;
+			 font-size:14px;
+			 padding:8px 20px;
+			 margin-left:160px;
+			 width:40px;}
+	
+.DHkan{background:#fbfbfb;
+			 display:block;
+			 border-radius:3px; 
+			 border:1px solid #e6e6e6;
+			 color:#c71c00;
+			 text-align:center;
+			 font-size:14px;
+			 padding:8px 20px;
+			 float:left;}
+			 
+/*评论区*/
+.Giftrecordt{ float:left;width:880px; padding-top:10px;}
+.Giftrecordt .dtrightt{cursor:pointer;}
+.proareat{ padding:15px 0;width:1000px;}
+.Thover2{ background:#fff;}
+.testareat{ border:1px solid #e9e9e9; width:860px; height:150px; overflow-y:scroll; padding:10px; font-size:14px;}
+.butt{width:880px; float:right;}
+.Acbottont{ width:120px; border-radius:5px; height:35px; text-align:center; line-height:35px; background:#0C9000; color:#fff; cursor:pointer; border:none;}
+.buttomt{ width:120px; border-radius:5px; height:35px; text-align:center; line-height:35px; cursor:pointer;color:#111; background:#CCC;border:none;}
+.dtrightt{ font-size:12px; color:#c3c3c3; padding-right:10px; padding-bottom:10px;}
+.dtrightt i{background: url(../images/answer.png) no-repeat 1px center;padding-left: 20px;margin-left:10px;}
+.dtrightt em{ background:url(../images/dz.png) no-repeat 0 center; padding-left:25px; cursor:pointer; }
+
+.answer{ background:#f8f8f8; border:1px solid #dbdbdb; border-radius:5px; padding:10px; margin:15px 0 0; width:100%;}
+.answer p{color:#999;}
+.personI{padding-bottom:5px;}
+.personI strong{font-size:16px; font-weight:bold;color:#d52336;}
+.personI i{font-size:16px; font-weight:bold;color:#111;}
+.personI em{float:right;color:#999;padding-right:7px;}
+.fbutton{ position: relative; top:0;right:0;float:right; }
+
+.Tbutr{ padding:20px 0;cursor: pointer;}
+.DHsureSoft{background:#fbfbfb;display:block;border-radius:3px; border:1px solid #e6e6e6;color:#c71c00;font-size:14px;width:80px; 
+			text-align:center; height:40px; line-height:40px; margin:0 160px;}
+/*弹框2*/			
+#Softboxgame{width:400px;background: #fff;z-index:110;display: none; border:10px #f8f8f8 solid; text-align:center;}
+#Softboxgame .Gamebox{ padding:50px 0 0;}
+#Softboxgame .Gamebox p.inputbox{ padding-bottom:15px;}
+#Softboxgame .Gamebox p.inputbox label{ display:inline-block; text-align:right; width:70px; font-size:14px; padding-right:10px;}
+#Softboxgame .Gamebox p.inputbox input{ height:30px; width:180px; line-height:30px;border:1px solid #e9e9e9;}
+#Softboxgame h1{ text-align:center; padding-top:20px;color:#c71c00;}
+
+.indexC{ cursor: pointer;}
+.resh{color: #3D7AE5;margin-right: 10px;float:right;cursor: pointer;}
+.reshRed{color: #cb2a00;margin-right: 10px;float:right;cursor: pointer;}
+.upbox{margin:50px 30px 200px 30px;display:block;position:absolute; top:0; left:0; background-color:rgba(0,0,0,0);
+filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#70000000,endColorstr=#70000000);
+/* For IE 5.5 - 7 */; width:100%; height:100%; color:#fff; text-align:center;z-index: 120;}

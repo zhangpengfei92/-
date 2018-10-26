@@ -1,0 +1,63 @@
+package com.jcl.service.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.interceptor.TransactionAspectSupport;
+
+import com.jcl.dao.FundOrderMapper;
+import com.jcl.dao.SubzhFundLogMapper;
+import com.jcl.pojo.FundOrder;
+import com.jcl.pojo.FundOrderExample;
+import com.jcl.pojo.FundOrderExample.Criteria;
+import com.jcl.pojo.FundOrderExample.Criterion;
+import com.jcl.pojo.SubzhFundLog;
+import com.jcl.service.SubzhFundLogService;
+
+@Service
+@Transactional(rollbackFor=Exception.class)  
+public class SubzhFundLogServiceImpl implements SubzhFundLogService{
+	@Autowired
+	private SubzhFundLogMapper SubzhFundLogMapper;
+	
+	@Autowired
+	private FundOrderMapper fundOrderMapper;
+
+	@Override
+	public int saveFundOrder(FundOrder fo) {
+		return fundOrderMapper.insertSelective(fo);
+	}
+
+	@Override
+	public int save(SubzhFundLog subzhFundLog,FundOrder fo) {
+		try {
+			int i = fundOrderMapper.insertSelective(fo);
+			int j = SubzhFundLogMapper.insertSelective(subzhFundLog);
+			if(i > 0 && j > 0){
+				return 1;
+			}else{
+				return 0;
+			}
+		} catch (Exception e) {
+			TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
+			return 0;
+		}
+	}
+
+	@Override
+	public List<FundOrder> getFundInfoList(FundOrder fo) {
+		FundOrderExample foe = new FundOrderExample();
+		foe.setOrderByClause("orderid desc");
+		Criteria criteria = foe.createCriteria();
+		criteria.andSubzhEqualTo(fo.getSubzh());
+		if(fo.getZjUse() != null && fo.getZjUse() != ""){
+			criteria.andZjUseEqualTo(fo.getZjUse());
+		}
+		if(fo.getPaymentzh() != null && fo.getPaymentzh() != ""){
+			criteria.andPaymentzhEqualTo(fo.getPaymentzh());
+		}
+		return fundOrderMapper.selectByExample(foe);
+	}
+}

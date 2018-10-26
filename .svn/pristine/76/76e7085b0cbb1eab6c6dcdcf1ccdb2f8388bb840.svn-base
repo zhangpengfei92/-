@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcl.dao.SubFeelogMapper" >
+  <resultMap id="BaseResultMap" type="com.jcl.pojo.SubFeelog" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="subzh" property="subzh" jdbcType="VARCHAR" />
+    <result column="nowBalance" property="nowbalance" jdbcType="NUMERIC" />
+    <result column="addBalance" property="addbalance" jdbcType="NUMERIC" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="feetype" property="feetype" jdbcType="INTEGER" />
+    <result column="feedesc" property="feedesc" jdbcType="VARCHAR" />
+    <result column="enquiryId" property="enquiryid" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, subzh, nowBalance, addBalance, createtime, feetype, feedesc, enquiryId
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jcl.pojo.SubFeelogExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from sub_feelog
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sub_feelog
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sub_feelog
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jcl.pojo.SubFeelogExample" >
+    delete from sub_feelog
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jcl.pojo.SubFeelog" >
+    insert into sub_feelog (id, subzh, nowBalance, 
+      addBalance, createtime, feetype, 
+      feedesc, enquiryId)
+    values (#{id,jdbcType=INTEGER}, #{subzh,jdbcType=VARCHAR}, #{nowbalance,jdbcType=NUMERIC}, 
+      #{addbalance,jdbcType=NUMERIC}, #{createtime,jdbcType=TIMESTAMP}, #{feetype,jdbcType=INTEGER}, 
+      #{feedesc,jdbcType=VARCHAR}, #{enquiryid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jcl.pojo.SubFeelog" >
+    insert into sub_feelog
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="subzh != null" >
+        subzh,
+      </if>
+      <if test="nowbalance != null" >
+        nowBalance,
+      </if>
+      <if test="addbalance != null" >
+        addBalance,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+      <if test="feetype != null" >
+        feetype,
+      </if>
+      <if test="feedesc != null" >
+        feedesc,
+      </if>
+      <if test="enquiryid != null" >
+        enquiryId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="subzh != null" >
+        #{subzh,jdbcType=VARCHAR},
+      </if>
+      <if test="nowbalance != null" >
+        #{nowbalance,jdbcType=NUMERIC},
+      </if>
+      <if test="addbalance != null" >
+        #{addbalance,jdbcType=NUMERIC},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="feetype != null" >
+        #{feetype,jdbcType=INTEGER},
+      </if>
+      <if test="feedesc != null" >
+        #{feedesc,jdbcType=VARCHAR},
+      </if>
+      <if test="enquiryid != null" >
+        #{enquiryid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jcl.pojo.SubFeelogExample" resultType="java.lang.Integer" >
+    select count(*) from sub_feelog
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update sub_feelog
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.subzh != null" >
+        subzh = #{record.subzh,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nowbalance != null" >
+        nowBalance = #{record.nowbalance,jdbcType=NUMERIC},
+      </if>
+      <if test="record.addbalance != null" >
+        addBalance = #{record.addbalance,jdbcType=NUMERIC},
+      </if>
+      <if test="record.createtime != null" >
+        createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.feetype != null" >
+        feetype = #{record.feetype,jdbcType=INTEGER},
+      </if>
+      <if test="record.feedesc != null" >
+        feedesc = #{record.feedesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.enquiryid != null" >
+        enquiryId = #{record.enquiryid,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update sub_feelog
+    set id = #{record.id,jdbcType=INTEGER},
+      subzh = #{record.subzh,jdbcType=VARCHAR},
+      nowBalance = #{record.nowbalance,jdbcType=NUMERIC},
+      addBalance = #{record.addbalance,jdbcType=NUMERIC},
+      createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      feetype = #{record.feetype,jdbcType=INTEGER},
+      feedesc = #{record.feedesc,jdbcType=VARCHAR},
+      enquiryId = #{record.enquiryid,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jcl.pojo.SubFeelog" >
+    update sub_feelog
+    <set >
+      <if test="subzh != null" >
+        subzh = #{subzh,jdbcType=VARCHAR},
+      </if>
+      <if test="nowbalance != null" >
+        nowBalance = #{nowbalance,jdbcType=NUMERIC},
+      </if>
+      <if test="addbalance != null" >
+        addBalance = #{addbalance,jdbcType=NUMERIC},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="feetype != null" >
+        feetype = #{feetype,jdbcType=INTEGER},
+      </if>
+      <if test="feedesc != null" >
+        feedesc = #{feedesc,jdbcType=VARCHAR},
+      </if>
+      <if test="enquiryid != null" >
+        enquiryId = #{enquiryid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jcl.pojo.SubFeelog" >
+    update sub_feelog
+    set subzh = #{subzh,jdbcType=VARCHAR},
+      nowBalance = #{nowbalance,jdbcType=NUMERIC},
+      addBalance = #{addbalance,jdbcType=NUMERIC},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      feetype = #{feetype,jdbcType=INTEGER},
+      feedesc = #{feedesc,jdbcType=VARCHAR},
+      enquiryId = #{enquiryid,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

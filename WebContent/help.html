@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html> 
+<head>
+	<meta charset="utf-8">
+	<title></title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta content="telephone=no" name="format-detection">
+    <link href="css/css.css" rel="stylesheet" type="text/css" />
+    <link href="css/animation.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="js/jquery-1.9.1.min.js"></script>
+    <script src="js/All.js" type="text/javascript"></script>
+    <script src="js/jquery1.42.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+$(document).ready(function() {
+	$('.inactive').click(function(){
+		$(this).parent('li').siblings().children('ul').css('display','none');
+		$(this).parent('li').siblings().find('.inactive').removeClass('inactives');
+		if($(this).siblings('ul').css('display')=='none'){
+			$(this).parent('li').siblings('li').removeClass('inactives');
+			$(this).addClass('inactives');
+			$(this).siblings('ul').slideDown(100).children('li');
+			if($(this).parents('li').siblings('li').children('ul').css('display')=='block'){
+				$(this).parents('li').siblings('li').children('ul').parent('li').children('a').removeClass('inactives');
+				$(this).parents('li').siblings('li').children('ul').slideUp(100);
+
+			}
+		}else{
+			//控制自身变成+号
+			$(this).removeClass('inactives');
+			//控制自身菜单下子菜单隐藏
+			$(this).siblings('ul').slideUp(100);
+			//控制自身子菜单变成+号
+			$(this).siblings('ul').children('li').children('ul').parent('li').children('a').addClass('inactives');
+			//控制自身菜单下子菜单隐藏
+			$(this).siblings('ul').children('li').children('ul').slideUp(100);
+
+			//控制同级菜单只保持一个是展开的（-号显示）
+			$(this).siblings('ul').children('li').children('a').removeClass('inactives');
+		}
+	})
+});
+</script>
+</head> 
+<body class="bggray">
+    <div class="category">
+    <!-- insder header -->
+    <header class="ls-header">
+       <!-- <div class="ls-header-left">
+            <a href="javascript:history.go(-1)"><i class="iconfont icon-back"></i></a>
+        </div>-->
+        <div class="ls-header-title">帮助说明</div>
+        <!--<div class="ls-header-right">
+           <a href=""><i class="iconfont icon-flash"></i></a>
+        </div>-->
+    </header>
+    <div class="mainbox">
+         <section>
+              <div class="leftbox">
+               	<ul class="yiji">
+                    <li><a href="JavaScript:;" class="inactive">1.名义本金</a>
+                        <ul style="display: none">
+                            <li>
+                            <a href="JavaScript:;" class=" active">名义本金是指交易双方在协议中确定的合约规模，即要进行的资金数额，简单的理解就是你想要买入或卖出的投资标的市值。</a>
+                            </li> 
+                        </ul>
+                    </li>
+                    <li><a href="JavaScript:;" class="inactive">2.行权周期</a>
+                        <ul style="display: none">
+                            <li>
+                            <a href="JavaScript:;" class=" active">期权未到期的时间。如果行权周期为一个月,则期权在一个月后到期</a>
+                            </li> 
+                        </ul>
+                    </li>
+                    <li><a href="JavaScript:;" class="inactive">3.权利金比例</a>
+                        <ul style="display: none">
+                            <li>
+                            <a href="JavaScript:;" class=" active">按照名义本金应交付权利金的百分比,一般来说不同品种,不同的行权周期的权利金比例也不一样</a>
+                            </li> 
+                        </ul>
+                    </li>
+                    <li><a href="JavaScript:;" class="inactive">4.到期日期</a>
+                        <ul style="display: none">
+                            <li>
+                            <a href="JavaScript:;" class=" active">到期日即是指期权合约所规定的,期权购买者可以实际执行该期权的最后日期</a>
+                            </li> 
+                        </ul>
+                    </li>
+                     <li><a href="JavaScript:;" class="inactive">5.交易方式</a>
+                        <ul style="display: none">
+                            <li>
+                            <a href="JavaScript:;" class=" active">现支持市价交易,现价现价交易和均价交易。</a>
+                            </li> 
+                        </ul>
+                    </li>
+                     <li><a href="JavaScript:;" class="inactive">6.交易规则</a>
+                        <ul style="display: none">
+                            <li>
+                            <a href="JavaScript:;" class=" active">期权的一般性交易规则</a>
+                            </li> 
+                        </ul>
+                    </li>
+                </ul>
+        </section> 
+  </div>
+</body>
+</html>

@@ -1,0 +1,1480 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcl.daoAuth.UserInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.jcl.pojo.auth.UserInfo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="INTEGER" />
+    <result column="expiredate" property="expiredate" jdbcType="TIMESTAMP" />
+    <result column="admin" property="admin" jdbcType="INTEGER" />
+    <result column="minver" property="minver" jdbcType="INTEGER" />
+    <result column="lasttime" property="lasttime" jdbcType="TIMESTAMP" />
+    <result column="info" property="info" jdbcType="VARCHAR" />
+    <result column="online" property="online" jdbcType="VARCHAR" />
+    <result column="ip" property="ip" jdbcType="VARCHAR" />
+    <result column="netcard" property="netcard" jdbcType="VARCHAR" />
+    <result column="starttime" property="starttime" jdbcType="TIMESTAMP" />
+    <result column="endtime" property="endtime" jdbcType="TIMESTAMP" />
+    <result column="lastmonth" property="lastmonth" jdbcType="INTEGER" />
+    <result column="huming" property="huming" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="NVARCHAR" />
+    <result column="telephone" property="telephone" jdbcType="NVARCHAR" />
+    <result column="paymoney" property="paymoney" jdbcType="DOUBLE" />
+    <result column="ucname" property="ucname" jdbcType="NVARCHAR" />
+    <result column="paytime" property="paytime" jdbcType="TIMESTAMP" />
+    <result column="seller" property="seller" jdbcType="NVARCHAR" />
+    <result column="funcinfo" property="funcinfo" jdbcType="VARCHAR" />
+    <result column="usertype" property="usertype" jdbcType="INTEGER" />
+    <result column="updatedAt" property="updatedat" jdbcType="TIMESTAMP" />
+    <result column="flag" property="flag" jdbcType="CHAR" />
+    <result column="syncinfo" property="syncinfo" jdbcType="CHAR" />
+    <result column="clientFrom" property="clientfrom" jdbcType="CHAR" />
+    <result column="openid" property="openid" jdbcType="VARCHAR" />
+    <result column="registfrom" property="registfrom" jdbcType="VARCHAR" />
+    <result column="hasmobile" property="hasmobile" jdbcType="INTEGER" />
+    <result column="pushTag" property="pushtag" jdbcType="VARCHAR" />
+    <result column="sysrights" property="sysrights" jdbcType="VARCHAR" />
+    <result column="localsource" property="localsource" jdbcType="VARCHAR" />
+    <result column="phoneType" property="phonetype" jdbcType="VARCHAR" />
+    <result column="phoneUserId" property="phoneuserid" jdbcType="VARCHAR" />
+    <result column="phoneChannelId" property="phonechannelid" jdbcType="VARCHAR" />
+    <result column="imUserId" property="imuserid" jdbcType="VARCHAR" />
+    <result column="imUserIdService" property="imuseridservice" jdbcType="VARCHAR" />
+    <result column="Pause" property="pause" jdbcType="INTEGER" />
+    <result column="CRMvalue" property="crmvalue" jdbcType="VARCHAR" />
+    <result column="LoginCount" property="logincount" jdbcType="INTEGER" />
+    <result column="LastLoginTime" property="lastlogintime" jdbcType="TIMESTAMP" />
+    <result column="IsReceive" property="isreceive" jdbcType="INTEGER" />
+    <result column="Integration" property="integration" jdbcType="INTEGER" />
+    <result column="Levels" property="levels" jdbcType="INTEGER" />
+    <result column="HeadPicture" property="headpicture" jdbcType="VARCHAR" />
+    <result column="TrueName" property="truename" jdbcType="VARCHAR" />
+    <result column="Year" property="year" jdbcType="INTEGER" />
+    <result column="Month" property="month" jdbcType="INTEGER" />
+    <result column="Day" property="day" jdbcType="INTEGER" />
+    <result column="City" property="city" jdbcType="VARCHAR" />
+    <result column="Town" property="town" jdbcType="VARCHAR" />
+    <result column="Email" property="email" jdbcType="VARCHAR" />
+    <result column="Phone" property="phone" jdbcType="VARCHAR" />
+    <result column="QQ" property="qq" jdbcType="VARCHAR" />
+    <result column="Education" property="education" jdbcType="VARCHAR" />
+    <result column="Profession" property="profession" jdbcType="VARCHAR" />
+    <result column="ProfessionInfo" property="professioninfo" jdbcType="VARCHAR" />
+    <result column="CapitalPosition" property="capitalposition" jdbcType="VARCHAR" />
+    <result column="OperatingStyle" property="operatingstyle" jdbcType="VARCHAR" />
+    <result column="PickingStyle" property="pickingstyle" jdbcType="VARCHAR" />
+    <result column="InvestingExperience" property="investingexperience" jdbcType="VARCHAR" />
+    <result column="InvestingProducts" property="investingproducts" jdbcType="VARCHAR" />
+    <result column="Profile" property="profile" jdbcType="VARCHAR" />
+    <result column="PicUpdTime" property="picupdtime" jdbcType="TIMESTAMP" />
+    <result column="IsMobileAttest" property="ismobileattest" jdbcType="INTEGER" />
+    <result column="IsEmailAttest" property="isemailattest" jdbcType="INTEGER" />
+    <result column="CreateTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="DelFlag" property="delflag" jdbcType="INTEGER" />
+    <result column="Pid" property="pid" jdbcType="INTEGER" />
+    <result column="IsUpgrade" property="isupgrade" jdbcType="INTEGER" />
+    <result column="online_mobile" property="onlineMobile" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.jcl.pojo.auth.UserInfo" extends="BaseResultMap" >
+    <result column="utsdbmask" property="utsdbmask" jdbcType="BINARY" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, username, password, sex, expiredate, admin, minver, lasttime, info, online, ip, 
+    netcard, starttime, endtime, lastmonth, huming, name, telephone, paymoney, ucname, 
+    paytime, seller, funcinfo, usertype, updatedAt, flag, syncinfo, clientFrom, openid, 
+    registfrom, hasmobile, pushTag, sysrights, localsource, phoneType, phoneUserId, phoneChannelId, 
+    imUserId, imUserIdService, Pause, CRMvalue, LoginCount, LastLoginTime, IsReceive, 
+    Integration, Levels, HeadPicture, TrueName, Year, Month, Day, City, Town, Email, 
+    Phone, QQ, Education, Profession, ProfessionInfo, CapitalPosition, OperatingStyle, 
+    PickingStyle, InvestingExperience, InvestingProducts, Profile, PicUpdTime, IsMobileAttest, 
+    IsEmailAttest, CreateTime, DelFlag, Pid, IsUpgrade, online_mobile
+  </sql>
+  <sql id="Blob_Column_List" >
+    utsdbmask
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.jcl.pojo.auth.UserInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from userinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jcl.pojo.auth.UserInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from userinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from userinfo
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from userinfo
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jcl.pojo.auth.UserInfoExample" >
+    delete from userinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jcl.pojo.auth.UserInfo" >
+    insert into userinfo (id, username, password, 
+      sex, expiredate, admin, 
+      minver, lasttime, info, 
+      online, ip, netcard, 
+      starttime, endtime, lastmonth, 
+      huming, name, telephone, 
+      paymoney, ucname, paytime, 
+      seller, funcinfo, usertype, 
+      updatedAt, flag, syncinfo, 
+      clientFrom, openid, registfrom, 
+      hasmobile, pushTag, sysrights, 
+      localsource, phoneType, phoneUserId, 
+      phoneChannelId, imUserId, imUserIdService, 
+      Pause, CRMvalue, LoginCount, 
+      LastLoginTime, IsReceive, Integration, 
+      Levels, HeadPicture, TrueName, 
+      Year, Month, Day, City, 
+      Town, Email, Phone, 
+      QQ, Education, Profession, 
+      ProfessionInfo, CapitalPosition, OperatingStyle, 
+      PickingStyle, InvestingExperience, InvestingProducts, 
+      Profile, PicUpdTime, IsMobileAttest, 
+      IsEmailAttest, CreateTime, DelFlag, 
+      Pid, IsUpgrade, online_mobile, 
+      utsdbmask)
+    values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{sex,jdbcType=INTEGER}, #{expiredate,jdbcType=TIMESTAMP}, #{admin,jdbcType=INTEGER}, 
+      #{minver,jdbcType=INTEGER}, #{lasttime,jdbcType=TIMESTAMP}, #{info,jdbcType=VARCHAR}, 
+      #{online,jdbcType=VARCHAR}, #{ip,jdbcType=VARCHAR}, #{netcard,jdbcType=VARCHAR}, 
+      #{starttime,jdbcType=TIMESTAMP}, #{endtime,jdbcType=TIMESTAMP}, #{lastmonth,jdbcType=INTEGER}, 
+      #{huming,jdbcType=INTEGER}, #{name,jdbcType=NVARCHAR}, #{telephone,jdbcType=NVARCHAR}, 
+      #{paymoney,jdbcType=DOUBLE}, #{ucname,jdbcType=NVARCHAR}, #{paytime,jdbcType=TIMESTAMP}, 
+      #{seller,jdbcType=NVARCHAR}, #{funcinfo,jdbcType=VARCHAR}, #{usertype,jdbcType=INTEGER}, 
+      #{updatedat,jdbcType=TIMESTAMP}, #{flag,jdbcType=CHAR}, #{syncinfo,jdbcType=CHAR}, 
+      #{clientfrom,jdbcType=CHAR}, #{openid,jdbcType=VARCHAR}, #{registfrom,jdbcType=VARCHAR}, 
+      #{hasmobile,jdbcType=INTEGER}, #{pushtag,jdbcType=VARCHAR}, #{sysrights,jdbcType=VARCHAR}, 
+      #{localsource,jdbcType=VARCHAR}, #{phonetype,jdbcType=VARCHAR}, #{phoneuserid,jdbcType=VARCHAR}, 
+      #{phonechannelid,jdbcType=VARCHAR}, #{imuserid,jdbcType=VARCHAR}, #{imuseridservice,jdbcType=VARCHAR}, 
+      #{pause,jdbcType=INTEGER}, #{crmvalue,jdbcType=VARCHAR}, #{logincount,jdbcType=INTEGER}, 
+      #{lastlogintime,jdbcType=TIMESTAMP}, #{isreceive,jdbcType=INTEGER}, #{integration,jdbcType=INTEGER}, 
+      #{levels,jdbcType=INTEGER}, #{headpicture,jdbcType=VARCHAR}, #{truename,jdbcType=VARCHAR}, 
+      #{year,jdbcType=INTEGER}, #{month,jdbcType=INTEGER}, #{day,jdbcType=INTEGER}, #{city,jdbcType=VARCHAR}, 
+      #{town,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{qq,jdbcType=VARCHAR}, #{education,jdbcType=VARCHAR}, #{profession,jdbcType=VARCHAR}, 
+      #{professioninfo,jdbcType=VARCHAR}, #{capitalposition,jdbcType=VARCHAR}, #{operatingstyle,jdbcType=VARCHAR}, 
+      #{pickingstyle,jdbcType=VARCHAR}, #{investingexperience,jdbcType=VARCHAR}, #{investingproducts,jdbcType=VARCHAR}, 
+      #{profile,jdbcType=VARCHAR}, #{picupdtime,jdbcType=TIMESTAMP}, #{ismobileattest,jdbcType=INTEGER}, 
+      #{isemailattest,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, #{delflag,jdbcType=INTEGER}, 
+      #{pid,jdbcType=INTEGER}, #{isupgrade,jdbcType=INTEGER}, #{onlineMobile,jdbcType=VARCHAR}, 
+      #{utsdbmask,jdbcType=BINARY})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jcl.pojo.auth.UserInfo" >
+    insert into userinfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="expiredate != null" >
+        expiredate,
+      </if>
+      <if test="admin != null" >
+        admin,
+      </if>
+      <if test="minver != null" >
+        minver,
+      </if>
+      <if test="lasttime != null" >
+        lasttime,
+      </if>
+      <if test="info != null" >
+        info,
+      </if>
+      <if test="online != null" >
+        online,
+      </if>
+      <if test="ip != null" >
+        ip,
+      </if>
+      <if test="netcard != null" >
+        netcard,
+      </if>
+      <if test="starttime != null" >
+        starttime,
+      </if>
+      <if test="endtime != null" >
+        endtime,
+      </if>
+      <if test="lastmonth != null" >
+        lastmonth,
+      </if>
+      <if test="huming != null" >
+        huming,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="telephone != null" >
+        telephone,
+      </if>
+      <if test="paymoney != null" >
+        paymoney,
+      </if>
+      <if test="ucname != null" >
+        ucname,
+      </if>
+      <if test="paytime != null" >
+        paytime,
+      </if>
+      <if test="seller != null" >
+        seller,
+      </if>
+      <if test="funcinfo != null" >
+        funcinfo,
+      </if>
+      <if test="usertype != null" >
+        usertype,
+      </if>
+      <if test="updatedat != null" >
+        updatedAt,
+      </if>
+      <if test="flag != null" >
+        flag,
+      </if>
+      <if test="syncinfo != null" >
+        syncinfo,
+      </if>
+      <if test="clientfrom != null" >
+        clientFrom,
+      </if>
+      <if test="openid != null" >
+        openid,
+      </if>
+      <if test="registfrom != null" >
+        registfrom,
+      </if>
+      <if test="hasmobile != null" >
+        hasmobile,
+      </if>
+      <if test="pushtag != null" >
+        pushTag,
+      </if>
+      <if test="sysrights != null" >
+        sysrights,
+      </if>
+      <if test="localsource != null" >
+        localsource,
+      </if>
+      <if test="phonetype != null" >
+        phoneType,
+      </if>
+      <if test="phoneuserid != null" >
+        phoneUserId,
+      </if>
+      <if test="phonechannelid != null" >
+        phoneChannelId,
+      </if>
+      <if test="imuserid != null" >
+        imUserId,
+      </if>
+      <if test="imuseridservice != null" >
+        imUserIdService,
+      </if>
+      <if test="pause != null" >
+        Pause,
+      </if>
+      <if test="crmvalue != null" >
+        CRMvalue,
+      </if>
+      <if test="logincount != null" >
+        LoginCount,
+      </if>
+      <if test="lastlogintime != null" >
+        LastLoginTime,
+      </if>
+      <if test="isreceive != null" >
+        IsReceive,
+      </if>
+      <if test="integration != null" >
+        Integration,
+      </if>
+      <if test="levels != null" >
+        Levels,
+      </if>
+      <if test="headpicture != null" >
+        HeadPicture,
+      </if>
+      <if test="truename != null" >
+        TrueName,
+      </if>
+      <if test="year != null" >
+        Year,
+      </if>
+      <if test="month != null" >
+        Month,
+      </if>
+      <if test="day != null" >
+        Day,
+      </if>
+      <if test="city != null" >
+        City,
+      </if>
+      <if test="town != null" >
+        Town,
+      </if>
+      <if test="email != null" >
+        Email,
+      </if>
+      <if test="phone != null" >
+        Phone,
+      </if>
+      <if test="qq != null" >
+        QQ,
+      </if>
+      <if test="education != null" >
+        Education,
+      </if>
+      <if test="profession != null" >
+        Profession,
+      </if>
+      <if test="professioninfo != null" >
+        ProfessionInfo,
+      </if>
+      <if test="capitalposition != null" >
+        CapitalPosition,
+      </if>
+      <if test="operatingstyle != null" >
+        OperatingStyle,
+      </if>
+      <if test="pickingstyle != null" >
+        PickingStyle,
+      </if>
+      <if test="investingexperience != null" >
+        InvestingExperience,
+      </if>
+      <if test="investingproducts != null" >
+        InvestingProducts,
+      </if>
+      <if test="profile != null" >
+        Profile,
+      </if>
+      <if test="picupdtime != null" >
+        PicUpdTime,
+      </if>
+      <if test="ismobileattest != null" >
+        IsMobileAttest,
+      </if>
+      <if test="isemailattest != null" >
+        IsEmailAttest,
+      </if>
+      <if test="createtime != null" >
+        CreateTime,
+      </if>
+      <if test="delflag != null" >
+        DelFlag,
+      </if>
+      <if test="pid != null" >
+        Pid,
+      </if>
+      <if test="isupgrade != null" >
+        IsUpgrade,
+      </if>
+      <if test="onlineMobile != null" >
+        online_mobile,
+      </if>
+      <if test="utsdbmask != null" >
+        utsdbmask,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="expiredate != null" >
+        #{expiredate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="admin != null" >
+        #{admin,jdbcType=INTEGER},
+      </if>
+      <if test="minver != null" >
+        #{minver,jdbcType=INTEGER},
+      </if>
+      <if test="lasttime != null" >
+        #{lasttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="info != null" >
+        #{info,jdbcType=VARCHAR},
+      </if>
+      <if test="online != null" >
+        #{online,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null" >
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="netcard != null" >
+        #{netcard,jdbcType=VARCHAR},
+      </if>
+      <if test="starttime != null" >
+        #{starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null" >
+        #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastmonth != null" >
+        #{lastmonth,jdbcType=INTEGER},
+      </if>
+      <if test="huming != null" >
+        #{huming,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=NVARCHAR},
+      </if>
+      <if test="telephone != null" >
+        #{telephone,jdbcType=NVARCHAR},
+      </if>
+      <if test="paymoney != null" >
+        #{paymoney,jdbcType=DOUBLE},
+      </if>
+      <if test="ucname != null" >
+        #{ucname,jdbcType=NVARCHAR},
+      </if>
+      <if test="paytime != null" >
+        #{paytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="seller != null" >
+        #{seller,jdbcType=NVARCHAR},
+      </if>
+      <if test="funcinfo != null" >
+        #{funcinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="usertype != null" >
+        #{usertype,jdbcType=INTEGER},
+      </if>
+      <if test="updatedat != null" >
+        #{updatedat,jdbcType=TIMESTAMP},
+      </if>
+      <if test="flag != null" >
+        #{flag,jdbcType=CHAR},
+      </if>
+      <if test="syncinfo != null" >
+        #{syncinfo,jdbcType=CHAR},
+      </if>
+      <if test="clientfrom != null" >
+        #{clientfrom,jdbcType=CHAR},
+      </if>
+      <if test="openid != null" >
+        #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="registfrom != null" >
+        #{registfrom,jdbcType=VARCHAR},
+      </if>
+      <if test="hasmobile != null" >
+        #{hasmobile,jdbcType=INTEGER},
+      </if>
+      <if test="pushtag != null" >
+        #{pushtag,jdbcType=VARCHAR},
+      </if>
+      <if test="sysrights != null" >
+        #{sysrights,jdbcType=VARCHAR},
+      </if>
+      <if test="localsource != null" >
+        #{localsource,jdbcType=VARCHAR},
+      </if>
+      <if test="phonetype != null" >
+        #{phonetype,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneuserid != null" >
+        #{phoneuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="phonechannelid != null" >
+        #{phonechannelid,jdbcType=VARCHAR},
+      </if>
+      <if test="imuserid != null" >
+        #{imuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="imuseridservice != null" >
+        #{imuseridservice,jdbcType=VARCHAR},
+      </if>
+      <if test="pause != null" >
+        #{pause,jdbcType=INTEGER},
+      </if>
+      <if test="crmvalue != null" >
+        #{crmvalue,jdbcType=VARCHAR},
+      </if>
+      <if test="logincount != null" >
+        #{logincount,jdbcType=INTEGER},
+      </if>
+      <if test="lastlogintime != null" >
+        #{lastlogintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isreceive != null" >
+        #{isreceive,jdbcType=INTEGER},
+      </if>
+      <if test="integration != null" >
+        #{integration,jdbcType=INTEGER},
+      </if>
+      <if test="levels != null" >
+        #{levels,jdbcType=INTEGER},
+      </if>
+      <if test="headpicture != null" >
+        #{headpicture,jdbcType=VARCHAR},
+      </if>
+      <if test="truename != null" >
+        #{truename,jdbcType=VARCHAR},
+      </if>
+      <if test="year != null" >
+        #{year,jdbcType=INTEGER},
+      </if>
+      <if test="month != null" >
+        #{month,jdbcType=INTEGER},
+      </if>
+      <if test="day != null" >
+        #{day,jdbcType=INTEGER},
+      </if>
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="town != null" >
+        #{town,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null" >
+        #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="education != null" >
+        #{education,jdbcType=VARCHAR},
+      </if>
+      <if test="profession != null" >
+        #{profession,jdbcType=VARCHAR},
+      </if>
+      <if test="professioninfo != null" >
+        #{professioninfo,jdbcType=VARCHAR},
+      </if>
+      <if test="capitalposition != null" >
+        #{capitalposition,jdbcType=VARCHAR},
+      </if>
+      <if test="operatingstyle != null" >
+        #{operatingstyle,jdbcType=VARCHAR},
+      </if>
+      <if test="pickingstyle != null" >
+        #{pickingstyle,jdbcType=VARCHAR},
+      </if>
+      <if test="investingexperience != null" >
+        #{investingexperience,jdbcType=VARCHAR},
+      </if>
+      <if test="investingproducts != null" >
+        #{investingproducts,jdbcType=VARCHAR},
+      </if>
+      <if test="profile != null" >
+        #{profile,jdbcType=VARCHAR},
+      </if>
+      <if test="picupdtime != null" >
+        #{picupdtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ismobileattest != null" >
+        #{ismobileattest,jdbcType=INTEGER},
+      </if>
+      <if test="isemailattest != null" >
+        #{isemailattest,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delflag != null" >
+        #{delflag,jdbcType=INTEGER},
+      </if>
+      <if test="pid != null" >
+        #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="isupgrade != null" >
+        #{isupgrade,jdbcType=INTEGER},
+      </if>
+      <if test="onlineMobile != null" >
+        #{onlineMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="utsdbmask != null" >
+        #{utsdbmask,jdbcType=BINARY},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jcl.pojo.auth.UserInfoExample" resultType="java.lang.Integer" >
+    select count(*) from userinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update userinfo
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.username != null" >
+        username = #{record.username,jdbcType=VARCHAR},
+      </if>
+      <if test="record.password != null" >
+        password = #{record.password,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sex != null" >
+        sex = #{record.sex,jdbcType=INTEGER},
+      </if>
+      <if test="record.expiredate != null" >
+        expiredate = #{record.expiredate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.admin != null" >
+        admin = #{record.admin,jdbcType=INTEGER},
+      </if>
+      <if test="record.minver != null" >
+        minver = #{record.minver,jdbcType=INTEGER},
+      </if>
+      <if test="record.lasttime != null" >
+        lasttime = #{record.lasttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.info != null" >
+        info = #{record.info,jdbcType=VARCHAR},
+      </if>
+      <if test="record.online != null" >
+        online = #{record.online,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ip != null" >
+        ip = #{record.ip,jdbcType=VARCHAR},
+      </if>
+      <if test="record.netcard != null" >
+        netcard = #{record.netcard,jdbcType=VARCHAR},
+      </if>
+      <if test="record.starttime != null" >
+        starttime = #{record.starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endtime != null" >
+        endtime = #{record.endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.lastmonth != null" >
+        lastmonth = #{record.lastmonth,jdbcType=INTEGER},
+      </if>
+      <if test="record.huming != null" >
+        huming = #{record.huming,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=NVARCHAR},
+      </if>
+      <if test="record.telephone != null" >
+        telephone = #{record.telephone,jdbcType=NVARCHAR},
+      </if>
+      <if test="record.paymoney != null" >
+        paymoney = #{record.paymoney,jdbcType=DOUBLE},
+      </if>
+      <if test="record.ucname != null" >
+        ucname = #{record.ucname,jdbcType=NVARCHAR},
+      </if>
+      <if test="record.paytime != null" >
+        paytime = #{record.paytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.seller != null" >
+        seller = #{record.seller,jdbcType=NVARCHAR},
+      </if>
+      <if test="record.funcinfo != null" >
+        funcinfo = #{record.funcinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.usertype != null" >
+        usertype = #{record.usertype,jdbcType=INTEGER},
+      </if>
+      <if test="record.updatedat != null" >
+        updatedAt = #{record.updatedat,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.flag != null" >
+        flag = #{record.flag,jdbcType=CHAR},
+      </if>
+      <if test="record.syncinfo != null" >
+        syncinfo = #{record.syncinfo,jdbcType=CHAR},
+      </if>
+      <if test="record.clientfrom != null" >
+        clientFrom = #{record.clientfrom,jdbcType=CHAR},
+      </if>
+      <if test="record.openid != null" >
+        openid = #{record.openid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.registfrom != null" >
+        registfrom = #{record.registfrom,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hasmobile != null" >
+        hasmobile = #{record.hasmobile,jdbcType=INTEGER},
+      </if>
+      <if test="record.pushtag != null" >
+        pushTag = #{record.pushtag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sysrights != null" >
+        sysrights = #{record.sysrights,jdbcType=VARCHAR},
+      </if>
+      <if test="record.localsource != null" >
+        localsource = #{record.localsource,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phonetype != null" >
+        phoneType = #{record.phonetype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phoneuserid != null" >
+        phoneUserId = #{record.phoneuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phonechannelid != null" >
+        phoneChannelId = #{record.phonechannelid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.imuserid != null" >
+        imUserId = #{record.imuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.imuseridservice != null" >
+        imUserIdService = #{record.imuseridservice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pause != null" >
+        Pause = #{record.pause,jdbcType=INTEGER},
+      </if>
+      <if test="record.crmvalue != null" >
+        CRMvalue = #{record.crmvalue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.logincount != null" >
+        LoginCount = #{record.logincount,jdbcType=INTEGER},
+      </if>
+      <if test="record.lastlogintime != null" >
+        LastLoginTime = #{record.lastlogintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isreceive != null" >
+        IsReceive = #{record.isreceive,jdbcType=INTEGER},
+      </if>
+      <if test="record.integration != null" >
+        Integration = #{record.integration,jdbcType=INTEGER},
+      </if>
+      <if test="record.levels != null" >
+        Levels = #{record.levels,jdbcType=INTEGER},
+      </if>
+      <if test="record.headpicture != null" >
+        HeadPicture = #{record.headpicture,jdbcType=VARCHAR},
+      </if>
+      <if test="record.truename != null" >
+        TrueName = #{record.truename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.year != null" >
+        Year = #{record.year,jdbcType=INTEGER},
+      </if>
+      <if test="record.month != null" >
+        Month = #{record.month,jdbcType=INTEGER},
+      </if>
+      <if test="record.day != null" >
+        Day = #{record.day,jdbcType=INTEGER},
+      </if>
+      <if test="record.city != null" >
+        City = #{record.city,jdbcType=VARCHAR},
+      </if>
+      <if test="record.town != null" >
+        Town = #{record.town,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null" >
+        Email = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null" >
+        Phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qq != null" >
+        QQ = #{record.qq,jdbcType=VARCHAR},
+      </if>
+      <if test="record.education != null" >
+        Education = #{record.education,jdbcType=VARCHAR},
+      </if>
+      <if test="record.profession != null" >
+        Profession = #{record.profession,jdbcType=VARCHAR},
+      </if>
+      <if test="record.professioninfo != null" >
+        ProfessionInfo = #{record.professioninfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.capitalposition != null" >
+        CapitalPosition = #{record.capitalposition,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operatingstyle != null" >
+        OperatingStyle = #{record.operatingstyle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pickingstyle != null" >
+        PickingStyle = #{record.pickingstyle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.investingexperience != null" >
+        InvestingExperience = #{record.investingexperience,jdbcType=VARCHAR},
+      </if>
+      <if test="record.investingproducts != null" >
+        InvestingProducts = #{record.investingproducts,jdbcType=VARCHAR},
+      </if>
+      <if test="record.profile != null" >
+        Profile = #{record.profile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.picupdtime != null" >
+        PicUpdTime = #{record.picupdtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.ismobileattest != null" >
+        IsMobileAttest = #{record.ismobileattest,jdbcType=INTEGER},
+      </if>
+      <if test="record.isemailattest != null" >
+        IsEmailAttest = #{record.isemailattest,jdbcType=INTEGER},
+      </if>
+      <if test="record.createtime != null" >
+        CreateTime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.delflag != null" >
+        DelFlag = #{record.delflag,jdbcType=INTEGER},
+      </if>
+      <if test="record.pid != null" >
+        Pid = #{record.pid,jdbcType=INTEGER},
+      </if>
+      <if test="record.isupgrade != null" >
+        IsUpgrade = #{record.isupgrade,jdbcType=INTEGER},
+      </if>
+      <if test="record.onlineMobile != null" >
+        online_mobile = #{record.onlineMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.utsdbmask != null" >
+        utsdbmask = #{record.utsdbmask,jdbcType=BINARY},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update userinfo
+    set id = #{record.id,jdbcType=INTEGER},
+      username = #{record.username,jdbcType=VARCHAR},
+      password = #{record.password,jdbcType=VARCHAR},
+      sex = #{record.sex,jdbcType=INTEGER},
+      expiredate = #{record.expiredate,jdbcType=TIMESTAMP},
+      admin = #{record.admin,jdbcType=INTEGER},
+      minver = #{record.minver,jdbcType=INTEGER},
+      lasttime = #{record.lasttime,jdbcType=TIMESTAMP},
+      info = #{record.info,jdbcType=VARCHAR},
+      online = #{record.online,jdbcType=VARCHAR},
+      ip = #{record.ip,jdbcType=VARCHAR},
+      netcard = #{record.netcard,jdbcType=VARCHAR},
+      starttime = #{record.starttime,jdbcType=TIMESTAMP},
+      endtime = #{record.endtime,jdbcType=TIMESTAMP},
+      lastmonth = #{record.lastmonth,jdbcType=INTEGER},
+      huming = #{record.huming,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=NVARCHAR},
+      telephone = #{record.telephone,jdbcType=NVARCHAR},
+      paymoney = #{record.paymoney,jdbcType=DOUBLE},
+      ucname = #{record.ucname,jdbcType=NVARCHAR},
+      paytime = #{record.paytime,jdbcType=TIMESTAMP},
+      seller = #{record.seller,jdbcType=NVARCHAR},
+      funcinfo = #{record.funcinfo,jdbcType=VARCHAR},
+      usertype = #{record.usertype,jdbcType=INTEGER},
+      updatedAt = #{record.updatedat,jdbcType=TIMESTAMP},
+      flag = #{record.flag,jdbcType=CHAR},
+      syncinfo = #{record.syncinfo,jdbcType=CHAR},
+      clientFrom = #{record.clientfrom,jdbcType=CHAR},
+      openid = #{record.openid,jdbcType=VARCHAR},
+      registfrom = #{record.registfrom,jdbcType=VARCHAR},
+      hasmobile = #{record.hasmobile,jdbcType=INTEGER},
+      pushTag = #{record.pushtag,jdbcType=VARCHAR},
+      sysrights = #{record.sysrights,jdbcType=VARCHAR},
+      localsource = #{record.localsource,jdbcType=VARCHAR},
+      phoneType = #{record.phonetype,jdbcType=VARCHAR},
+      phoneUserId = #{record.phoneuserid,jdbcType=VARCHAR},
+      phoneChannelId = #{record.phonechannelid,jdbcType=VARCHAR},
+      imUserId = #{record.imuserid,jdbcType=VARCHAR},
+      imUserIdService = #{record.imuseridservice,jdbcType=VARCHAR},
+      Pause = #{record.pause,jdbcType=INTEGER},
+      CRMvalue = #{record.crmvalue,jdbcType=VARCHAR},
+      LoginCount = #{record.logincount,jdbcType=INTEGER},
+      LastLoginTime = #{record.lastlogintime,jdbcType=TIMESTAMP},
+      IsReceive = #{record.isreceive,jdbcType=INTEGER},
+      Integration = #{record.integration,jdbcType=INTEGER},
+      Levels = #{record.levels,jdbcType=INTEGER},
+      HeadPicture = #{record.headpicture,jdbcType=VARCHAR},
+      TrueName = #{record.truename,jdbcType=VARCHAR},
+      Year = #{record.year,jdbcType=INTEGER},
+      Month = #{record.month,jdbcType=INTEGER},
+      Day = #{record.day,jdbcType=INTEGER},
+      City = #{record.city,jdbcType=VARCHAR},
+      Town = #{record.town,jdbcType=VARCHAR},
+      Email = #{record.email,jdbcType=VARCHAR},
+      Phone = #{record.phone,jdbcType=VARCHAR},
+      QQ = #{record.qq,jdbcType=VARCHAR},
+      Education = #{record.education,jdbcType=VARCHAR},
+      Profession = #{record.profession,jdbcType=VARCHAR},
+      ProfessionInfo = #{record.professioninfo,jdbcType=VARCHAR},
+      CapitalPosition = #{record.capitalposition,jdbcType=VARCHAR},
+      OperatingStyle = #{record.operatingstyle,jdbcType=VARCHAR},
+      PickingStyle = #{record.pickingstyle,jdbcType=VARCHAR},
+      InvestingExperience = #{record.investingexperience,jdbcType=VARCHAR},
+      InvestingProducts = #{record.investingproducts,jdbcType=VARCHAR},
+      Profile = #{record.profile,jdbcType=VARCHAR},
+      PicUpdTime = #{record.picupdtime,jdbcType=TIMESTAMP},
+      IsMobileAttest = #{record.ismobileattest,jdbcType=INTEGER},
+      IsEmailAttest = #{record.isemailattest,jdbcType=INTEGER},
+      CreateTime = #{record.createtime,jdbcType=TIMESTAMP},
+      DelFlag = #{record.delflag,jdbcType=INTEGER},
+      Pid = #{record.pid,jdbcType=INTEGER},
+      IsUpgrade = #{record.isupgrade,jdbcType=INTEGER},
+      online_mobile = #{record.onlineMobile,jdbcType=VARCHAR},
+      utsdbmask = #{record.utsdbmask,jdbcType=BINARY}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update userinfo
+    set id = #{record.id,jdbcType=INTEGER},
+      username = #{record.username,jdbcType=VARCHAR},
+      password = #{record.password,jdbcType=VARCHAR},
+      sex = #{record.sex,jdbcType=INTEGER},
+      expiredate = #{record.expiredate,jdbcType=TIMESTAMP},
+      admin = #{record.admin,jdbcType=INTEGER},
+      minver = #{record.minver,jdbcType=INTEGER},
+      lasttime = #{record.lasttime,jdbcType=TIMESTAMP},
+      info = #{record.info,jdbcType=VARCHAR},
+      online = #{record.online,jdbcType=VARCHAR},
+      ip = #{record.ip,jdbcType=VARCHAR},
+      netcard = #{record.netcard,jdbcType=VARCHAR},
+      starttime = #{record.starttime,jdbcType=TIMESTAMP},
+      endtime = #{record.endtime,jdbcType=TIMESTAMP},
+      lastmonth = #{record.lastmonth,jdbcType=INTEGER},
+      huming = #{record.huming,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=NVARCHAR},
+      telephone = #{record.telephone,jdbcType=NVARCHAR},
+      paymoney = #{record.paymoney,jdbcType=DOUBLE},
+      ucname = #{record.ucname,jdbcType=NVARCHAR},
+      paytime = #{record.paytime,jdbcType=TIMESTAMP},
+      seller = #{record.seller,jdbcType=NVARCHAR},
+      funcinfo = #{record.funcinfo,jdbcType=VARCHAR},
+      usertype = #{record.usertype,jdbcType=INTEGER},
+      updatedAt = #{record.updatedat,jdbcType=TIMESTAMP},
+      flag = #{record.flag,jdbcType=CHAR},
+      syncinfo = #{record.syncinfo,jdbcType=CHAR},
+      clientFrom = #{record.clientfrom,jdbcType=CHAR},
+      openid = #{record.openid,jdbcType=VARCHAR},
+      registfrom = #{record.registfrom,jdbcType=VARCHAR},
+      hasmobile = #{record.hasmobile,jdbcType=INTEGER},
+      pushTag = #{record.pushtag,jdbcType=VARCHAR},
+      sysrights = #{record.sysrights,jdbcType=VARCHAR},
+      localsource = #{record.localsource,jdbcType=VARCHAR},
+      phoneType = #{record.phonetype,jdbcType=VARCHAR},
+      phoneUserId = #{record.phoneuserid,jdbcType=VARCHAR},
+      phoneChannelId = #{record.phonechannelid,jdbcType=VARCHAR},
+      imUserId = #{record.imuserid,jdbcType=VARCHAR},
+      imUserIdService = #{record.imuseridservice,jdbcType=VARCHAR},
+      Pause = #{record.pause,jdbcType=INTEGER},
+      CRMvalue = #{record.crmvalue,jdbcType=VARCHAR},
+      LoginCount = #{record.logincount,jdbcType=INTEGER},
+      LastLoginTime = #{record.lastlogintime,jdbcType=TIMESTAMP},
+      IsReceive = #{record.isreceive,jdbcType=INTEGER},
+      Integration = #{record.integration,jdbcType=INTEGER},
+      Levels = #{record.levels,jdbcType=INTEGER},
+      HeadPicture = #{record.headpicture,jdbcType=VARCHAR},
+      TrueName = #{record.truename,jdbcType=VARCHAR},
+      Year = #{record.year,jdbcType=INTEGER},
+      Month = #{record.month,jdbcType=INTEGER},
+      Day = #{record.day,jdbcType=INTEGER},
+      City = #{record.city,jdbcType=VARCHAR},
+      Town = #{record.town,jdbcType=VARCHAR},
+      Email = #{record.email,jdbcType=VARCHAR},
+      Phone = #{record.phone,jdbcType=VARCHAR},
+      QQ = #{record.qq,jdbcType=VARCHAR},
+      Education = #{record.education,jdbcType=VARCHAR},
+      Profession = #{record.profession,jdbcType=VARCHAR},
+      ProfessionInfo = #{record.professioninfo,jdbcType=VARCHAR},
+      CapitalPosition = #{record.capitalposition,jdbcType=VARCHAR},
+      OperatingStyle = #{record.operatingstyle,jdbcType=VARCHAR},
+      PickingStyle = #{record.pickingstyle,jdbcType=VARCHAR},
+      InvestingExperience = #{record.investingexperience,jdbcType=VARCHAR},
+      InvestingProducts = #{record.investingproducts,jdbcType=VARCHAR},
+      Profile = #{record.profile,jdbcType=VARCHAR},
+      PicUpdTime = #{record.picupdtime,jdbcType=TIMESTAMP},
+      IsMobileAttest = #{record.ismobileattest,jdbcType=INTEGER},
+      IsEmailAttest = #{record.isemailattest,jdbcType=INTEGER},
+      CreateTime = #{record.createtime,jdbcType=TIMESTAMP},
+      DelFlag = #{record.delflag,jdbcType=INTEGER},
+      Pid = #{record.pid,jdbcType=INTEGER},
+      IsUpgrade = #{record.isupgrade,jdbcType=INTEGER},
+      online_mobile = #{record.onlineMobile,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jcl.pojo.auth.UserInfo" >
+    update userinfo
+    <set >
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="expiredate != null" >
+        expiredate = #{expiredate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="admin != null" >
+        admin = #{admin,jdbcType=INTEGER},
+      </if>
+      <if test="minver != null" >
+        minver = #{minver,jdbcType=INTEGER},
+      </if>
+      <if test="lasttime != null" >
+        lasttime = #{lasttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="info != null" >
+        info = #{info,jdbcType=VARCHAR},
+      </if>
+      <if test="online != null" >
+        online = #{online,jdbcType=VARCHAR},
+      </if>
+      <if test="ip != null" >
+        ip = #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="netcard != null" >
+        netcard = #{netcard,jdbcType=VARCHAR},
+      </if>
+      <if test="starttime != null" >
+        starttime = #{starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null" >
+        endtime = #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastmonth != null" >
+        lastmonth = #{lastmonth,jdbcType=INTEGER},
+      </if>
+      <if test="huming != null" >
+        huming = #{huming,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=NVARCHAR},
+      </if>
+      <if test="telephone != null" >
+        telephone = #{telephone,jdbcType=NVARCHAR},
+      </if>
+      <if test="paymoney != null" >
+        paymoney = #{paymoney,jdbcType=DOUBLE},
+      </if>
+      <if test="ucname != null" >
+        ucname = #{ucname,jdbcType=NVARCHAR},
+      </if>
+      <if test="paytime != null" >
+        paytime = #{paytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="seller != null" >
+        seller = #{seller,jdbcType=NVARCHAR},
+      </if>
+      <if test="funcinfo != null" >
+        funcinfo = #{funcinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="usertype != null" >
+        usertype = #{usertype,jdbcType=INTEGER},
+      </if>
+      <if test="updatedat != null" >
+        updatedAt = #{updatedat,jdbcType=TIMESTAMP},
+      </if>
+      <if test="flag != null" >
+        flag = #{flag,jdbcType=CHAR},
+      </if>
+      <if test="syncinfo != null" >
+        syncinfo = #{syncinfo,jdbcType=CHAR},
+      </if>
+      <if test="clientfrom != null" >
+        clientFrom = #{clientfrom,jdbcType=CHAR},
+      </if>
+      <if test="openid != null" >
+        openid = #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="registfrom != null" >
+        registfrom = #{registfrom,jdbcType=VARCHAR},
+      </if>
+      <if test="hasmobile != null" >
+        hasmobile = #{hasmobile,jdbcType=INTEGER},
+      </if>
+      <if test="pushtag != null" >
+        pushTag = #{pushtag,jdbcType=VARCHAR},
+      </if>
+      <if test="sysrights != null" >
+        sysrights = #{sysrights,jdbcType=VARCHAR},
+      </if>
+      <if test="localsource != null" >
+        localsource = #{localsource,jdbcType=VARCHAR},
+      </if>
+      <if test="phonetype != null" >
+        phoneType = #{phonetype,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneuserid != null" >
+        phoneUserId = #{phoneuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="phonechannelid != null" >
+        phoneChannelId = #{phonechannelid,jdbcType=VARCHAR},
+      </if>
+      <if test="imuserid != null" >
+        imUserId = #{imuserid,jdbcType=VARCHAR},
+      </if>
+      <if test="imuseridservice != null" >
+        imUserIdService = #{imuseridservice,jdbcType=VARCHAR},
+      </if>
+      <if test="pause != null" >
+        Pause = #{pause,jdbcType=INTEGER},
+      </if>
+      <if test="crmvalue != null" >
+        CRMvalue = #{crmvalue,jdbcType=VARCHAR},
+      </if>
+      <if test="logincount != null" >
+        LoginCount = #{logincount,jdbcType=INTEGER},
+      </if>
+      <if test="lastlogintime != null" >
+        LastLoginTime = #{lastlogintime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isreceive != null" >
+        IsReceive = #{isreceive,jdbcType=INTEGER},
+      </if>
+      <if test="integration != null" >
+        Integration = #{integration,jdbcType=INTEGER},
+      </if>
+      <if test="levels != null" >
+        Levels = #{levels,jdbcType=INTEGER},
+      </if>
+      <if test="headpicture != null" >
+        HeadPicture = #{headpicture,jdbcType=VARCHAR},
+      </if>
+      <if test="truename != null" >
+        TrueName = #{truename,jdbcType=VARCHAR},
+      </if>
+      <if test="year != null" >
+        Year = #{year,jdbcType=INTEGER},
+      </if>
+      <if test="month != null" >
+        Month = #{month,jdbcType=INTEGER},
+      </if>
+      <if test="day != null" >
+        Day = #{day,jdbcType=INTEGER},
+      </if>
+      <if test="city != null" >
+        City = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="town != null" >
+        Town = #{town,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        Email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        Phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null" >
+        QQ = #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="education != null" >
+        Education = #{education,jdbcType=VARCHAR},
+      </if>
+      <if test="profession != null" >
+        Profession = #{profession,jdbcType=VARCHAR},
+      </if>
+      <if test="professioninfo != null" >
+        ProfessionInfo = #{professioninfo,jdbcType=VARCHAR},
+      </if>
+      <if test="capitalposition != null" >
+        CapitalPosition = #{capitalposition,jdbcType=VARCHAR},
+      </if>
+      <if test="operatingstyle != null" >
+        OperatingStyle = #{operatingstyle,jdbcType=VARCHAR},
+      </if>
+      <if test="pickingstyle != null" >
+        PickingStyle = #{pickingstyle,jdbcType=VARCHAR},
+      </if>
+      <if test="investingexperience != null" >
+        InvestingExperience = #{investingexperience,jdbcType=VARCHAR},
+      </if>
+      <if test="investingproducts != null" >
+        InvestingProducts = #{investingproducts,jdbcType=VARCHAR},
+      </if>
+      <if test="profile != null" >
+        Profile = #{profile,jdbcType=VARCHAR},
+      </if>
+      <if test="picupdtime != null" >
+        PicUpdTime = #{picupdtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ismobileattest != null" >
+        IsMobileAttest = #{ismobileattest,jdbcType=INTEGER},
+      </if>
+      <if test="isemailattest != null" >
+        IsEmailAttest = #{isemailattest,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delflag != null" >
+        DelFlag = #{delflag,jdbcType=INTEGER},
+      </if>
+      <if test="pid != null" >
+        Pid = #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="isupgrade != null" >
+        IsUpgrade = #{isupgrade,jdbcType=INTEGER},
+      </if>
+      <if test="onlineMobile != null" >
+        online_mobile = #{onlineMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="utsdbmask != null" >
+        utsdbmask = #{utsdbmask,jdbcType=BINARY},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.jcl.pojo.auth.UserInfo" >
+    update userinfo
+    set username = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=INTEGER},
+      expiredate = #{expiredate,jdbcType=TIMESTAMP},
+      admin = #{admin,jdbcType=INTEGER},
+      minver = #{minver,jdbcType=INTEGER},
+      lasttime = #{lasttime,jdbcType=TIMESTAMP},
+      info = #{info,jdbcType=VARCHAR},
+      online = #{online,jdbcType=VARCHAR},
+      ip = #{ip,jdbcType=VARCHAR},
+      netcard = #{netcard,jdbcType=VARCHAR},
+      starttime = #{starttime,jdbcType=TIMESTAMP},
+      endtime = #{endtime,jdbcType=TIMESTAMP},
+      lastmonth = #{lastmonth,jdbcType=INTEGER},
+      huming = #{huming,jdbcType=INTEGER},
+      name = #{name,jdbcType=NVARCHAR},
+      telephone = #{telephone,jdbcType=NVARCHAR},
+      paymoney = #{paymoney,jdbcType=DOUBLE},
+      ucname = #{ucname,jdbcType=NVARCHAR},
+      paytime = #{paytime,jdbcType=TIMESTAMP},
+      seller = #{seller,jdbcType=NVARCHAR},
+      funcinfo = #{funcinfo,jdbcType=VARCHAR},
+      usertype = #{usertype,jdbcType=INTEGER},
+      updatedAt = #{updatedat,jdbcType=TIMESTAMP},
+      flag = #{flag,jdbcType=CHAR},
+      syncinfo = #{syncinfo,jdbcType=CHAR},
+      clientFrom = #{clientfrom,jdbcType=CHAR},
+      openid = #{openid,jdbcType=VARCHAR},
+      registfrom = #{registfrom,jdbcType=VARCHAR},
+      hasmobile = #{hasmobile,jdbcType=INTEGER},
+      pushTag = #{pushtag,jdbcType=VARCHAR},
+      sysrights = #{sysrights,jdbcType=VARCHAR},
+      localsource = #{localsource,jdbcType=VARCHAR},
+      phoneType = #{phonetype,jdbcType=VARCHAR},
+      phoneUserId = #{phoneuserid,jdbcType=VARCHAR},
+      phoneChannelId = #{phonechannelid,jdbcType=VARCHAR},
+      imUserId = #{imuserid,jdbcType=VARCHAR},
+      imUserIdService = #{imuseridservice,jdbcType=VARCHAR},
+      Pause = #{pause,jdbcType=INTEGER},
+      CRMvalue = #{crmvalue,jdbcType=VARCHAR},
+      LoginCount = #{logincount,jdbcType=INTEGER},
+      LastLoginTime = #{lastlogintime,jdbcType=TIMESTAMP},
+      IsReceive = #{isreceive,jdbcType=INTEGER},
+      Integration = #{integration,jdbcType=INTEGER},
+      Levels = #{levels,jdbcType=INTEGER},
+      HeadPicture = #{headpicture,jdbcType=VARCHAR},
+      TrueName = #{truename,jdbcType=VARCHAR},
+      Year = #{year,jdbcType=INTEGER},
+      Month = #{month,jdbcType=INTEGER},
+      Day = #{day,jdbcType=INTEGER},
+      City = #{city,jdbcType=VARCHAR},
+      Town = #{town,jdbcType=VARCHAR},
+      Email = #{email,jdbcType=VARCHAR},
+      Phone = #{phone,jdbcType=VARCHAR},
+      QQ = #{qq,jdbcType=VARCHAR},
+      Education = #{education,jdbcType=VARCHAR},
+      Profession = #{profession,jdbcType=VARCHAR},
+      ProfessionInfo = #{professioninfo,jdbcType=VARCHAR},
+      CapitalPosition = #{capitalposition,jdbcType=VARCHAR},
+      OperatingStyle = #{operatingstyle,jdbcType=VARCHAR},
+      PickingStyle = #{pickingstyle,jdbcType=VARCHAR},
+      InvestingExperience = #{investingexperience,jdbcType=VARCHAR},
+      InvestingProducts = #{investingproducts,jdbcType=VARCHAR},
+      Profile = #{profile,jdbcType=VARCHAR},
+      PicUpdTime = #{picupdtime,jdbcType=TIMESTAMP},
+      IsMobileAttest = #{ismobileattest,jdbcType=INTEGER},
+      IsEmailAttest = #{isemailattest,jdbcType=INTEGER},
+      CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      DelFlag = #{delflag,jdbcType=INTEGER},
+      Pid = #{pid,jdbcType=INTEGER},
+      IsUpgrade = #{isupgrade,jdbcType=INTEGER},
+      online_mobile = #{onlineMobile,jdbcType=VARCHAR},
+      utsdbmask = #{utsdbmask,jdbcType=BINARY}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jcl.pojo.auth.UserInfo" >
+    update userinfo
+    set username = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=INTEGER},
+      expiredate = #{expiredate,jdbcType=TIMESTAMP},
+      admin = #{admin,jdbcType=INTEGER},
+      minver = #{minver,jdbcType=INTEGER},
+      lasttime = #{lasttime,jdbcType=TIMESTAMP},
+      info = #{info,jdbcType=VARCHAR},
+      online = #{online,jdbcType=VARCHAR},
+      ip = #{ip,jdbcType=VARCHAR},
+      netcard = #{netcard,jdbcType=VARCHAR},
+      starttime = #{starttime,jdbcType=TIMESTAMP},
+      endtime = #{endtime,jdbcType=TIMESTAMP},
+      lastmonth = #{lastmonth,jdbcType=INTEGER},
+      huming = #{huming,jdbcType=INTEGER},
+      name = #{name,jdbcType=NVARCHAR},
+      telephone = #{telephone,jdbcType=NVARCHAR},
+      paymoney = #{paymoney,jdbcType=DOUBLE},
+      ucname = #{ucname,jdbcType=NVARCHAR},
+      paytime = #{paytime,jdbcType=TIMESTAMP},
+      seller = #{seller,jdbcType=NVARCHAR},
+      funcinfo = #{funcinfo,jdbcType=VARCHAR},
+      usertype = #{usertype,jdbcType=INTEGER},
+      updatedAt = #{updatedat,jdbcType=TIMESTAMP},
+      flag = #{flag,jdbcType=CHAR},
+      syncinfo = #{syncinfo,jdbcType=CHAR},
+      clientFrom = #{clientfrom,jdbcType=CHAR},
+      openid = #{openid,jdbcType=VARCHAR},
+      registfrom = #{registfrom,jdbcType=VARCHAR},
+      hasmobile = #{hasmobile,jdbcType=INTEGER},
+      pushTag = #{pushtag,jdbcType=VARCHAR},
+      sysrights = #{sysrights,jdbcType=VARCHAR},
+      localsource = #{localsource,jdbcType=VARCHAR},
+      phoneType = #{phonetype,jdbcType=VARCHAR},
+      phoneUserId = #{phoneuserid,jdbcType=VARCHAR},
+      phoneChannelId = #{phonechannelid,jdbcType=VARCHAR},
+      imUserId = #{imuserid,jdbcType=VARCHAR},
+      imUserIdService = #{imuseridservice,jdbcType=VARCHAR},
+      Pause = #{pause,jdbcType=INTEGER},
+      CRMvalue = #{crmvalue,jdbcType=VARCHAR},
+      LoginCount = #{logincount,jdbcType=INTEGER},
+      LastLoginTime = #{lastlogintime,jdbcType=TIMESTAMP},
+      IsReceive = #{isreceive,jdbcType=INTEGER},
+      Integration = #{integration,jdbcType=INTEGER},
+      Levels = #{levels,jdbcType=INTEGER},
+      HeadPicture = #{headpicture,jdbcType=VARCHAR},
+      TrueName = #{truename,jdbcType=VARCHAR},
+      Year = #{year,jdbcType=INTEGER},
+      Month = #{month,jdbcType=INTEGER},
+      Day = #{day,jdbcType=INTEGER},
+      City = #{city,jdbcType=VARCHAR},
+      Town = #{town,jdbcType=VARCHAR},
+      Email = #{email,jdbcType=VARCHAR},
+      Phone = #{phone,jdbcType=VARCHAR},
+      QQ = #{qq,jdbcType=VARCHAR},
+      Education = #{education,jdbcType=VARCHAR},
+      Profession = #{profession,jdbcType=VARCHAR},
+      ProfessionInfo = #{professioninfo,jdbcType=VARCHAR},
+      CapitalPosition = #{capitalposition,jdbcType=VARCHAR},
+      OperatingStyle = #{operatingstyle,jdbcType=VARCHAR},
+      PickingStyle = #{pickingstyle,jdbcType=VARCHAR},
+      InvestingExperience = #{investingexperience,jdbcType=VARCHAR},
+      InvestingProducts = #{investingproducts,jdbcType=VARCHAR},
+      Profile = #{profile,jdbcType=VARCHAR},
+      PicUpdTime = #{picupdtime,jdbcType=TIMESTAMP},
+      IsMobileAttest = #{ismobileattest,jdbcType=INTEGER},
+      IsEmailAttest = #{isemailattest,jdbcType=INTEGER},
+      CreateTime = #{createtime,jdbcType=TIMESTAMP},
+      DelFlag = #{delflag,jdbcType=INTEGER},
+      Pid = #{pid,jdbcType=INTEGER},
+      IsUpgrade = #{isupgrade,jdbcType=INTEGER},
+      online_mobile = #{onlineMobile,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

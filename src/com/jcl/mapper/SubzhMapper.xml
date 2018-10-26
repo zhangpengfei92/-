@@ -1,0 +1,1001 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcl.dao.SubzhMapper" >
+  <resultMap id="BaseResultMap" type="com.jcl.pojo.Subzh" >
+    <id column="subzh" property="subzh" jdbcType="VARCHAR" />
+    <id column="cookie" property="cookie" jdbcType="VARCHAR" />
+    <result column="pagentzh" property="pagentzh" jdbcType="VARCHAR" />
+    <result column="mainzh" property="mainzh" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="INTEGER" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="khdate" property="khdate" jdbcType="TIMESTAMP" />
+    <result column="wtzh" property="wtzh" jdbcType="VARCHAR" />
+    <result column="marginset" property="marginset" jdbcType="VARCHAR" />
+    <result column="feeset" property="feeset" jdbcType="VARCHAR" />
+    <result column="riskset" property="riskset" jdbcType="INTEGER" />
+    <result column="midman" property="midman" jdbcType="VARCHAR" />
+    <result column="openright" property="openright" jdbcType="INTEGER" />
+    <result column="accounttype" property="accounttype" jdbcType="INTEGER" />
+    <result column="brokerzh" property="brokerzh" jdbcType="VARCHAR" />
+    <result column="isagent" property="isagent" jdbcType="INTEGER" />
+    <result column="qq" property="qq" jdbcType="VARCHAR" />
+    <result column="mail" property="mail" jdbcType="VARCHAR" />
+    <result column="initmoney" property="initmoney" jdbcType="DECIMAL" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="firstjjs" property="firstjjs" jdbcType="VARCHAR" />
+    <result column="secendjjs" property="secendjjs" jdbcType="VARCHAR" />
+    <result column="thirdjjs" property="thirdjjs" jdbcType="VARCHAR" />
+    <result column="mac" property="mac" jdbcType="VARCHAR" />
+    <result column="note" property="note" jdbcType="VARCHAR" />
+    <result column="groupid" property="groupid" jdbcType="VARCHAR" />
+    <result column="bz" property="bz" jdbcType="VARCHAR" />
+    <result column="userid" property="userid" jdbcType="NUMERIC" />
+    <result column="headPicture" property="headpicture" jdbcType="VARCHAR" />
+    <result column="loginname" property="loginname" jdbcType="VARCHAR" />
+    <result column="notename" property="notename" jdbcType="VARCHAR" />
+    <result column="notetel" property="notetel" jdbcType="VARCHAR" />
+    <result column="risktype" property="risktype" jdbcType="INTEGER" />
+    <result column="accountpattern" property="accountpattern" jdbcType="INTEGER" />
+    <result column="zijinaccount" property="zijinaccount" jdbcType="INTEGER" />
+    <result column="jypz" property="jypz" jdbcType="INTEGER" />
+    <result column="bdtd" property="bdtd" jdbcType="VARCHAR" />
+    <result column="bzj" property="bzj" jdbcType="DECIMAL" />
+    <result column="rzj" property="rzj" jdbcType="DECIMAL" />
+    <result column="yjx" property="yjx" jdbcType="DECIMAL" />
+    <result column="pcx" property="pcx" jdbcType="DECIMAL" />
+    <result column="xzj" property="xzj" jdbcType="DECIMAL" />
+    <result column="ccbl" property="ccbl" jdbcType="INTEGER" />
+    <result column="isadmin" property="isadmin" jdbcType="INTEGER" />
+    <result column="jyright" property="jyright" jdbcType="VARCHAR" />
+    <result column="riskstate" property="riskstate" jdbcType="INTEGER" />
+    <result column="mncj" property="mncj" jdbcType="INTEGER" />
+    <result column="riskHolderId" property="riskholderid" jdbcType="VARCHAR" />
+    <result column="fundBalance" property="fundbalance" jdbcType="NUMERIC" />
+    <result column="munberno" property="munberno" jdbcType="VARCHAR" />
+    <result column="allocbroker" property="allocbroker" jdbcType="VARCHAR" />
+    <result column="allocchannel" property="allocchannel" jdbcType="VARCHAR" />
+    <result column="proportion" property="proportion" jdbcType="DOUBLE" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    subzh, cookie, pagentzh, mainzh, password, name, sex, phone, khdate, wtzh, marginset, 
+    feeset, riskset, midman, openright, accounttype, brokerzh, isagent, qq, mail, initmoney, 
+    address, firstjjs, secendjjs, thirdjjs, mac, note, groupid, bz, userid, headPicture, 
+    loginname, notename, notetel, risktype, accountpattern, zijinaccount, jypz, bdtd, 
+    bzj, rzj, yjx, pcx, xzj, ccbl, isadmin, jyright, riskstate, mncj, riskHolderId, fundBalance, 
+    munberno, allocbroker, allocchannel, proportion
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jcl.pojo.SubzhExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from subzh
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.jcl.pojo.SubzhKey" >
+    select 
+    <include refid="Base_Column_List" />
+    from subzh
+    where subzh = #{subzh,jdbcType=VARCHAR}
+      and cookie = #{cookie,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.jcl.pojo.SubzhKey" >
+    delete from subzh
+    where subzh = #{subzh,jdbcType=VARCHAR}
+      and cookie = #{cookie,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jcl.pojo.SubzhExample" >
+    delete from subzh
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jcl.pojo.Subzh" >
+    insert into subzh (subzh, cookie, pagentzh, 
+      mainzh, password, name, 
+      sex, phone, khdate, 
+      wtzh, marginset, feeset, 
+      riskset, midman, openright, 
+      accounttype, brokerzh, isagent, 
+      qq, mail, initmoney, 
+      address, firstjjs, secendjjs, 
+      thirdjjs, mac, note, 
+      groupid, bz, userid, 
+      headPicture, loginname, notename, 
+      notetel, risktype, accountpattern, 
+      zijinaccount, jypz, bdtd, 
+      bzj, rzj, yjx, pcx, 
+      xzj, ccbl, isadmin, 
+      jyright, riskstate, mncj, 
+      riskHolderId, fundBalance, munberno, 
+      allocbroker, allocchannel, proportion
+      )
+    values (#{subzh,jdbcType=VARCHAR}, #{cookie,jdbcType=VARCHAR}, #{pagentzh,jdbcType=VARCHAR}, 
+      #{mainzh,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{sex,jdbcType=INTEGER}, #{phone,jdbcType=VARCHAR}, #{khdate,jdbcType=TIMESTAMP}, 
+      #{wtzh,jdbcType=VARCHAR}, #{marginset,jdbcType=VARCHAR}, #{feeset,jdbcType=VARCHAR}, 
+      #{riskset,jdbcType=INTEGER}, #{midman,jdbcType=VARCHAR}, #{openright,jdbcType=INTEGER}, 
+      #{accounttype,jdbcType=INTEGER}, #{brokerzh,jdbcType=VARCHAR}, #{isagent,jdbcType=INTEGER}, 
+      #{qq,jdbcType=VARCHAR}, #{mail,jdbcType=VARCHAR}, #{initmoney,jdbcType=DECIMAL}, 
+      #{address,jdbcType=VARCHAR}, #{firstjjs,jdbcType=VARCHAR}, #{secendjjs,jdbcType=VARCHAR}, 
+      #{thirdjjs,jdbcType=VARCHAR}, #{mac,jdbcType=VARCHAR}, #{note,jdbcType=VARCHAR}, 
+      #{groupid,jdbcType=VARCHAR}, #{bz,jdbcType=VARCHAR}, #{userid,jdbcType=NUMERIC}, 
+      #{headpicture,jdbcType=VARCHAR}, #{loginname,jdbcType=VARCHAR}, #{notename,jdbcType=VARCHAR}, 
+      #{notetel,jdbcType=VARCHAR}, #{risktype,jdbcType=INTEGER}, #{accountpattern,jdbcType=INTEGER}, 
+      #{zijinaccount,jdbcType=INTEGER}, #{jypz,jdbcType=INTEGER}, #{bdtd,jdbcType=VARCHAR}, 
+      #{bzj,jdbcType=DECIMAL}, #{rzj,jdbcType=DECIMAL}, #{yjx,jdbcType=DECIMAL}, #{pcx,jdbcType=DECIMAL}, 
+      #{xzj,jdbcType=DECIMAL}, #{ccbl,jdbcType=INTEGER}, #{isadmin,jdbcType=INTEGER}, 
+      #{jyright,jdbcType=VARCHAR}, #{riskstate,jdbcType=INTEGER}, #{mncj,jdbcType=INTEGER}, 
+      #{riskholderid,jdbcType=VARCHAR}, #{fundbalance,jdbcType=NUMERIC}, #{munberno,jdbcType=VARCHAR}, 
+      #{allocbroker,jdbcType=VARCHAR}, #{allocchannel,jdbcType=VARCHAR}, #{proportion,jdbcType=DOUBLE}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jcl.pojo.Subzh" >
+    insert into subzh
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="subzh != null" >
+        subzh,
+      </if>
+      <if test="cookie != null" >
+        cookie,
+      </if>
+      <if test="pagentzh != null" >
+        pagentzh,
+      </if>
+      <if test="mainzh != null" >
+        mainzh,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="khdate != null" >
+        khdate,
+      </if>
+      <if test="wtzh != null" >
+        wtzh,
+      </if>
+      <if test="marginset != null" >
+        marginset,
+      </if>
+      <if test="feeset != null" >
+        feeset,
+      </if>
+      <if test="riskset != null" >
+        riskset,
+      </if>
+      <if test="midman != null" >
+        midman,
+      </if>
+      <if test="openright != null" >
+        openright,
+      </if>
+      <if test="accounttype != null" >
+        accounttype,
+      </if>
+      <if test="brokerzh != null" >
+        brokerzh,
+      </if>
+      <if test="isagent != null" >
+        isagent,
+      </if>
+      <if test="qq != null" >
+        qq,
+      </if>
+      <if test="mail != null" >
+        mail,
+      </if>
+      <if test="initmoney != null" >
+        initmoney,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="firstjjs != null" >
+        firstjjs,
+      </if>
+      <if test="secendjjs != null" >
+        secendjjs,
+      </if>
+      <if test="thirdjjs != null" >
+        thirdjjs,
+      </if>
+      <if test="mac != null" >
+        mac,
+      </if>
+      <if test="note != null" >
+        note,
+      </if>
+      <if test="groupid != null" >
+        groupid,
+      </if>
+      <if test="bz != null" >
+        bz,
+      </if>
+      <if test="userid != null" >
+        userid,
+      </if>
+      <if test="headpicture != null" >
+        headPicture,
+      </if>
+      <if test="loginname != null" >
+        loginname,
+      </if>
+      <if test="notename != null" >
+        notename,
+      </if>
+      <if test="notetel != null" >
+        notetel,
+      </if>
+      <if test="risktype != null" >
+        risktype,
+      </if>
+      <if test="accountpattern != null" >
+        accountpattern,
+      </if>
+      <if test="zijinaccount != null" >
+        zijinaccount,
+      </if>
+      <if test="jypz != null" >
+        jypz,
+      </if>
+      <if test="bdtd != null" >
+        bdtd,
+      </if>
+      <if test="bzj != null" >
+        bzj,
+      </if>
+      <if test="rzj != null" >
+        rzj,
+      </if>
+      <if test="yjx != null" >
+        yjx,
+      </if>
+      <if test="pcx != null" >
+        pcx,
+      </if>
+      <if test="xzj != null" >
+        xzj,
+      </if>
+      <if test="ccbl != null" >
+        ccbl,
+      </if>
+      <if test="isadmin != null" >
+        isadmin,
+      </if>
+      <if test="jyright != null" >
+        jyright,
+      </if>
+      <if test="riskstate != null" >
+        riskstate,
+      </if>
+      <if test="mncj != null" >
+        mncj,
+      </if>
+      <if test="riskholderid != null" >
+        riskHolderId,
+      </if>
+      <if test="fundbalance != null" >
+        fundBalance,
+      </if>
+      <if test="munberno != null" >
+        munberno,
+      </if>
+      <if test="allocbroker != null" >
+        allocbroker,
+      </if>
+      <if test="allocchannel != null" >
+        allocchannel,
+      </if>
+      <if test="proportion != null" >
+        proportion,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="subzh != null" >
+        #{subzh,jdbcType=VARCHAR},
+      </if>
+      <if test="cookie != null" >
+        #{cookie,jdbcType=VARCHAR},
+      </if>
+      <if test="pagentzh != null" >
+        #{pagentzh,jdbcType=VARCHAR},
+      </if>
+      <if test="mainzh != null" >
+        #{mainzh,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="khdate != null" >
+        #{khdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="wtzh != null" >
+        #{wtzh,jdbcType=VARCHAR},
+      </if>
+      <if test="marginset != null" >
+        #{marginset,jdbcType=VARCHAR},
+      </if>
+      <if test="feeset != null" >
+        #{feeset,jdbcType=VARCHAR},
+      </if>
+      <if test="riskset != null" >
+        #{riskset,jdbcType=INTEGER},
+      </if>
+      <if test="midman != null" >
+        #{midman,jdbcType=VARCHAR},
+      </if>
+      <if test="openright != null" >
+        #{openright,jdbcType=INTEGER},
+      </if>
+      <if test="accounttype != null" >
+        #{accounttype,jdbcType=INTEGER},
+      </if>
+      <if test="brokerzh != null" >
+        #{brokerzh,jdbcType=VARCHAR},
+      </if>
+      <if test="isagent != null" >
+        #{isagent,jdbcType=INTEGER},
+      </if>
+      <if test="qq != null" >
+        #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="mail != null" >
+        #{mail,jdbcType=VARCHAR},
+      </if>
+      <if test="initmoney != null" >
+        #{initmoney,jdbcType=DECIMAL},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="firstjjs != null" >
+        #{firstjjs,jdbcType=VARCHAR},
+      </if>
+      <if test="secendjjs != null" >
+        #{secendjjs,jdbcType=VARCHAR},
+      </if>
+      <if test="thirdjjs != null" >
+        #{thirdjjs,jdbcType=VARCHAR},
+      </if>
+      <if test="mac != null" >
+        #{mac,jdbcType=VARCHAR},
+      </if>
+      <if test="note != null" >
+        #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="groupid != null" >
+        #{groupid,jdbcType=VARCHAR},
+      </if>
+      <if test="bz != null" >
+        #{bz,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=NUMERIC},
+      </if>
+      <if test="headpicture != null" >
+        #{headpicture,jdbcType=VARCHAR},
+      </if>
+      <if test="loginname != null" >
+        #{loginname,jdbcType=VARCHAR},
+      </if>
+      <if test="notename != null" >
+        #{notename,jdbcType=VARCHAR},
+      </if>
+      <if test="notetel != null" >
+        #{notetel,jdbcType=VARCHAR},
+      </if>
+      <if test="risktype != null" >
+        #{risktype,jdbcType=INTEGER},
+      </if>
+      <if test="accountpattern != null" >
+        #{accountpattern,jdbcType=INTEGER},
+      </if>
+      <if test="zijinaccount != null" >
+        #{zijinaccount,jdbcType=INTEGER},
+      </if>
+      <if test="jypz != null" >
+        #{jypz,jdbcType=INTEGER},
+      </if>
+      <if test="bdtd != null" >
+        #{bdtd,jdbcType=VARCHAR},
+      </if>
+      <if test="bzj != null" >
+        #{bzj,jdbcType=DECIMAL},
+      </if>
+      <if test="rzj != null" >
+        #{rzj,jdbcType=DECIMAL},
+      </if>
+      <if test="yjx != null" >
+        #{yjx,jdbcType=DECIMAL},
+      </if>
+      <if test="pcx != null" >
+        #{pcx,jdbcType=DECIMAL},
+      </if>
+      <if test="xzj != null" >
+        #{xzj,jdbcType=DECIMAL},
+      </if>
+      <if test="ccbl != null" >
+        #{ccbl,jdbcType=INTEGER},
+      </if>
+      <if test="isadmin != null" >
+        #{isadmin,jdbcType=INTEGER},
+      </if>
+      <if test="jyright != null" >
+        #{jyright,jdbcType=VARCHAR},
+      </if>
+      <if test="riskstate != null" >
+        #{riskstate,jdbcType=INTEGER},
+      </if>
+      <if test="mncj != null" >
+        #{mncj,jdbcType=INTEGER},
+      </if>
+      <if test="riskholderid != null" >
+        #{riskholderid,jdbcType=VARCHAR},
+      </if>
+      <if test="fundbalance != null" >
+        #{fundbalance,jdbcType=NUMERIC},
+      </if>
+      <if test="munberno != null" >
+        #{munberno,jdbcType=VARCHAR},
+      </if>
+      <if test="allocbroker != null" >
+        #{allocbroker,jdbcType=VARCHAR},
+      </if>
+      <if test="allocchannel != null" >
+        #{allocchannel,jdbcType=VARCHAR},
+      </if>
+      <if test="proportion != null" >
+        #{proportion,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jcl.pojo.SubzhExample" resultType="java.lang.Integer" >
+    select count(*) from subzh
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update subzh
+    <set >
+      <if test="record.subzh != null" >
+        subzh = #{record.subzh,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cookie != null" >
+        cookie = #{record.cookie,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pagentzh != null" >
+        pagentzh = #{record.pagentzh,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mainzh != null" >
+        mainzh = #{record.mainzh,jdbcType=VARCHAR},
+      </if>
+      <if test="record.password != null" >
+        password = #{record.password,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sex != null" >
+        sex = #{record.sex,jdbcType=INTEGER},
+      </if>
+      <if test="record.phone != null" >
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.khdate != null" >
+        khdate = #{record.khdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.wtzh != null" >
+        wtzh = #{record.wtzh,jdbcType=VARCHAR},
+      </if>
+      <if test="record.marginset != null" >
+        marginset = #{record.marginset,jdbcType=VARCHAR},
+      </if>
+      <if test="record.feeset != null" >
+        feeset = #{record.feeset,jdbcType=VARCHAR},
+      </if>
+      <if test="record.riskset != null" >
+        riskset = #{record.riskset,jdbcType=INTEGER},
+      </if>
+      <if test="record.midman != null" >
+        midman = #{record.midman,jdbcType=VARCHAR},
+      </if>
+      <if test="record.openright != null" >
+        openright = #{record.openright,jdbcType=INTEGER},
+      </if>
+      <if test="record.accounttype != null" >
+        accounttype = #{record.accounttype,jdbcType=INTEGER},
+      </if>
+      <if test="record.brokerzh != null" >
+        brokerzh = #{record.brokerzh,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isagent != null" >
+        isagent = #{record.isagent,jdbcType=INTEGER},
+      </if>
+      <if test="record.qq != null" >
+        qq = #{record.qq,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mail != null" >
+        mail = #{record.mail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.initmoney != null" >
+        initmoney = #{record.initmoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.address != null" >
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.firstjjs != null" >
+        firstjjs = #{record.firstjjs,jdbcType=VARCHAR},
+      </if>
+      <if test="record.secendjjs != null" >
+        secendjjs = #{record.secendjjs,jdbcType=VARCHAR},
+      </if>
+      <if test="record.thirdjjs != null" >
+        thirdjjs = #{record.thirdjjs,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mac != null" >
+        mac = #{record.mac,jdbcType=VARCHAR},
+      </if>
+      <if test="record.note != null" >
+        note = #{record.note,jdbcType=VARCHAR},
+      </if>
+      <if test="record.groupid != null" >
+        groupid = #{record.groupid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bz != null" >
+        bz = #{record.bz,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userid != null" >
+        userid = #{record.userid,jdbcType=NUMERIC},
+      </if>
+      <if test="record.headpicture != null" >
+        headPicture = #{record.headpicture,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loginname != null" >
+        loginname = #{record.loginname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.notename != null" >
+        notename = #{record.notename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.notetel != null" >
+        notetel = #{record.notetel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.risktype != null" >
+        risktype = #{record.risktype,jdbcType=INTEGER},
+      </if>
+      <if test="record.accountpattern != null" >
+        accountpattern = #{record.accountpattern,jdbcType=INTEGER},
+      </if>
+      <if test="record.zijinaccount != null" >
+        zijinaccount = #{record.zijinaccount,jdbcType=INTEGER},
+      </if>
+      <if test="record.jypz != null" >
+        jypz = #{record.jypz,jdbcType=INTEGER},
+      </if>
+      <if test="record.bdtd != null" >
+        bdtd = #{record.bdtd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bzj != null" >
+        bzj = #{record.bzj,jdbcType=DECIMAL},
+      </if>
+      <if test="record.rzj != null" >
+        rzj = #{record.rzj,jdbcType=DECIMAL},
+      </if>
+      <if test="record.yjx != null" >
+        yjx = #{record.yjx,jdbcType=DECIMAL},
+      </if>
+      <if test="record.pcx != null" >
+        pcx = #{record.pcx,jdbcType=DECIMAL},
+      </if>
+      <if test="record.xzj != null" >
+        xzj = #{record.xzj,jdbcType=DECIMAL},
+      </if>
+      <if test="record.ccbl != null" >
+        ccbl = #{record.ccbl,jdbcType=INTEGER},
+      </if>
+      <if test="record.isadmin != null" >
+        isadmin = #{record.isadmin,jdbcType=INTEGER},
+      </if>
+      <if test="record.jyright != null" >
+        jyright = #{record.jyright,jdbcType=VARCHAR},
+      </if>
+      <if test="record.riskstate != null" >
+        riskstate = #{record.riskstate,jdbcType=INTEGER},
+      </if>
+      <if test="record.mncj != null" >
+        mncj = #{record.mncj,jdbcType=INTEGER},
+      </if>
+      <if test="record.riskholderid != null" >
+        riskHolderId = #{record.riskholderid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fundbalance != null" >
+        fundBalance = #{record.fundbalance,jdbcType=NUMERIC},
+      </if>
+      <if test="record.munberno != null" >
+        munberno = #{record.munberno,jdbcType=VARCHAR},
+      </if>
+      <if test="record.allocbroker != null" >
+        allocbroker = #{record.allocbroker,jdbcType=VARCHAR},
+      </if>
+      <if test="record.allocchannel != null" >
+        allocchannel = #{record.allocchannel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.proportion != null" >
+        proportion = #{record.proportion,jdbcType=DOUBLE},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update subzh
+    set subzh = #{record.subzh,jdbcType=VARCHAR},
+      cookie = #{record.cookie,jdbcType=VARCHAR},
+      pagentzh = #{record.pagentzh,jdbcType=VARCHAR},
+      mainzh = #{record.mainzh,jdbcType=VARCHAR},
+      password = #{record.password,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      sex = #{record.sex,jdbcType=INTEGER},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      khdate = #{record.khdate,jdbcType=TIMESTAMP},
+      wtzh = #{record.wtzh,jdbcType=VARCHAR},
+      marginset = #{record.marginset,jdbcType=VARCHAR},
+      feeset = #{record.feeset,jdbcType=VARCHAR},
+      riskset = #{record.riskset,jdbcType=INTEGER},
+      midman = #{record.midman,jdbcType=VARCHAR},
+      openright = #{record.openright,jdbcType=INTEGER},
+      accounttype = #{record.accounttype,jdbcType=INTEGER},
+      brokerzh = #{record.brokerzh,jdbcType=VARCHAR},
+      isagent = #{record.isagent,jdbcType=INTEGER},
+      qq = #{record.qq,jdbcType=VARCHAR},
+      mail = #{record.mail,jdbcType=VARCHAR},
+      initmoney = #{record.initmoney,jdbcType=DECIMAL},
+      address = #{record.address,jdbcType=VARCHAR},
+      firstjjs = #{record.firstjjs,jdbcType=VARCHAR},
+      secendjjs = #{record.secendjjs,jdbcType=VARCHAR},
+      thirdjjs = #{record.thirdjjs,jdbcType=VARCHAR},
+      mac = #{record.mac,jdbcType=VARCHAR},
+      note = #{record.note,jdbcType=VARCHAR},
+      groupid = #{record.groupid,jdbcType=VARCHAR},
+      bz = #{record.bz,jdbcType=VARCHAR},
+      userid = #{record.userid,jdbcType=NUMERIC},
+      headPicture = #{record.headpicture,jdbcType=VARCHAR},
+      loginname = #{record.loginname,jdbcType=VARCHAR},
+      notename = #{record.notename,jdbcType=VARCHAR},
+      notetel = #{record.notetel,jdbcType=VARCHAR},
+      risktype = #{record.risktype,jdbcType=INTEGER},
+      accountpattern = #{record.accountpattern,jdbcType=INTEGER},
+      zijinaccount = #{record.zijinaccount,jdbcType=INTEGER},
+      jypz = #{record.jypz,jdbcType=INTEGER},
+      bdtd = #{record.bdtd,jdbcType=VARCHAR},
+      bzj = #{record.bzj,jdbcType=DECIMAL},
+      rzj = #{record.rzj,jdbcType=DECIMAL},
+      yjx = #{record.yjx,jdbcType=DECIMAL},
+      pcx = #{record.pcx,jdbcType=DECIMAL},
+      xzj = #{record.xzj,jdbcType=DECIMAL},
+      ccbl = #{record.ccbl,jdbcType=INTEGER},
+      isadmin = #{record.isadmin,jdbcType=INTEGER},
+      jyright = #{record.jyright,jdbcType=VARCHAR},
+      riskstate = #{record.riskstate,jdbcType=INTEGER},
+      mncj = #{record.mncj,jdbcType=INTEGER},
+      riskHolderId = #{record.riskholderid,jdbcType=VARCHAR},
+      fundBalance = #{record.fundbalance,jdbcType=NUMERIC},
+      munberno = #{record.munberno,jdbcType=VARCHAR},
+      allocbroker = #{record.allocbroker,jdbcType=VARCHAR},
+      allocchannel = #{record.allocchannel,jdbcType=VARCHAR},
+      proportion = #{record.proportion,jdbcType=DOUBLE}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jcl.pojo.Subzh" >
+    update subzh
+    <set >
+      <if test="pagentzh != null" >
+        pagentzh = #{pagentzh,jdbcType=VARCHAR},
+      </if>
+      <if test="mainzh != null" >
+        mainzh = #{mainzh,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="khdate != null" >
+        khdate = #{khdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="wtzh != null" >
+        wtzh = #{wtzh,jdbcType=VARCHAR},
+      </if>
+      <if test="marginset != null" >
+        marginset = #{marginset,jdbcType=VARCHAR},
+      </if>
+      <if test="feeset != null" >
+        feeset = #{feeset,jdbcType=VARCHAR},
+      </if>
+      <if test="riskset != null" >
+        riskset = #{riskset,jdbcType=INTEGER},
+      </if>
+      <if test="midman != null" >
+        midman = #{midman,jdbcType=VARCHAR},
+      </if>
+      <if test="openright != null" >
+        openright = #{openright,jdbcType=INTEGER},
+      </if>
+      <if test="accounttype != null" >
+        accounttype = #{accounttype,jdbcType=INTEGER},
+      </if>
+      <if test="brokerzh != null" >
+        brokerzh = #{brokerzh,jdbcType=VARCHAR},
+      </if>
+      <if test="isagent != null" >
+        isagent = #{isagent,jdbcType=INTEGER},
+      </if>
+      <if test="qq != null" >
+        qq = #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="mail != null" >
+        mail = #{mail,jdbcType=VARCHAR},
+      </if>
+      <if test="initmoney != null" >
+        initmoney = #{initmoney,jdbcType=DECIMAL},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="firstjjs != null" >
+        firstjjs = #{firstjjs,jdbcType=VARCHAR},
+      </if>
+      <if test="secendjjs != null" >
+        secendjjs = #{secendjjs,jdbcType=VARCHAR},
+      </if>
+      <if test="thirdjjs != null" >
+        thirdjjs = #{thirdjjs,jdbcType=VARCHAR},
+      </if>
+      <if test="mac != null" >
+        mac = #{mac,jdbcType=VARCHAR},
+      </if>
+      <if test="note != null" >
+        note = #{note,jdbcType=VARCHAR},
+      </if>
+      <if test="groupid != null" >
+        groupid = #{groupid,jdbcType=VARCHAR},
+      </if>
+      <if test="bz != null" >
+        bz = #{bz,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null" >
+        userid = #{userid,jdbcType=NUMERIC},
+      </if>
+      <if test="headpicture != null" >
+        headPicture = #{headpicture,jdbcType=VARCHAR},
+      </if>
+      <if test="loginname != null" >
+        loginname = #{loginname,jdbcType=VARCHAR},
+      </if>
+      <if test="notename != null" >
+        notename = #{notename,jdbcType=VARCHAR},
+      </if>
+      <if test="notetel != null" >
+        notetel = #{notetel,jdbcType=VARCHAR},
+      </if>
+      <if test="risktype != null" >
+        risktype = #{risktype,jdbcType=INTEGER},
+      </if>
+      <if test="accountpattern != null" >
+        accountpattern = #{accountpattern,jdbcType=INTEGER},
+      </if>
+      <if test="zijinaccount != null" >
+        zijinaccount = #{zijinaccount,jdbcType=INTEGER},
+      </if>
+      <if test="jypz != null" >
+        jypz = #{jypz,jdbcType=INTEGER},
+      </if>
+      <if test="bdtd != null" >
+        bdtd = #{bdtd,jdbcType=VARCHAR},
+      </if>
+      <if test="bzj != null" >
+        bzj = #{bzj,jdbcType=DECIMAL},
+      </if>
+      <if test="rzj != null" >
+        rzj = #{rzj,jdbcType=DECIMAL},
+      </if>
+      <if test="yjx != null" >
+        yjx = #{yjx,jdbcType=DECIMAL},
+      </if>
+      <if test="pcx != null" >
+        pcx = #{pcx,jdbcType=DECIMAL},
+      </if>
+      <if test="xzj != null" >
+        xzj = #{xzj,jdbcType=DECIMAL},
+      </if>
+      <if test="ccbl != null" >
+        ccbl = #{ccbl,jdbcType=INTEGER},
+      </if>
+      <if test="isadmin != null" >
+        isadmin = #{isadmin,jdbcType=INTEGER},
+      </if>
+      <if test="jyright != null" >
+        jyright = #{jyright,jdbcType=VARCHAR},
+      </if>
+      <if test="riskstate != null" >
+        riskstate = #{riskstate,jdbcType=INTEGER},
+      </if>
+      <if test="mncj != null" >
+        mncj = #{mncj,jdbcType=INTEGER},
+      </if>
+      <if test="riskholderid != null" >
+        riskHolderId = #{riskholderid,jdbcType=VARCHAR},
+      </if>
+      <if test="fundbalance != null" >
+        fundBalance = #{fundbalance,jdbcType=NUMERIC},
+      </if>
+      <if test="munberno != null" >
+        munberno = #{munberno,jdbcType=VARCHAR},
+      </if>
+      <if test="allocbroker != null" >
+        allocbroker = #{allocbroker,jdbcType=VARCHAR},
+      </if>
+      <if test="allocchannel != null" >
+        allocchannel = #{allocchannel,jdbcType=VARCHAR},
+      </if>
+      <if test="proportion != null" >
+        proportion = #{proportion,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where subzh = #{subzh,jdbcType=VARCHAR}
+      and cookie = #{cookie,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jcl.pojo.Subzh" >
+    update subzh
+    set pagentzh = #{pagentzh,jdbcType=VARCHAR},
+      mainzh = #{mainzh,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=INTEGER},
+      phone = #{phone,jdbcType=VARCHAR},
+      khdate = #{khdate,jdbcType=TIMESTAMP},
+      wtzh = #{wtzh,jdbcType=VARCHAR},
+      marginset = #{marginset,jdbcType=VARCHAR},
+      feeset = #{feeset,jdbcType=VARCHAR},
+      riskset = #{riskset,jdbcType=INTEGER},
+      midman = #{midman,jdbcType=VARCHAR},
+      openright = #{openright,jdbcType=INTEGER},
+      accounttype = #{accounttype,jdbcType=INTEGER},
+      brokerzh = #{brokerzh,jdbcType=VARCHAR},
+      isagent = #{isagent,jdbcType=INTEGER},
+      qq = #{qq,jdbcType=VARCHAR},
+      mail = #{mail,jdbcType=VARCHAR},
+      initmoney = #{initmoney,jdbcType=DECIMAL},
+      address = #{address,jdbcType=VARCHAR},
+      firstjjs = #{firstjjs,jdbcType=VARCHAR},
+      secendjjs = #{secendjjs,jdbcType=VARCHAR},
+      thirdjjs = #{thirdjjs,jdbcType=VARCHAR},
+      mac = #{mac,jdbcType=VARCHAR},
+      note = #{note,jdbcType=VARCHAR},
+      groupid = #{groupid,jdbcType=VARCHAR},
+      bz = #{bz,jdbcType=VARCHAR},
+      userid = #{userid,jdbcType=NUMERIC},
+      headPicture = #{headpicture,jdbcType=VARCHAR},
+      loginname = #{loginname,jdbcType=VARCHAR},
+      notename = #{notename,jdbcType=VARCHAR},
+      notetel = #{notetel,jdbcType=VARCHAR},
+      risktype = #{risktype,jdbcType=INTEGER},
+      accountpattern = #{accountpattern,jdbcType=INTEGER},
+      zijinaccount = #{zijinaccount,jdbcType=INTEGER},
+      jypz = #{jypz,jdbcType=INTEGER},
+      bdtd = #{bdtd,jdbcType=VARCHAR},
+      bzj = #{bzj,jdbcType=DECIMAL},
+      rzj = #{rzj,jdbcType=DECIMAL},
+      yjx = #{yjx,jdbcType=DECIMAL},
+      pcx = #{pcx,jdbcType=DECIMAL},
+      xzj = #{xzj,jdbcType=DECIMAL},
+      ccbl = #{ccbl,jdbcType=INTEGER},
+      isadmin = #{isadmin,jdbcType=INTEGER},
+      jyright = #{jyright,jdbcType=VARCHAR},
+      riskstate = #{riskstate,jdbcType=INTEGER},
+      mncj = #{mncj,jdbcType=INTEGER},
+      riskHolderId = #{riskholderid,jdbcType=VARCHAR},
+      fundBalance = #{fundbalance,jdbcType=NUMERIC},
+      munberno = #{munberno,jdbcType=VARCHAR},
+      allocbroker = #{allocbroker,jdbcType=VARCHAR},
+      allocchannel = #{allocchannel,jdbcType=VARCHAR},
+      proportion = #{proportion,jdbcType=DOUBLE}
+    where subzh = #{subzh,jdbcType=VARCHAR}
+      and cookie = #{cookie,jdbcType=VARCHAR}
+  </update>
+</mapper>

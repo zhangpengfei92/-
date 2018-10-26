@@ -1,0 +1,166 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<%@include file="../../../head.jsp"%>
+<head>
+<meta charset="utf-8">
+<title></title>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta content="telephone=no" name="format-detection">
+</head>
+<script type="text/javascript">
+var uid= "<%=session.getAttribute("SESSION_ACCOUNTID")%>"; 
+var username= "<%=session.getAttribute("SESSION_LOGINNAME")%>"; 
+$(document).ready(function() {
+	$("#txmoney").bind("keypress", function(event) {
+	    var event= event || window.event;  
+	    var getValue = $(this).val();  
+	    //控制只能输入的值  
+	    if (event.which && (event.which < 48 || event.which > 57) && event.which != 8 && event.which != 46) {  
+	        event.preventDefault();  
+	         return;  
+	    }
+	    if (getValue.length == 1 && getValue.substring(0,1) == "0" && event.which != 46) {  
+	        event.preventDefault();  
+	        return;  
+	    }
+	  	//控制只能输入一个小数点"."  
+	    if (getValue.indexOf('.') != -1 && event.which == 46) {  
+	        event.preventDefault();   
+	        return;  
+	    }
+	  	//小数点后面只能输2位
+	    if(getValue.indexOf('.') != -1 && event.which != 46){
+	    	var arr = getValue.split(".");
+		    if(arr[1].length > 1){
+		    	event.preventDefault();  
+		        return; 
+		    }
+	    }
+	 })
+	 $("#bankcardNum").bind("keypress", function(event) {
+	    var event= event || window.event;  
+	    var getValue = $(this).val();  
+	    //控制只能输入的值  
+	    if (event.which && (event.which < 48 || event.which > 57) && event.which != 8 ) {  
+	        event.preventDefault();  
+	         return;  
+	    }
+	 })
+})
+ function tixiansubmit(){
+	 var amount= $("#amount").val();
+	 var bankcode=$("#bankcode").val();
+	 var bankname=$("#bankname").val();
+	 var bankbranch=$("#bankbranch").val();
+	 var cardname =$("#cardname").val();
+     var cardno =$("#cardno").val();
+     var cardmobile =$("#cardmobile").val();
+     var certid =$("#certid").val();
+     var province=$("#province").val();
+     var city=$("#city").val();
+	 
+	 $.post("${path}/subzhfund/paya",{
+		 "amount":amount,
+		 "bankcode":bankcode,
+		 "bankname":bankname,
+		 "bankbranch":bankbranch,
+		 "cardname":cardname,
+		 "cardno":cardno,
+		 "cardmobile":cardmobile,
+		 "certid":certid,
+		 "province":province,
+		 "city":city
+	 },function(data){
+		 if(data=="ok"){
+			 jump();
+		 }else{
+			 alert(data.substring(6));
+		 }
+	 })
+ 	}
+	function jump(){
+		window.location = "${path}/stockoption/stockoptionJump?str=fundpc";
+	}
+ 
+
+</script>
+<body class="hgray">
+	<div class="category">
+		<!-- insder header -->
+		<header class="ls-header">
+		<div class="ls-header-left">
+			<a href="javascript:void(0)" onclick="zjmx()"><i
+				class="iconfont icon-back"></i></a>
+		</div>
+		<div class="ls-header-title">提现</div>
+		<!--<div class="ls-header-right">
+       <a href=""><i class="iconfont icon-flash"></i></a>
+    </div>--> </header>
+		<div class="mainbox">
+			<div class="zjbox wbox">
+				<div class="User">
+					<img src="${path}/images/zjzh.png">
+					<div class="Ugold">
+						<p class="tit">资金账户</p>
+						<p class="sum">
+							<span>账户余额</span><em>￥${userinfo.xzj}</em>
+						</p>
+					</div>
+				</div>
+				<div class="Uzhao">
+					<div class="search">
+						<ul>
+							<li><label>金额</label> <input type="text" id="amount"
+								name="amount" placeholder="请输入金额"></li>
+							<li><label>银行卡编号</label> <input type="text" id="bankcode"
+								name="bankcode" placeholder="银行卡编号如ICBC"></li>
+							<li><label>银行卡开户行名称</label> <input type="text" id="bankname"
+								name="bankname" placeholder="请输入银行卡开户行名称"></li>
+							<li><label>银行卡开户支行名称</label> <input type="text"
+								id="bankbranch" name="bankbranch" placeholder="请输入银行卡开户支行名称">
+							</li>
+							<li><label>收款人姓名</label> <input type="text" id="cardname"
+								name="cardname" placeholder="请输入收款人姓名"></li>
+							<li><label>收款人银行账号</label> <input type="text" id="cardno"
+								name="cardno" placeholder="收款人银行账号"></li>
+							<li><label>预留手机号</label> <input type="text" id="cardmobile"
+								name="cardmobile" placeholder="银行预留手机号"></li>
+							<li><label>身份证号</label> <input type="text" id="certid"
+								name="certid" placeholder="身份证号"></li>
+							<li><label>开户行所在省</label> <input type="text" id="province"
+								name="province" placeholder=""></li>
+							<li><label>开户行所在市</label> <input type="text" id="city"
+								name="city" placeholder=""></li>																				
+						</ul>
+					</div>
+				</div>
+				<a href="javascript:;" class="czbutton" onclick="tixiansubmit()">提交</a>
+			</div>
+		</div>
+		<div class="homebottom">
+			<ul>
+				<li class="nav01" onclick="hangqing()"><a href="javascript:;">
+						<i></i> <span>行情</span>
+				</a></li>
+				<li class="nav02" onclick="trader()"><a href="javascript:;">
+						<i></i> <span>交易</span>
+				</a></li>
+				<li class="nav13" onclick="zjmx()"><a href="javascript:;"
+					class="on"> <i></i> <span>资金</span>
+				</a></li>
+				<li class="nav04" onclick="helpCenter()"><a href="javascript:;">
+						<i></i> <span>帮助</span>
+				</a></li>
+				<li class="nav05" onclick="personal()"><a href="javascript:;">
+						<i></i> <span>我的</span>
+				</a></li>
+			</ul>
+		</div>
+		<%@include file="../../../foot.jsp"%>
+	</div>
+</body>
+</html>

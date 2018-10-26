@@ -1,0 +1,466 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcl.dao.FundOrderMapper" >
+  <resultMap id="BaseResultMap" type="com.jcl.pojo.FundOrder" >
+    <id column="orderid" property="orderid" jdbcType="INTEGER" />
+    <result column="subzh" property="subzh" jdbcType="VARCHAR" />
+    <result column="zj_use" property="zjUse" jdbcType="VARCHAR" />
+    <result column="zj_type" property="zjType" jdbcType="VARCHAR" />
+    <result column="paymentzh" property="paymentzh" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="kh_name" property="khName" jdbcType="VARCHAR" />
+    <result column="fund" property="fund" jdbcType="DECIMAL" />
+    <result column="remark_name" property="remarkName" jdbcType="VARCHAR" />
+    <result column="remark_phone" property="remarkPhone" jdbcType="VARCHAR" />
+    <result column="over_time" property="overTime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="sys_userid" property="sysUserid" jdbcType="INTEGER" />
+    <result column="sys_user_name" property="sysUserName" jdbcType="VARCHAR" />
+    <result column="sk_name" property="skName" jdbcType="VARCHAR" />
+    <result column="sk_bank" property="skBank" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="modified_time" property="modifiedTime" jdbcType="TIMESTAMP" />
+    <result column="sk_bank_name" property="skBankName" jdbcType="VARCHAR" />
+    <result column="cz_type" property="czType" jdbcType="VARCHAR" />
+    <result column="ck_bank" property="ckBank" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    orderid, subzh, zj_use, zj_type, paymentzh, phone, kh_name, fund, remark_name, remark_phone, 
+    over_time, status, sys_userid, sys_user_name, sk_name, sk_bank, create_time, modified_time, 
+    sk_bank_name, cz_type, ck_bank
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jcl.pojo.FundOrderExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from fund_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from fund_order
+    where orderid = #{orderid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from fund_order
+    where orderid = #{orderid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jcl.pojo.FundOrderExample" >
+    delete from fund_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jcl.pojo.FundOrder" >
+    insert into fund_order (orderid, subzh, zj_use, 
+      zj_type, paymentzh, phone, 
+      kh_name, fund, remark_name, 
+      remark_phone, over_time, status, 
+      sys_userid, sys_user_name, sk_name, 
+      sk_bank, create_time, modified_time, 
+      sk_bank_name, cz_type, ck_bank
+      )
+    values (#{orderid,jdbcType=INTEGER}, #{subzh,jdbcType=VARCHAR}, #{zjUse,jdbcType=VARCHAR}, 
+      #{zjType,jdbcType=VARCHAR}, #{paymentzh,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{khName,jdbcType=VARCHAR}, #{fund,jdbcType=DECIMAL}, #{remarkName,jdbcType=VARCHAR}, 
+      #{remarkPhone,jdbcType=VARCHAR}, #{overTime,jdbcType=TIMESTAMP}, #{status,jdbcType=VARCHAR}, 
+      #{sysUserid,jdbcType=INTEGER}, #{sysUserName,jdbcType=VARCHAR}, #{skName,jdbcType=VARCHAR}, 
+      #{skBank,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{modifiedTime,jdbcType=TIMESTAMP}, 
+      #{skBankName,jdbcType=VARCHAR}, #{czType,jdbcType=VARCHAR}, #{ckBank,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jcl.pojo.FundOrder" >
+    insert into fund_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="orderid != null" >
+        orderid,
+      </if>
+      <if test="subzh != null" >
+        subzh,
+      </if>
+      <if test="zjUse != null" >
+        zj_use,
+      </if>
+      <if test="zjType != null" >
+        zj_type,
+      </if>
+      <if test="paymentzh != null" >
+        paymentzh,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="khName != null" >
+        kh_name,
+      </if>
+      <if test="fund != null" >
+        fund,
+      </if>
+      <if test="remarkName != null" >
+        remark_name,
+      </if>
+      <if test="remarkPhone != null" >
+        remark_phone,
+      </if>
+      <if test="overTime != null" >
+        over_time,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="sysUserid != null" >
+        sys_userid,
+      </if>
+      <if test="sysUserName != null" >
+        sys_user_name,
+      </if>
+      <if test="skName != null" >
+        sk_name,
+      </if>
+      <if test="skBank != null" >
+        sk_bank,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="modifiedTime != null" >
+        modified_time,
+      </if>
+      <if test="skBankName != null" >
+        sk_bank_name,
+      </if>
+      <if test="czType != null" >
+        cz_type,
+      </if>
+      <if test="ckBank != null" >
+        ck_bank,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="orderid != null" >
+        #{orderid,jdbcType=INTEGER},
+      </if>
+      <if test="subzh != null" >
+        #{subzh,jdbcType=VARCHAR},
+      </if>
+      <if test="zjUse != null" >
+        #{zjUse,jdbcType=VARCHAR},
+      </if>
+      <if test="zjType != null" >
+        #{zjType,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentzh != null" >
+        #{paymentzh,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="khName != null" >
+        #{khName,jdbcType=VARCHAR},
+      </if>
+      <if test="fund != null" >
+        #{fund,jdbcType=DECIMAL},
+      </if>
+      <if test="remarkName != null" >
+        #{remarkName,jdbcType=VARCHAR},
+      </if>
+      <if test="remarkPhone != null" >
+        #{remarkPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="overTime != null" >
+        #{overTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="sysUserid != null" >
+        #{sysUserid,jdbcType=INTEGER},
+      </if>
+      <if test="sysUserName != null" >
+        #{sysUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="skName != null" >
+        #{skName,jdbcType=VARCHAR},
+      </if>
+      <if test="skBank != null" >
+        #{skBank,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedTime != null" >
+        #{modifiedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="skBankName != null" >
+        #{skBankName,jdbcType=VARCHAR},
+      </if>
+      <if test="czType != null" >
+        #{czType,jdbcType=VARCHAR},
+      </if>
+      <if test="ckBank != null" >
+        #{ckBank,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jcl.pojo.FundOrderExample" resultType="java.lang.Integer" >
+    select count(*) from fund_order
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update fund_order
+    <set >
+      <if test="record.orderid != null" >
+        orderid = #{record.orderid,jdbcType=INTEGER},
+      </if>
+      <if test="record.subzh != null" >
+        subzh = #{record.subzh,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zjUse != null" >
+        zj_use = #{record.zjUse,jdbcType=VARCHAR},
+      </if>
+      <if test="record.zjType != null" >
+        zj_type = #{record.zjType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paymentzh != null" >
+        paymentzh = #{record.paymentzh,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null" >
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.khName != null" >
+        kh_name = #{record.khName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fund != null" >
+        fund = #{record.fund,jdbcType=DECIMAL},
+      </if>
+      <if test="record.remarkName != null" >
+        remark_name = #{record.remarkName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remarkPhone != null" >
+        remark_phone = #{record.remarkPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.overTime != null" >
+        over_time = #{record.overTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sysUserid != null" >
+        sys_userid = #{record.sysUserid,jdbcType=INTEGER},
+      </if>
+      <if test="record.sysUserName != null" >
+        sys_user_name = #{record.sysUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.skName != null" >
+        sk_name = #{record.skName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.skBank != null" >
+        sk_bank = #{record.skBank,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifiedTime != null" >
+        modified_time = #{record.modifiedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.skBankName != null" >
+        sk_bank_name = #{record.skBankName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.czType != null" >
+        cz_type = #{record.czType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ckBank != null" >
+        ck_bank = #{record.ckBank,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update fund_order
+    set orderid = #{record.orderid,jdbcType=INTEGER},
+      subzh = #{record.subzh,jdbcType=VARCHAR},
+      zj_use = #{record.zjUse,jdbcType=VARCHAR},
+      zj_type = #{record.zjType,jdbcType=VARCHAR},
+      paymentzh = #{record.paymentzh,jdbcType=VARCHAR},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      kh_name = #{record.khName,jdbcType=VARCHAR},
+      fund = #{record.fund,jdbcType=DECIMAL},
+      remark_name = #{record.remarkName,jdbcType=VARCHAR},
+      remark_phone = #{record.remarkPhone,jdbcType=VARCHAR},
+      over_time = #{record.overTime,jdbcType=TIMESTAMP},
+      status = #{record.status,jdbcType=VARCHAR},
+      sys_userid = #{record.sysUserid,jdbcType=INTEGER},
+      sys_user_name = #{record.sysUserName,jdbcType=VARCHAR},
+      sk_name = #{record.skName,jdbcType=VARCHAR},
+      sk_bank = #{record.skBank,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      modified_time = #{record.modifiedTime,jdbcType=TIMESTAMP},
+      sk_bank_name = #{record.skBankName,jdbcType=VARCHAR},
+      cz_type = #{record.czType,jdbcType=VARCHAR},
+      ck_bank = #{record.ckBank,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jcl.pojo.FundOrder" >
+    update fund_order
+    <set >
+      <if test="subzh != null" >
+        subzh = #{subzh,jdbcType=VARCHAR},
+      </if>
+      <if test="zjUse != null" >
+        zj_use = #{zjUse,jdbcType=VARCHAR},
+      </if>
+      <if test="zjType != null" >
+        zj_type = #{zjType,jdbcType=VARCHAR},
+      </if>
+      <if test="paymentzh != null" >
+        paymentzh = #{paymentzh,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="khName != null" >
+        kh_name = #{khName,jdbcType=VARCHAR},
+      </if>
+      <if test="fund != null" >
+        fund = #{fund,jdbcType=DECIMAL},
+      </if>
+      <if test="remarkName != null" >
+        remark_name = #{remarkName,jdbcType=VARCHAR},
+      </if>
+      <if test="remarkPhone != null" >
+        remark_phone = #{remarkPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="overTime != null" >
+        over_time = #{overTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="sysUserid != null" >
+        sys_userid = #{sysUserid,jdbcType=INTEGER},
+      </if>
+      <if test="sysUserName != null" >
+        sys_user_name = #{sysUserName,jdbcType=VARCHAR},
+      </if>
+      <if test="skName != null" >
+        sk_name = #{skName,jdbcType=VARCHAR},
+      </if>
+      <if test="skBank != null" >
+        sk_bank = #{skBank,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedTime != null" >
+        modified_time = #{modifiedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="skBankName != null" >
+        sk_bank_name = #{skBankName,jdbcType=VARCHAR},
+      </if>
+      <if test="czType != null" >
+        cz_type = #{czType,jdbcType=VARCHAR},
+      </if>
+      <if test="ckBank != null" >
+        ck_bank = #{ckBank,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where orderid = #{orderid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jcl.pojo.FundOrder" >
+    update fund_order
+    set subzh = #{subzh,jdbcType=VARCHAR},
+      zj_use = #{zjUse,jdbcType=VARCHAR},
+      zj_type = #{zjType,jdbcType=VARCHAR},
+      paymentzh = #{paymentzh,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      kh_name = #{khName,jdbcType=VARCHAR},
+      fund = #{fund,jdbcType=DECIMAL},
+      remark_name = #{remarkName,jdbcType=VARCHAR},
+      remark_phone = #{remarkPhone,jdbcType=VARCHAR},
+      over_time = #{overTime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=VARCHAR},
+      sys_userid = #{sysUserid,jdbcType=INTEGER},
+      sys_user_name = #{sysUserName,jdbcType=VARCHAR},
+      sk_name = #{skName,jdbcType=VARCHAR},
+      sk_bank = #{skBank,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modified_time = #{modifiedTime,jdbcType=TIMESTAMP},
+      sk_bank_name = #{skBankName,jdbcType=VARCHAR},
+      cz_type = #{czType,jdbcType=VARCHAR},
+      ck_bank = #{ckBank,jdbcType=VARCHAR}
+    where orderid = #{orderid,jdbcType=INTEGER}
+  </update>
+</mapper>

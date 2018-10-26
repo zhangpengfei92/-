@@ -1,0 +1,466 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcl.dao.SubzhFundLogMapper" >
+  <resultMap id="BaseResultMap" type="com.jcl.pojo.SubzhFundLog" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="subzh" property="subzh" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="bz" property="bz" jdbcType="TINYINT" />
+    <result column="fund" property="fund" jdbcType="DECIMAL" />
+    <result column="afterfund" property="afterfund" jdbcType="DECIMAL" />
+    <result column="modifytime" property="modifytime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="userid" property="userid" jdbcType="NUMERIC" />
+    <result column="agentzh" property="agentzh" jdbcType="VARCHAR" />
+    <result column="reason" property="reason" jdbcType="VARCHAR" />
+    <result column="bankaccname" property="bankaccname" jdbcType="VARCHAR" />
+    <result column="bankcardNum" property="bankcardnum" jdbcType="VARCHAR" />
+    <result column="openbankname" property="openbankname" jdbcType="VARCHAR" />
+    <result column="bankflownum" property="bankflownum" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.jcl.pojo.SubzhFundLog" extends="BaseResultMap" >
+    <result column="description" property="description" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, subzh, name, type, bz, fund, afterfund, modifytime, status, userid, agentzh, 
+    reason, bankaccname, bankcardNum, openbankname, bankflownum
+  </sql>
+  <sql id="Blob_Column_List" >
+    description
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.jcl.pojo.SubzhFundLogExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from subzhfund_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jcl.pojo.SubzhFundLogExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from subzhfund_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from subzhfund_log
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from subzhfund_log
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jcl.pojo.SubzhFundLogExample" >
+    delete from subzhfund_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jcl.pojo.SubzhFundLog" >
+    insert into subzhfund_log (id, subzh, name, 
+      type, bz, fund, afterfund, 
+      modifytime, status, userid, 
+      agentzh, reason, bankaccname, 
+      bankcardNum, openbankname, bankflownum, 
+      description)
+    values (#{id,jdbcType=INTEGER}, #{subzh,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{type,jdbcType=VARCHAR}, #{bz,jdbcType=TINYINT}, #{fund,jdbcType=DECIMAL}, #{afterfund,jdbcType=DECIMAL}, 
+      #{modifytime,jdbcType=TIMESTAMP}, #{status,jdbcType=TINYINT}, #{userid,jdbcType=NUMERIC}, 
+      #{agentzh,jdbcType=VARCHAR}, #{reason,jdbcType=VARCHAR}, #{bankaccname,jdbcType=VARCHAR}, 
+      #{bankcardnum,jdbcType=VARCHAR}, #{openbankname,jdbcType=VARCHAR}, #{bankflownum,jdbcType=VARCHAR}, 
+      #{description,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jcl.pojo.SubzhFundLog" >
+    insert into subzhfund_log
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="subzh != null" >
+        subzh,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="bz != null" >
+        bz,
+      </if>
+      <if test="fund != null" >
+        fund,
+      </if>
+      <if test="afterfund != null" >
+        afterfund,
+      </if>
+      <if test="modifytime != null" >
+        modifytime,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="userid != null" >
+        userid,
+      </if>
+      <if test="agentzh != null" >
+        agentzh,
+      </if>
+      <if test="reason != null" >
+        reason,
+      </if>
+      <if test="bankaccname != null" >
+        bankaccname,
+      </if>
+      <if test="bankcardnum != null" >
+        bankcardNum,
+      </if>
+      <if test="openbankname != null" >
+        openbankname,
+      </if>
+      <if test="bankflownum != null" >
+        bankflownum,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="subzh != null" >
+        #{subzh,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="bz != null" >
+        #{bz,jdbcType=TINYINT},
+      </if>
+      <if test="fund != null" >
+        #{fund,jdbcType=DECIMAL},
+      </if>
+      <if test="afterfund != null" >
+        #{afterfund,jdbcType=DECIMAL},
+      </if>
+      <if test="modifytime != null" >
+        #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=NUMERIC},
+      </if>
+      <if test="agentzh != null" >
+        #{agentzh,jdbcType=VARCHAR},
+      </if>
+      <if test="reason != null" >
+        #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="bankaccname != null" >
+        #{bankaccname,jdbcType=VARCHAR},
+      </if>
+      <if test="bankcardnum != null" >
+        #{bankcardnum,jdbcType=VARCHAR},
+      </if>
+      <if test="openbankname != null" >
+        #{openbankname,jdbcType=VARCHAR},
+      </if>
+      <if test="bankflownum != null" >
+        #{bankflownum,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jcl.pojo.SubzhFundLogExample" resultType="java.lang.Integer" >
+    select count(*) from subzhfund_log
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update subzhfund_log
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.subzh != null" >
+        subzh = #{record.subzh,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bz != null" >
+        bz = #{record.bz,jdbcType=TINYINT},
+      </if>
+      <if test="record.fund != null" >
+        fund = #{record.fund,jdbcType=DECIMAL},
+      </if>
+      <if test="record.afterfund != null" >
+        afterfund = #{record.afterfund,jdbcType=DECIMAL},
+      </if>
+      <if test="record.modifytime != null" >
+        modifytime = #{record.modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=TINYINT},
+      </if>
+      <if test="record.userid != null" >
+        userid = #{record.userid,jdbcType=NUMERIC},
+      </if>
+      <if test="record.agentzh != null" >
+        agentzh = #{record.agentzh,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reason != null" >
+        reason = #{record.reason,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bankaccname != null" >
+        bankaccname = #{record.bankaccname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bankcardnum != null" >
+        bankcardNum = #{record.bankcardnum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.openbankname != null" >
+        openbankname = #{record.openbankname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bankflownum != null" >
+        bankflownum = #{record.bankflownum,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null" >
+        description = #{record.description,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update subzhfund_log
+    set id = #{record.id,jdbcType=INTEGER},
+      subzh = #{record.subzh,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=VARCHAR},
+      bz = #{record.bz,jdbcType=TINYINT},
+      fund = #{record.fund,jdbcType=DECIMAL},
+      afterfund = #{record.afterfund,jdbcType=DECIMAL},
+      modifytime = #{record.modifytime,jdbcType=TIMESTAMP},
+      status = #{record.status,jdbcType=TINYINT},
+      userid = #{record.userid,jdbcType=NUMERIC},
+      agentzh = #{record.agentzh,jdbcType=VARCHAR},
+      reason = #{record.reason,jdbcType=VARCHAR},
+      bankaccname = #{record.bankaccname,jdbcType=VARCHAR},
+      bankcardNum = #{record.bankcardnum,jdbcType=VARCHAR},
+      openbankname = #{record.openbankname,jdbcType=VARCHAR},
+      bankflownum = #{record.bankflownum,jdbcType=VARCHAR},
+      description = #{record.description,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update subzhfund_log
+    set id = #{record.id,jdbcType=INTEGER},
+      subzh = #{record.subzh,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=VARCHAR},
+      bz = #{record.bz,jdbcType=TINYINT},
+      fund = #{record.fund,jdbcType=DECIMAL},
+      afterfund = #{record.afterfund,jdbcType=DECIMAL},
+      modifytime = #{record.modifytime,jdbcType=TIMESTAMP},
+      status = #{record.status,jdbcType=TINYINT},
+      userid = #{record.userid,jdbcType=NUMERIC},
+      agentzh = #{record.agentzh,jdbcType=VARCHAR},
+      reason = #{record.reason,jdbcType=VARCHAR},
+      bankaccname = #{record.bankaccname,jdbcType=VARCHAR},
+      bankcardNum = #{record.bankcardnum,jdbcType=VARCHAR},
+      openbankname = #{record.openbankname,jdbcType=VARCHAR},
+      bankflownum = #{record.bankflownum,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jcl.pojo.SubzhFundLog" >
+    update subzhfund_log
+    <set >
+      <if test="subzh != null" >
+        subzh = #{subzh,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="bz != null" >
+        bz = #{bz,jdbcType=TINYINT},
+      </if>
+      <if test="fund != null" >
+        fund = #{fund,jdbcType=DECIMAL},
+      </if>
+      <if test="afterfund != null" >
+        afterfund = #{afterfund,jdbcType=DECIMAL},
+      </if>
+      <if test="modifytime != null" >
+        modifytime = #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="userid != null" >
+        userid = #{userid,jdbcType=NUMERIC},
+      </if>
+      <if test="agentzh != null" >
+        agentzh = #{agentzh,jdbcType=VARCHAR},
+      </if>
+      <if test="reason != null" >
+        reason = #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="bankaccname != null" >
+        bankaccname = #{bankaccname,jdbcType=VARCHAR},
+      </if>
+      <if test="bankcardnum != null" >
+        bankcardNum = #{bankcardnum,jdbcType=VARCHAR},
+      </if>
+      <if test="openbankname != null" >
+        openbankname = #{openbankname,jdbcType=VARCHAR},
+      </if>
+      <if test="bankflownum != null" >
+        bankflownum = #{bankflownum,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.jcl.pojo.SubzhFundLog" >
+    update subzhfund_log
+    set subzh = #{subzh,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      bz = #{bz,jdbcType=TINYINT},
+      fund = #{fund,jdbcType=DECIMAL},
+      afterfund = #{afterfund,jdbcType=DECIMAL},
+      modifytime = #{modifytime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=TINYINT},
+      userid = #{userid,jdbcType=NUMERIC},
+      agentzh = #{agentzh,jdbcType=VARCHAR},
+      reason = #{reason,jdbcType=VARCHAR},
+      bankaccname = #{bankaccname,jdbcType=VARCHAR},
+      bankcardNum = #{bankcardnum,jdbcType=VARCHAR},
+      openbankname = #{openbankname,jdbcType=VARCHAR},
+      bankflownum = #{bankflownum,jdbcType=VARCHAR},
+      description = #{description,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jcl.pojo.SubzhFundLog" >
+    update subzhfund_log
+    set subzh = #{subzh,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      bz = #{bz,jdbcType=TINYINT},
+      fund = #{fund,jdbcType=DECIMAL},
+      afterfund = #{afterfund,jdbcType=DECIMAL},
+      modifytime = #{modifytime,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=TINYINT},
+      userid = #{userid,jdbcType=NUMERIC},
+      agentzh = #{agentzh,jdbcType=VARCHAR},
+      reason = #{reason,jdbcType=VARCHAR},
+      bankaccname = #{bankaccname,jdbcType=VARCHAR},
+      bankcardNum = #{bankcardnum,jdbcType=VARCHAR},
+      openbankname = #{openbankname,jdbcType=VARCHAR},
+      bankflownum = #{bankflownum,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

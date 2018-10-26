@@ -1,0 +1,671 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcl.dao.StockEnquiryMapper" >
+  <resultMap id="BaseResultMap" type="com.jcl.pojo.StockEnquiry" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="subzh" property="subzh" jdbcType="VARCHAR" />
+    <result column="stockcode" property="stockcode" jdbcType="VARCHAR" />
+    <result column="stockname" property="stockname" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="enquirytime" property="enquirytime" jdbcType="INTEGER" />
+    <result column="principalBalance" property="principalbalance" jdbcType="NUMERIC" />
+    <result column="principalFloat" property="principalfloat" jdbcType="NUMERIC" />
+    <result column="royaltyBalance" property="royaltybalance" jdbcType="NUMERIC" />
+    <result column="enquiryPrice" property="enquiryprice" jdbcType="NUMERIC" />
+    <result column="settlePrice" property="settleprice" jdbcType="NUMERIC" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="starttime" property="starttime" jdbcType="TIMESTAMP" />
+    <result column="endtime" property="endtime" jdbcType="TIMESTAMP" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="buytime" property="buytime" jdbcType="TIMESTAMP" />
+    <result column="enquirydesc" property="enquirydesc" jdbcType="VARCHAR" />
+    <result column="setFee" property="setfee" jdbcType="INTEGER" />
+    <result column="orgincode" property="orgincode" jdbcType="VARCHAR" />
+    <result column="orginname" property="orginname" jdbcType="VARCHAR" />
+    <result column="agent" property="agent" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="ditch" property="ditch" jdbcType="VARCHAR" />
+    <result column="agentid" property="agentid" jdbcType="VARCHAR" />
+    <result column="ditchid" property="ditchid" jdbcType="VARCHAR" />
+    <result column="orginFloat" property="orginfloat" jdbcType="NUMERIC" />
+    <result column="isSell" property="issell" jdbcType="INTEGER" />
+    <result column="profit" property="profit" jdbcType="NUMERIC" />
+    <result column="freePrice" property="freeprice" jdbcType="NUMERIC" />
+    <result column="timeFly" property="timefly" jdbcType="INTEGER" />
+    <result column="cycleFloat" property="cyclefloat" jdbcType="NUMERIC" />
+    <result column="mybjFloat" property="mybjfloat" jdbcType="NUMERIC" />
+    <result column="agentf" property="agentf" jdbcType="NUMERIC" />
+    <result column="orginf" property="orginf" jdbcType="NUMERIC" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, subzh, stockcode, stockname, type, enquirytime, principalBalance, principalFloat, 
+    royaltyBalance, enquiryPrice, settlePrice, status, starttime, endtime, createtime, 
+    buytime, enquirydesc, setFee, orgincode, orginname, agent, phone, ditch, agentid, 
+    ditchid, orginFloat, isSell, profit, freePrice, timeFly, cycleFloat, mybjFloat, agentf, 
+    orginf
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jcl.pojo.StockEnquiryExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from stock_enquiry
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from stock_enquiry
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from stock_enquiry
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jcl.pojo.StockEnquiryExample" >
+    delete from stock_enquiry
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jcl.pojo.StockEnquiry" >
+    insert into stock_enquiry (id, subzh, stockcode, 
+      stockname, type, enquirytime, 
+      principalBalance, principalFloat, royaltyBalance, 
+      enquiryPrice, settlePrice, status, 
+      starttime, endtime, createtime, 
+      buytime, enquirydesc, setFee, 
+      orgincode, orginname, agent, 
+      phone, ditch, agentid, 
+      ditchid, orginFloat, isSell, 
+      profit, freePrice, timeFly, 
+      cycleFloat, mybjFloat, agentf, 
+      orginf)
+    values (#{id,jdbcType=INTEGER}, #{subzh,jdbcType=VARCHAR}, #{stockcode,jdbcType=VARCHAR}, 
+      #{stockname,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{enquirytime,jdbcType=INTEGER}, 
+      #{principalbalance,jdbcType=NUMERIC}, #{principalfloat,jdbcType=NUMERIC}, #{royaltybalance,jdbcType=NUMERIC}, 
+      #{enquiryprice,jdbcType=NUMERIC}, #{settleprice,jdbcType=NUMERIC}, #{status,jdbcType=INTEGER}, 
+      #{starttime,jdbcType=TIMESTAMP}, #{endtime,jdbcType=TIMESTAMP}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{buytime,jdbcType=TIMESTAMP}, #{enquirydesc,jdbcType=VARCHAR}, #{setfee,jdbcType=INTEGER}, 
+      #{orgincode,jdbcType=VARCHAR}, #{orginname,jdbcType=VARCHAR}, #{agent,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{ditch,jdbcType=VARCHAR}, #{agentid,jdbcType=VARCHAR}, 
+      #{ditchid,jdbcType=VARCHAR}, #{orginfloat,jdbcType=NUMERIC}, #{issell,jdbcType=INTEGER}, 
+      #{profit,jdbcType=NUMERIC}, #{freeprice,jdbcType=NUMERIC}, #{timefly,jdbcType=INTEGER}, 
+      #{cyclefloat,jdbcType=NUMERIC}, #{mybjfloat,jdbcType=NUMERIC}, #{agentf,jdbcType=NUMERIC}, 
+      #{orginf,jdbcType=NUMERIC})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jcl.pojo.StockEnquiry" >
+    insert into stock_enquiry
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="subzh != null" >
+        subzh,
+      </if>
+      <if test="stockcode != null" >
+        stockcode,
+      </if>
+      <if test="stockname != null" >
+        stockname,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="enquirytime != null" >
+        enquirytime,
+      </if>
+      <if test="principalbalance != null" >
+        principalBalance,
+      </if>
+      <if test="principalfloat != null" >
+        principalFloat,
+      </if>
+      <if test="royaltybalance != null" >
+        royaltyBalance,
+      </if>
+      <if test="enquiryprice != null" >
+        enquiryPrice,
+      </if>
+      <if test="settleprice != null" >
+        settlePrice,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="starttime != null" >
+        starttime,
+      </if>
+      <if test="endtime != null" >
+        endtime,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+      <if test="buytime != null" >
+        buytime,
+      </if>
+      <if test="enquirydesc != null" >
+        enquirydesc,
+      </if>
+      <if test="setfee != null" >
+        setFee,
+      </if>
+      <if test="orgincode != null" >
+        orgincode,
+      </if>
+      <if test="orginname != null" >
+        orginname,
+      </if>
+      <if test="agent != null" >
+        agent,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="ditch != null" >
+        ditch,
+      </if>
+      <if test="agentid != null" >
+        agentid,
+      </if>
+      <if test="ditchid != null" >
+        ditchid,
+      </if>
+      <if test="orginfloat != null" >
+        orginFloat,
+      </if>
+      <if test="issell != null" >
+        isSell,
+      </if>
+      <if test="profit != null" >
+        profit,
+      </if>
+      <if test="freeprice != null" >
+        freePrice,
+      </if>
+      <if test="timefly != null" >
+        timeFly,
+      </if>
+      <if test="cyclefloat != null" >
+        cycleFloat,
+      </if>
+      <if test="mybjfloat != null" >
+        mybjFloat,
+      </if>
+      <if test="agentf != null" >
+        agentf,
+      </if>
+      <if test="orginf != null" >
+        orginf,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="subzh != null" >
+        #{subzh,jdbcType=VARCHAR},
+      </if>
+      <if test="stockcode != null" >
+        #{stockcode,jdbcType=VARCHAR},
+      </if>
+      <if test="stockname != null" >
+        #{stockname,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="enquirytime != null" >
+        #{enquirytime,jdbcType=INTEGER},
+      </if>
+      <if test="principalbalance != null" >
+        #{principalbalance,jdbcType=NUMERIC},
+      </if>
+      <if test="principalfloat != null" >
+        #{principalfloat,jdbcType=NUMERIC},
+      </if>
+      <if test="royaltybalance != null" >
+        #{royaltybalance,jdbcType=NUMERIC},
+      </if>
+      <if test="enquiryprice != null" >
+        #{enquiryprice,jdbcType=NUMERIC},
+      </if>
+      <if test="settleprice != null" >
+        #{settleprice,jdbcType=NUMERIC},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="starttime != null" >
+        #{starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null" >
+        #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="buytime != null" >
+        #{buytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enquirydesc != null" >
+        #{enquirydesc,jdbcType=VARCHAR},
+      </if>
+      <if test="setfee != null" >
+        #{setfee,jdbcType=INTEGER},
+      </if>
+      <if test="orgincode != null" >
+        #{orgincode,jdbcType=VARCHAR},
+      </if>
+      <if test="orginname != null" >
+        #{orginname,jdbcType=VARCHAR},
+      </if>
+      <if test="agent != null" >
+        #{agent,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="ditch != null" >
+        #{ditch,jdbcType=VARCHAR},
+      </if>
+      <if test="agentid != null" >
+        #{agentid,jdbcType=VARCHAR},
+      </if>
+      <if test="ditchid != null" >
+        #{ditchid,jdbcType=VARCHAR},
+      </if>
+      <if test="orginfloat != null" >
+        #{orginfloat,jdbcType=NUMERIC},
+      </if>
+      <if test="issell != null" >
+        #{issell,jdbcType=INTEGER},
+      </if>
+      <if test="profit != null" >
+        #{profit,jdbcType=NUMERIC},
+      </if>
+      <if test="freeprice != null" >
+        #{freeprice,jdbcType=NUMERIC},
+      </if>
+      <if test="timefly != null" >
+        #{timefly,jdbcType=INTEGER},
+      </if>
+      <if test="cyclefloat != null" >
+        #{cyclefloat,jdbcType=NUMERIC},
+      </if>
+      <if test="mybjfloat != null" >
+        #{mybjfloat,jdbcType=NUMERIC},
+      </if>
+      <if test="agentf != null" >
+        #{agentf,jdbcType=NUMERIC},
+      </if>
+      <if test="orginf != null" >
+        #{orginf,jdbcType=NUMERIC},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jcl.pojo.StockEnquiryExample" resultType="java.lang.Integer" >
+    select count(*) from stock_enquiry
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update stock_enquiry
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.subzh != null" >
+        subzh = #{record.subzh,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stockcode != null" >
+        stockcode = #{record.stockcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stockname != null" >
+        stockname = #{record.stockname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.enquirytime != null" >
+        enquirytime = #{record.enquirytime,jdbcType=INTEGER},
+      </if>
+      <if test="record.principalbalance != null" >
+        principalBalance = #{record.principalbalance,jdbcType=NUMERIC},
+      </if>
+      <if test="record.principalfloat != null" >
+        principalFloat = #{record.principalfloat,jdbcType=NUMERIC},
+      </if>
+      <if test="record.royaltybalance != null" >
+        royaltyBalance = #{record.royaltybalance,jdbcType=NUMERIC},
+      </if>
+      <if test="record.enquiryprice != null" >
+        enquiryPrice = #{record.enquiryprice,jdbcType=NUMERIC},
+      </if>
+      <if test="record.settleprice != null" >
+        settlePrice = #{record.settleprice,jdbcType=NUMERIC},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.starttime != null" >
+        starttime = #{record.starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endtime != null" >
+        endtime = #{record.endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createtime != null" >
+        createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.buytime != null" >
+        buytime = #{record.buytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.enquirydesc != null" >
+        enquirydesc = #{record.enquirydesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.setfee != null" >
+        setFee = #{record.setfee,jdbcType=INTEGER},
+      </if>
+      <if test="record.orgincode != null" >
+        orgincode = #{record.orgincode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orginname != null" >
+        orginname = #{record.orginname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.agent != null" >
+        agent = #{record.agent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null" >
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ditch != null" >
+        ditch = #{record.ditch,jdbcType=VARCHAR},
+      </if>
+      <if test="record.agentid != null" >
+        agentid = #{record.agentid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ditchid != null" >
+        ditchid = #{record.ditchid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orginfloat != null" >
+        orginFloat = #{record.orginfloat,jdbcType=NUMERIC},
+      </if>
+      <if test="record.issell != null" >
+        isSell = #{record.issell,jdbcType=INTEGER},
+      </if>
+      <if test="record.profit != null" >
+        profit = #{record.profit,jdbcType=NUMERIC},
+      </if>
+      <if test="record.freeprice != null" >
+        freePrice = #{record.freeprice,jdbcType=NUMERIC},
+      </if>
+      <if test="record.timefly != null" >
+        timeFly = #{record.timefly,jdbcType=INTEGER},
+      </if>
+      <if test="record.cyclefloat != null" >
+        cycleFloat = #{record.cyclefloat,jdbcType=NUMERIC},
+      </if>
+      <if test="record.mybjfloat != null" >
+        mybjFloat = #{record.mybjfloat,jdbcType=NUMERIC},
+      </if>
+      <if test="record.agentf != null" >
+        agentf = #{record.agentf,jdbcType=NUMERIC},
+      </if>
+      <if test="record.orginf != null" >
+        orginf = #{record.orginf,jdbcType=NUMERIC},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update stock_enquiry
+    set id = #{record.id,jdbcType=INTEGER},
+      subzh = #{record.subzh,jdbcType=VARCHAR},
+      stockcode = #{record.stockcode,jdbcType=VARCHAR},
+      stockname = #{record.stockname,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=VARCHAR},
+      enquirytime = #{record.enquirytime,jdbcType=INTEGER},
+      principalBalance = #{record.principalbalance,jdbcType=NUMERIC},
+      principalFloat = #{record.principalfloat,jdbcType=NUMERIC},
+      royaltyBalance = #{record.royaltybalance,jdbcType=NUMERIC},
+      enquiryPrice = #{record.enquiryprice,jdbcType=NUMERIC},
+      settlePrice = #{record.settleprice,jdbcType=NUMERIC},
+      status = #{record.status,jdbcType=INTEGER},
+      starttime = #{record.starttime,jdbcType=TIMESTAMP},
+      endtime = #{record.endtime,jdbcType=TIMESTAMP},
+      createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      buytime = #{record.buytime,jdbcType=TIMESTAMP},
+      enquirydesc = #{record.enquirydesc,jdbcType=VARCHAR},
+      setFee = #{record.setfee,jdbcType=INTEGER},
+      orgincode = #{record.orgincode,jdbcType=VARCHAR},
+      orginname = #{record.orginname,jdbcType=VARCHAR},
+      agent = #{record.agent,jdbcType=VARCHAR},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      ditch = #{record.ditch,jdbcType=VARCHAR},
+      agentid = #{record.agentid,jdbcType=VARCHAR},
+      ditchid = #{record.ditchid,jdbcType=VARCHAR},
+      orginFloat = #{record.orginfloat,jdbcType=NUMERIC},
+      isSell = #{record.issell,jdbcType=INTEGER},
+      profit = #{record.profit,jdbcType=NUMERIC},
+      freePrice = #{record.freeprice,jdbcType=NUMERIC},
+      timeFly = #{record.timefly,jdbcType=INTEGER},
+      cycleFloat = #{record.cyclefloat,jdbcType=NUMERIC},
+      mybjFloat = #{record.mybjfloat,jdbcType=NUMERIC},
+      agentf = #{record.agentf,jdbcType=NUMERIC},
+      orginf = #{record.orginf,jdbcType=NUMERIC}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jcl.pojo.StockEnquiry" >
+    update stock_enquiry
+    <set >
+      <if test="subzh != null" >
+        subzh = #{subzh,jdbcType=VARCHAR},
+      </if>
+      <if test="stockcode != null" >
+        stockcode = #{stockcode,jdbcType=VARCHAR},
+      </if>
+      <if test="stockname != null" >
+        stockname = #{stockname,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="enquirytime != null" >
+        enquirytime = #{enquirytime,jdbcType=INTEGER},
+      </if>
+      <if test="principalbalance != null" >
+        principalBalance = #{principalbalance,jdbcType=NUMERIC},
+      </if>
+      <if test="principalfloat != null" >
+        principalFloat = #{principalfloat,jdbcType=NUMERIC},
+      </if>
+      <if test="royaltybalance != null" >
+        royaltyBalance = #{royaltybalance,jdbcType=NUMERIC},
+      </if>
+      <if test="enquiryprice != null" >
+        enquiryPrice = #{enquiryprice,jdbcType=NUMERIC},
+      </if>
+      <if test="settleprice != null" >
+        settlePrice = #{settleprice,jdbcType=NUMERIC},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="starttime != null" >
+        starttime = #{starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null" >
+        endtime = #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="buytime != null" >
+        buytime = #{buytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enquirydesc != null" >
+        enquirydesc = #{enquirydesc,jdbcType=VARCHAR},
+      </if>
+      <if test="setfee != null" >
+        setFee = #{setfee,jdbcType=INTEGER},
+      </if>
+      <if test="orgincode != null" >
+        orgincode = #{orgincode,jdbcType=VARCHAR},
+      </if>
+      <if test="orginname != null" >
+        orginname = #{orginname,jdbcType=VARCHAR},
+      </if>
+      <if test="agent != null" >
+        agent = #{agent,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="ditch != null" >
+        ditch = #{ditch,jdbcType=VARCHAR},
+      </if>
+      <if test="agentid != null" >
+        agentid = #{agentid,jdbcType=VARCHAR},
+      </if>
+      <if test="ditchid != null" >
+        ditchid = #{ditchid,jdbcType=VARCHAR},
+      </if>
+      <if test="orginfloat != null" >
+        orginFloat = #{orginfloat,jdbcType=NUMERIC},
+      </if>
+      <if test="issell != null" >
+        isSell = #{issell,jdbcType=INTEGER},
+      </if>
+      <if test="profit != null" >
+        profit = #{profit,jdbcType=NUMERIC},
+      </if>
+      <if test="freeprice != null" >
+        freePrice = #{freeprice,jdbcType=NUMERIC},
+      </if>
+      <if test="timefly != null" >
+        timeFly = #{timefly,jdbcType=INTEGER},
+      </if>
+      <if test="cyclefloat != null" >
+        cycleFloat = #{cyclefloat,jdbcType=NUMERIC},
+      </if>
+      <if test="mybjfloat != null" >
+        mybjFloat = #{mybjfloat,jdbcType=NUMERIC},
+      </if>
+      <if test="agentf != null" >
+        agentf = #{agentf,jdbcType=NUMERIC},
+      </if>
+      <if test="orginf != null" >
+        orginf = #{orginf,jdbcType=NUMERIC},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jcl.pojo.StockEnquiry" >
+    update stock_enquiry
+    set subzh = #{subzh,jdbcType=VARCHAR},
+      stockcode = #{stockcode,jdbcType=VARCHAR},
+      stockname = #{stockname,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      enquirytime = #{enquirytime,jdbcType=INTEGER},
+      principalBalance = #{principalbalance,jdbcType=NUMERIC},
+      principalFloat = #{principalfloat,jdbcType=NUMERIC},
+      royaltyBalance = #{royaltybalance,jdbcType=NUMERIC},
+      enquiryPrice = #{enquiryprice,jdbcType=NUMERIC},
+      settlePrice = #{settleprice,jdbcType=NUMERIC},
+      status = #{status,jdbcType=INTEGER},
+      starttime = #{starttime,jdbcType=TIMESTAMP},
+      endtime = #{endtime,jdbcType=TIMESTAMP},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      buytime = #{buytime,jdbcType=TIMESTAMP},
+      enquirydesc = #{enquirydesc,jdbcType=VARCHAR},
+      setFee = #{setfee,jdbcType=INTEGER},
+      orgincode = #{orgincode,jdbcType=VARCHAR},
+      orginname = #{orginname,jdbcType=VARCHAR},
+      agent = #{agent,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      ditch = #{ditch,jdbcType=VARCHAR},
+      agentid = #{agentid,jdbcType=VARCHAR},
+      ditchid = #{ditchid,jdbcType=VARCHAR},
+      orginFloat = #{orginfloat,jdbcType=NUMERIC},
+      isSell = #{issell,jdbcType=INTEGER},
+      profit = #{profit,jdbcType=NUMERIC},
+      freePrice = #{freeprice,jdbcType=NUMERIC},
+      timeFly = #{timefly,jdbcType=INTEGER},
+      cycleFloat = #{cyclefloat,jdbcType=NUMERIC},
+      mybjFloat = #{mybjfloat,jdbcType=NUMERIC},
+      agentf = #{agentf,jdbcType=NUMERIC},
+      orginf = #{orginf,jdbcType=NUMERIC}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

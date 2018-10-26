@@ -1,0 +1,20 @@
+#public.message.url=http://210.5.158.31/hy/
+#public.message.uid=80645
+#public.message.username=jclx
+#public.message.password=jcl8818
+message.accesskeyid=LTAIoyYDmDmH7WJP
+message.accesskeysecret=9ds6zBvWfjPcytspWtsx1NcCJdQxfr
+message.signname=\u5929\u4F7F\u91D1\u63A7
+message.templatecode=SMS_119077976
+#message.templatecode1=SMS_96550037
+#message.templatecode2=SMS_98955023
+
+
+#mail configuration
+mail.smtp.auth=true
+mail.smtp.timeout=25000
+mail.smtp.from=admin@cabitex.com
+mail.host=smtp.mxhichina.com
+mail.defaultEncoding=utf-8
+mail.username=admin@cabitex.com
+mail.password=cabitex2018!

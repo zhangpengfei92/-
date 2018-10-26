@@ -1,0 +1,282 @@
+package com.jcl.service.impl;
+
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.UUID;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.apache.poi.util.StringUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+import org.springframework.util.CollectionUtils;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.jcl.dao.SptMapper;
+import com.jcl.dao.SubzhMapper;
+import com.jcl.pojo.Spt;
+import com.jcl.pojo.SptExample;
+import com.jcl.pojo.Subzh;
+import com.jcl.pojo.SubzhExample;
+import com.jcl.pojo.SubzhExample.Criteria;
+import com.jcl.service.PayService;
+import com.jcl.service.SubzhFundLogService;
+import com.jcl.util.Constant;
+import com.jcl.util.DeployProperties;
+import com.jcl.util.spt.HttpRequest;
+import com.jcl.util.spt.SignMd5Utils;
+import com.jcl.vo.Payroll;
+
+@Service
+public class PayServiceImpl implements PayService {
+
+	@Autowired
+	private SubzhMapper subzhmapper;
+	@Autowired
+	private SptMapper sptmapper;
+	@Autowired
+	private SubzhFundLogService subzhFundLogService;
+	
+	private static final String project_path = DeployProperties.getInstance().getPublicProjectePath();
+
+	@Override
+	public String paya(Payroll payroll, HttpSession session) {
+		String subzh = (String) session.getAttribute(Constant.SESSION_LOGINNAME);
+
+		String uuid = UUID.randomUUID().toString().trim().replaceAll("-", "");
+		if (subzh == null)
+			return "result用户不存在";
+
+		SubzhExample ex = new SubzhExample();
+		Criteria cca = ex.createCriteria();
+		cca.andSubzhEqualTo(subzh);
+		List<Subzh> sublist = subzhmapper.selectByExample(ex);
+		if (sublist == null && sublist.size() != 1) {
+			return "result查询出多个用户信息";
+		}
+		Subzh sub = sublist.get(0);
+		if (sub == null)
+			return "result用户不存在";
+		if (sub.getXzj() == null)
+			return "result余额不足";
+		if (sub.getXzj().doubleValue() - Double.valueOf(payroll.getAmount()) < 0) {
+			return "result余额不足";
+		}
+		
+
+		String url = "http://gw.spt-pay.cn/settle";
+		String testKey = Constant.SPT_SECRTKEY;// 秘钥
+
+		TreeMap<String, String> sortedMap = new TreeMap();
+		sortedMap.put("merch", Constant.SPT_MERCHART);
+		sortedMap.put("orderno", uuid);
+		DecimalFormat decimalFormat = new DecimalFormat("###################.###########");
+		sortedMap.put("amount", decimalFormat.format((Double.valueOf(payroll.getAmount())+3) * 100));
+		sortedMap.put("notifyurl", project_path+"/subzhfund/isPay");
+		sortedMap.put("cardtype", "1");
+		sortedMap.put("bankcode", payroll.getBankcode());
+		sortedMap.put("bankname", payroll.getBankname());
+		sortedMap.put("bankbranch", payroll.getBankbranch());
+		sortedMap.put("cardname", payroll.getCardname());
+		sortedMap.put("cardno", payroll.getCardno());
+		sortedMap.put("cardmobile", payroll.getCardmobile());
+		sortedMap.put("certid", payroll.getCertid());
+		sortedMap.put("province", payroll.getProvince());
+		sortedMap.put("city", payroll.getCity());
+
+		System.out.println(sortedMap.toString());
+		String key_sign_zn = SignMd5Utils.createSign(sortedMap, testKey);// 签名
+		sortedMap.put("sign", key_sign_zn);
+		sortedMap.put("signtype", "MD5");
+
+		String result = HttpRequest.sendPost(url, sortedMap);
+
+		Map<String, String> resmap = JSON.parseObject(result, Map.class);
+		String recode = resmap.get("return_code");
+		String msg = resmap.get("return_msg");
+		if ("SETTLE_NOT_WALLET".equals(recode)) {
+			return "result"+recode+":"+msg;
+		}
+		if ("SETTLE_OUT_UPPER".equals(recode)) {
+			return "result"+recode+":"+msg;
+		}
+		
+		if ("SUCCESS".equals(recode)) {
+			Spt spt = new Spt();
+			spt.setCoin(BigDecimal.valueOf(Double.valueOf(payroll.getAmount())));
+			spt.setState("0");
+			spt.setMerch(uuid);
+			spt.setSubzh(subzh);
+			spt.setTime(new Date());
+			sptmapper.insertSelective(spt);
+
+			SubzhExample subex = new SubzhExample();
+			Criteria ccas = subex.createCriteria();
+			ccas.andSubzhEqualTo(spt.getSubzh());
+			List<Subzh> sublist0 = subzhmapper.selectByExample(subex);
+			if (sublist0 != null && sublist0.size() == 1) {
+				Subzh subzh0 = sublist0.get(0);
+				if (subzh0.getXzj() != null) {
+					subzh0.setXzj(subzh0.getXzj().subtract(BigDecimal.valueOf(Double.valueOf(payroll.getAmount()))));
+				} else {
+					subzh0.setXzj(BigDecimal.valueOf(Double.valueOf(payroll.getAmount())));
+				}
+				if (subzh0.getRzj() != null) {
+					subzh0.setRzj(subzh0.getRzj().subtract(BigDecimal.valueOf(Double.valueOf(payroll.getAmount()))));
+				} else {
+					subzh0.setRzj(BigDecimal.valueOf(Double.valueOf(payroll.getAmount())));
+				}
+
+				subzhmapper.updateByPrimaryKeySelective(subzh0);
+
+			}
+
+		}else{
+			return "result提现失败"+recode+":"+msg;
+		}
+		return "ok";
+	}
+
+	@Override
+	public String isPay(HttpServletRequest request, Model model, JSONObject allStr) {
+		TreeMap<String, String> sortedMap = new TreeMap();
+		sortedMap.put("order_no", allStr.getString("order_no"));
+		sortedMap.put("total_fee", allStr.getString("total_fee"));
+		sortedMap.put("merch_id", allStr.getString("merch_id"));
+		sortedMap.put("settle_status", allStr.getString("settle_status"));
+		sortedMap.put("return_code", allStr.getString("return_code"));
+		sortedMap.put("settle_no", allStr.getString("settle_no"));
+		String camparesign = SignMd5Utils.createSign(sortedMap, Constant.SPT_SECRTKEY);
+		if (allStr.getString("sign").equals(camparesign)) {
+			SptExample sptex = new SptExample();
+			com.jcl.pojo.SptExample.Criteria cca = sptex.createCriteria();
+			cca.andMerchEqualTo(allStr.getString("order_no"));
+			List<Spt> listspt = sptmapper.selectByExample(sptex);
+			if (listspt != null && listspt.size() == 1) {
+				Spt spt = listspt.get(0);
+
+				if("0".equals(spt.getState())) {
+					
+					
+					if ("SUCCESS".equals(allStr.getString("return_code"))) {
+						spt.setState("1");
+						sptmapper.updateByPrimaryKey(spt);
+						
+					} else if ("FAIL".equals(allStr.getString("return_code"))) {
+						spt.setState("2");
+						sptmapper.updateByPrimaryKey(spt);
+						SubzhExample subex = new SubzhExample();
+						Criteria ccas = subex.createCriteria();
+						ccas.andSubzhEqualTo(spt.getSubzh());
+						List<Subzh> sublist = subzhmapper.selectByExample(subex);
+						if (sublist != null && sublist.size() == 1) {
+							Subzh subzh = sublist.get(0);
+							if (subzh.getXzj() != null) {
+								subzh.setXzj(subzh.getXzj()
+										.add(spt.getCoin()));
+							} else {
+								subzh.setXzj(spt.getCoin());
+							}
+							
+							if (subzh.getRzj() != null) {
+								subzh.setRzj(subzh.getRzj()
+										.add(spt.getCoin()));
+							} else {
+								subzh.setRzj(spt.getCoin());
+							}
+							subzhmapper.updateByPrimaryKeySelective(subzh);
+						}
+					}
+				}
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public void isCheckPaySpt(String username) {
+		String url = "http://gw.spt-pay.cn/settle/query";
+		String testKey = Constant.SPT_SECRTKEY;// 秘钥
+		
+		if(username!=null&&username!="") {
+			SubzhExample subex = new SubzhExample();
+			Criteria cca = subex.createCriteria();
+			cca.andSubzhEqualTo(username);
+			List<Subzh> list = subzhmapper.selectByExample(subex);
+			if(list!=null&&list.size()==1) {
+				Subzh subzh = list.get(0);
+				
+				SptExample sptex = new SptExample();
+				com.jcl.pojo.SptExample.Criteria ca = sptex.createCriteria();
+				ca.andSubzhEqualTo(username);
+				ca.andStateEqualTo("0");
+				List<Spt> sptlist = sptmapper.selectByExample(sptex);
+				if(sptlist!=null&&sptlist.size()>0) {
+					for (Spt spt : sptlist) {
+						TreeMap<String, String> sortedMap = new TreeMap();
+						sortedMap.put("merch", Constant.SPT_MERCHART);
+						sortedMap.put("orderno", spt.getMerch());
+						String key_sign_zn = SignMd5Utils.createSign(sortedMap, testKey);// 签名
+						sortedMap.put("sign", key_sign_zn);
+						sortedMap.put("signtype", "MD5");
+						String result = HttpRequest.sendPost(url, sortedMap);
+						if(result!=null&&result!="") 
+						{
+							JSONObject allStr = JSONObject.parseObject(result);
+										
+								if("SUCCESS".equals(allStr.getString("return_code"))) {
+									if("00000".equals(allStr.getString("settle_status"))) {
+										//成功
+										spt.setState("1");
+										sptmapper.updateByPrimaryKey(spt);
+									}
+									if("10000".equals(allStr.getString("settle_status"))) {
+										//失败
+										spt.setState("2");
+										sptmapper.updateByPrimaryKey(spt);
+										
+										if (subzh.getXzj() != null) {
+											subzh.setXzj(subzh.getXzj()
+													.add(spt.getCoin()));
+										} else {
+											subzh.setXzj(spt.getCoin());
+										}
+										
+										if (subzh.getRzj() != null) {
+											subzh.setRzj(subzh.getRzj()
+													.add(spt.getCoin()));
+										} else {
+											subzh.setRzj(spt.getCoin());
+										}
+									}
+								}
+						}
+					}
+					subzhmapper.updateByPrimaryKeySelective(subzh);
+				}
+			}
+		}
+		
+	}
+	public static void main(String[] args) {
+		List<Subzh> list = null ;
+		List<Subzh> list1 = new ArrayList<Subzh>() ;
+		System.out.println(list);
+		System.out.println(list1.size());
+		Map<String,Object> map = new HashMap<String,Object>();
+		CollectionUtils.isEmpty(map);
+		if(CollectionUtils.isEmpty(list1)){
+			
+			System.out.println(list1.isEmpty());
+		}
+	}
+}

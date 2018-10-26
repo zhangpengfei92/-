@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcl.dao.StockPrincipalMapper" >
+  <resultMap id="BaseResultMap" type="com.jcl.pojo.StockPrincipal" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="stockcode" property="stockcode" jdbcType="VARCHAR" />
+    <result column="stockname" property="stockname" jdbcType="VARCHAR" />
+    <result column="rightstype" property="rightstype" jdbcType="VARCHAR" />
+    <result column="dealway" property="dealway" jdbcType="VARCHAR" />
+    <result column="addtime" property="addtime" jdbcType="TIMESTAMP" />
+    <result column="validtime" property="validtime" jdbcType="TIMESTAMP" />
+    <result column="endtime" property="endtime" jdbcType="TIMESTAMP" />
+    <result column="enquiryPrice" property="enquiryprice" jdbcType="NUMERIC" />
+    <result column="realPrice" property="realprice" jdbcType="NUMERIC" />
+    <result column="exchangetype" property="exchangetype" jdbcType="VARCHAR" />
+    <result column="enquirytype" property="enquirytype" jdbcType="VARCHAR" />
+    <result column="enquirytime" property="enquirytime" jdbcType="INTEGER" />
+    <result column="principalBalance" property="principalbalance" jdbcType="NUMERIC" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="oid" property="oid" jdbcType="VARCHAR" />
+    <result column="agent" property="agent" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, stockcode, stockname, rightstype, dealway, addtime, validtime, endtime, enquiryPrice, 
+    realPrice, exchangetype, enquirytype, enquirytime, principalBalance, createtime, 
+    oid, agent
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jcl.pojo.StockPrincipalExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from stock_principal
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from stock_principal
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from stock_principal
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jcl.pojo.StockPrincipalExample" >
+    delete from stock_principal
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jcl.pojo.StockPrincipal" >
+    insert into stock_principal (id, stockcode, stockname, 
+      rightstype, dealway, addtime, 
+      validtime, endtime, enquiryPrice, 
+      realPrice, exchangetype, enquirytype, 
+      enquirytime, principalBalance, createtime, 
+      oid, agent)
+    values (#{id,jdbcType=INTEGER}, #{stockcode,jdbcType=VARCHAR}, #{stockname,jdbcType=VARCHAR}, 
+      #{rightstype,jdbcType=VARCHAR}, #{dealway,jdbcType=VARCHAR}, #{addtime,jdbcType=TIMESTAMP}, 
+      #{validtime,jdbcType=TIMESTAMP}, #{endtime,jdbcType=TIMESTAMP}, #{enquiryprice,jdbcType=NUMERIC}, 
+      #{realprice,jdbcType=NUMERIC}, #{exchangetype,jdbcType=VARCHAR}, #{enquirytype,jdbcType=VARCHAR}, 
+      #{enquirytime,jdbcType=INTEGER}, #{principalbalance,jdbcType=NUMERIC}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{oid,jdbcType=VARCHAR}, #{agent,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jcl.pojo.StockPrincipal" >
+    insert into stock_principal
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="stockcode != null" >
+        stockcode,
+      </if>
+      <if test="stockname != null" >
+        stockname,
+      </if>
+      <if test="rightstype != null" >
+        rightstype,
+      </if>
+      <if test="dealway != null" >
+        dealway,
+      </if>
+      <if test="addtime != null" >
+        addtime,
+      </if>
+      <if test="validtime != null" >
+        validtime,
+      </if>
+      <if test="endtime != null" >
+        endtime,
+      </if>
+      <if test="enquiryprice != null" >
+        enquiryPrice,
+      </if>
+      <if test="realprice != null" >
+        realPrice,
+      </if>
+      <if test="exchangetype != null" >
+        exchangetype,
+      </if>
+      <if test="enquirytype != null" >
+        enquirytype,
+      </if>
+      <if test="enquirytime != null" >
+        enquirytime,
+      </if>
+      <if test="principalbalance != null" >
+        principalBalance,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+      <if test="oid != null" >
+        oid,
+      </if>
+      <if test="agent != null" >
+        agent,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="stockcode != null" >
+        #{stockcode,jdbcType=VARCHAR},
+      </if>
+      <if test="stockname != null" >
+        #{stockname,jdbcType=VARCHAR},
+      </if>
+      <if test="rightstype != null" >
+        #{rightstype,jdbcType=VARCHAR},
+      </if>
+      <if test="dealway != null" >
+        #{dealway,jdbcType=VARCHAR},
+      </if>
+      <if test="addtime != null" >
+        #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="validtime != null" >
+        #{validtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null" >
+        #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enquiryprice != null" >
+        #{enquiryprice,jdbcType=NUMERIC},
+      </if>
+      <if test="realprice != null" >
+        #{realprice,jdbcType=NUMERIC},
+      </if>
+      <if test="exchangetype != null" >
+        #{exchangetype,jdbcType=VARCHAR},
+      </if>
+      <if test="enquirytype != null" >
+        #{enquirytype,jdbcType=VARCHAR},
+      </if>
+      <if test="enquirytime != null" >
+        #{enquirytime,jdbcType=INTEGER},
+      </if>
+      <if test="principalbalance != null" >
+        #{principalbalance,jdbcType=NUMERIC},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oid != null" >
+        #{oid,jdbcType=VARCHAR},
+      </if>
+      <if test="agent != null" >
+        #{agent,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jcl.pojo.StockPrincipalExample" resultType="java.lang.Integer" >
+    select count(*) from stock_principal
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update stock_principal
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.stockcode != null" >
+        stockcode = #{record.stockcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stockname != null" >
+        stockname = #{record.stockname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rightstype != null" >
+        rightstype = #{record.rightstype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dealway != null" >
+        dealway = #{record.dealway,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addtime != null" >
+        addtime = #{record.addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.validtime != null" >
+        validtime = #{record.validtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endtime != null" >
+        endtime = #{record.endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.enquiryprice != null" >
+        enquiryPrice = #{record.enquiryprice,jdbcType=NUMERIC},
+      </if>
+      <if test="record.realprice != null" >
+        realPrice = #{record.realprice,jdbcType=NUMERIC},
+      </if>
+      <if test="record.exchangetype != null" >
+        exchangetype = #{record.exchangetype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.enquirytype != null" >
+        enquirytype = #{record.enquirytype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.enquirytime != null" >
+        enquirytime = #{record.enquirytime,jdbcType=INTEGER},
+      </if>
+      <if test="record.principalbalance != null" >
+        principalBalance = #{record.principalbalance,jdbcType=NUMERIC},
+      </if>
+      <if test="record.createtime != null" >
+        createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.oid != null" >
+        oid = #{record.oid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.agent != null" >
+        agent = #{record.agent,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update stock_principal
+    set id = #{record.id,jdbcType=INTEGER},
+      stockcode = #{record.stockcode,jdbcType=VARCHAR},
+      stockname = #{record.stockname,jdbcType=VARCHAR},
+      rightstype = #{record.rightstype,jdbcType=VARCHAR},
+      dealway = #{record.dealway,jdbcType=VARCHAR},
+      addtime = #{record.addtime,jdbcType=TIMESTAMP},
+      validtime = #{record.validtime,jdbcType=TIMESTAMP},
+      endtime = #{record.endtime,jdbcType=TIMESTAMP},
+      enquiryPrice = #{record.enquiryprice,jdbcType=NUMERIC},
+      realPrice = #{record.realprice,jdbcType=NUMERIC},
+      exchangetype = #{record.exchangetype,jdbcType=VARCHAR},
+      enquirytype = #{record.enquirytype,jdbcType=VARCHAR},
+      enquirytime = #{record.enquirytime,jdbcType=INTEGER},
+      principalBalance = #{record.principalbalance,jdbcType=NUMERIC},
+      createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      oid = #{record.oid,jdbcType=VARCHAR},
+      agent = #{record.agent,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jcl.pojo.StockPrincipal" >
+    update stock_principal
+    <set >
+      <if test="stockcode != null" >
+        stockcode = #{stockcode,jdbcType=VARCHAR},
+      </if>
+      <if test="stockname != null" >
+        stockname = #{stockname,jdbcType=VARCHAR},
+      </if>
+      <if test="rightstype != null" >
+        rightstype = #{rightstype,jdbcType=VARCHAR},
+      </if>
+      <if test="dealway != null" >
+        dealway = #{dealway,jdbcType=VARCHAR},
+      </if>
+      <if test="addtime != null" >
+        addtime = #{addtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="validtime != null" >
+        validtime = #{validtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null" >
+        endtime = #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enquiryprice != null" >
+        enquiryPrice = #{enquiryprice,jdbcType=NUMERIC},
+      </if>
+      <if test="realprice != null" >
+        realPrice = #{realprice,jdbcType=NUMERIC},
+      </if>
+      <if test="exchangetype != null" >
+        exchangetype = #{exchangetype,jdbcType=VARCHAR},
+      </if>
+      <if test="enquirytype != null" >
+        enquirytype = #{enquirytype,jdbcType=VARCHAR},
+      </if>
+      <if test="enquirytime != null" >
+        enquirytime = #{enquirytime,jdbcType=INTEGER},
+      </if>
+      <if test="principalbalance != null" >
+        principalBalance = #{principalbalance,jdbcType=NUMERIC},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oid != null" >
+        oid = #{oid,jdbcType=VARCHAR},
+      </if>
+      <if test="agent != null" >
+        agent = #{agent,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jcl.pojo.StockPrincipal" >
+    update stock_principal
+    set stockcode = #{stockcode,jdbcType=VARCHAR},
+      stockname = #{stockname,jdbcType=VARCHAR},
+      rightstype = #{rightstype,jdbcType=VARCHAR},
+      dealway = #{dealway,jdbcType=VARCHAR},
+      addtime = #{addtime,jdbcType=TIMESTAMP},
+      validtime = #{validtime,jdbcType=TIMESTAMP},
+      endtime = #{endtime,jdbcType=TIMESTAMP},
+      enquiryPrice = #{enquiryprice,jdbcType=NUMERIC},
+      realPrice = #{realprice,jdbcType=NUMERIC},
+      exchangetype = #{exchangetype,jdbcType=VARCHAR},
+      enquirytype = #{enquirytype,jdbcType=VARCHAR},
+      enquirytime = #{enquirytime,jdbcType=INTEGER},
+      principalBalance = #{principalbalance,jdbcType=NUMERIC},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      oid = #{oid,jdbcType=VARCHAR},
+      agent = #{agent,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

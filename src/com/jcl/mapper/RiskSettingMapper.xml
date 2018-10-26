@@ -1,0 +1,622 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcl.dao.RiskSettingMapper" >
+  <resultMap id="BaseResultMap" type="com.jcl.pojo.RiskSetting" >
+    <id column="rid" property="rid" jdbcType="INTEGER" />
+    <result column="principal_min" property="principalMin" jdbcType="DECIMAL" />
+    <result column="principal_max" property="principalMax" jdbcType="DECIMAL" />
+    <result column="limitscope" property="limitscope" jdbcType="DOUBLE" />
+    <result column="up_scope_max" property="upScopeMax" jdbcType="DOUBLE" />
+    <result column="down_scope_max" property="downScopeMax" jdbcType="DOUBLE" />
+    <result column="total_max" property="totalMax" jdbcType="DECIMAL" />
+    <result column="doubbo" property="doubbo" jdbcType="INTEGER" />
+    <result column="lessday" property="lessday" jdbcType="INTEGER" />
+    <result column="single_total_max" property="singleTotalMax" jdbcType="DECIMAL" />
+    <result column="default_principal" property="defaultPrincipal" jdbcType="VARCHAR" />
+    <result column="mon" property="mon" jdbcType="INTEGER" />
+    <result column="tue" property="tue" jdbcType="INTEGER" />
+    <result column="wed" property="wed" jdbcType="INTEGER" />
+    <result column="thursday" property="thursday" jdbcType="INTEGER" />
+    <result column="fri" property="fri" jdbcType="INTEGER" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="cycle_min" property="cycleMin" jdbcType="VARCHAR" />
+    <result column="cycle_min_type" property="cycleMinType" jdbcType="VARCHAR" />
+    <result column="cycle_max" property="cycleMax" jdbcType="VARCHAR" />
+    <result column="cycle_max_type" property="cycleMaxType" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.jcl.pojo.RiskSettingWithBLOBs" extends="BaseResultMap" >
+    <result column="principal_json" property="principalJson" jdbcType="LONGVARCHAR" />
+    <result column="cycle_json" property="cycleJson" jdbcType="LONGVARCHAR" />
+    <result column="time_json" property="timeJson" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    rid, principal_min, principal_max, limitscope, up_scope_max, down_scope_max, total_max, 
+    doubbo, lessday, single_total_max, default_principal, mon, tue, wed, thursday, fri, 
+    state, name, create_time, cycle_min, cycle_min_type, cycle_max, cycle_max_type
+  </sql>
+  <sql id="Blob_Column_List" >
+    principal_json, cycle_json, time_json
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.jcl.pojo.RiskSettingExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from risk_setting
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jcl.pojo.RiskSettingExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from risk_setting
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from risk_setting
+    where rid = #{rid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from risk_setting
+    where rid = #{rid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jcl.pojo.RiskSettingExample" >
+    delete from risk_setting
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jcl.pojo.RiskSettingWithBLOBs" >
+    insert into risk_setting (rid, principal_min, principal_max, 
+      limitscope, up_scope_max, down_scope_max, 
+      total_max, doubbo, lessday, 
+      single_total_max, default_principal, mon, 
+      tue, wed, thursday, 
+      fri, state, name, create_time, 
+      cycle_min, cycle_min_type, cycle_max, 
+      cycle_max_type, principal_json, cycle_json, 
+      time_json)
+    values (#{rid,jdbcType=INTEGER}, #{principalMin,jdbcType=DECIMAL}, #{principalMax,jdbcType=DECIMAL}, 
+      #{limitscope,jdbcType=DOUBLE}, #{upScopeMax,jdbcType=DOUBLE}, #{downScopeMax,jdbcType=DOUBLE}, 
+      #{totalMax,jdbcType=DECIMAL}, #{doubbo,jdbcType=INTEGER}, #{lessday,jdbcType=INTEGER}, 
+      #{singleTotalMax,jdbcType=DECIMAL}, #{defaultPrincipal,jdbcType=VARCHAR}, #{mon,jdbcType=INTEGER}, 
+      #{tue,jdbcType=INTEGER}, #{wed,jdbcType=INTEGER}, #{thursday,jdbcType=INTEGER}, 
+      #{fri,jdbcType=INTEGER}, #{state,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{cycleMin,jdbcType=VARCHAR}, #{cycleMinType,jdbcType=VARCHAR}, #{cycleMax,jdbcType=VARCHAR}, 
+      #{cycleMaxType,jdbcType=VARCHAR}, #{principalJson,jdbcType=LONGVARCHAR}, #{cycleJson,jdbcType=LONGVARCHAR}, 
+      #{timeJson,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jcl.pojo.RiskSettingWithBLOBs" >
+    insert into risk_setting
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="rid != null" >
+        rid,
+      </if>
+      <if test="principalMin != null" >
+        principal_min,
+      </if>
+      <if test="principalMax != null" >
+        principal_max,
+      </if>
+      <if test="limitscope != null" >
+        limitscope,
+      </if>
+      <if test="upScopeMax != null" >
+        up_scope_max,
+      </if>
+      <if test="downScopeMax != null" >
+        down_scope_max,
+      </if>
+      <if test="totalMax != null" >
+        total_max,
+      </if>
+      <if test="doubbo != null" >
+        doubbo,
+      </if>
+      <if test="lessday != null" >
+        lessday,
+      </if>
+      <if test="singleTotalMax != null" >
+        single_total_max,
+      </if>
+      <if test="defaultPrincipal != null" >
+        default_principal,
+      </if>
+      <if test="mon != null" >
+        mon,
+      </if>
+      <if test="tue != null" >
+        tue,
+      </if>
+      <if test="wed != null" >
+        wed,
+      </if>
+      <if test="thursday != null" >
+        thursday,
+      </if>
+      <if test="fri != null" >
+        fri,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="cycleMin != null" >
+        cycle_min,
+      </if>
+      <if test="cycleMinType != null" >
+        cycle_min_type,
+      </if>
+      <if test="cycleMax != null" >
+        cycle_max,
+      </if>
+      <if test="cycleMaxType != null" >
+        cycle_max_type,
+      </if>
+      <if test="principalJson != null" >
+        principal_json,
+      </if>
+      <if test="cycleJson != null" >
+        cycle_json,
+      </if>
+      <if test="timeJson != null" >
+        time_json,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="rid != null" >
+        #{rid,jdbcType=INTEGER},
+      </if>
+      <if test="principalMin != null" >
+        #{principalMin,jdbcType=DECIMAL},
+      </if>
+      <if test="principalMax != null" >
+        #{principalMax,jdbcType=DECIMAL},
+      </if>
+      <if test="limitscope != null" >
+        #{limitscope,jdbcType=DOUBLE},
+      </if>
+      <if test="upScopeMax != null" >
+        #{upScopeMax,jdbcType=DOUBLE},
+      </if>
+      <if test="downScopeMax != null" >
+        #{downScopeMax,jdbcType=DOUBLE},
+      </if>
+      <if test="totalMax != null" >
+        #{totalMax,jdbcType=DECIMAL},
+      </if>
+      <if test="doubbo != null" >
+        #{doubbo,jdbcType=INTEGER},
+      </if>
+      <if test="lessday != null" >
+        #{lessday,jdbcType=INTEGER},
+      </if>
+      <if test="singleTotalMax != null" >
+        #{singleTotalMax,jdbcType=DECIMAL},
+      </if>
+      <if test="defaultPrincipal != null" >
+        #{defaultPrincipal,jdbcType=VARCHAR},
+      </if>
+      <if test="mon != null" >
+        #{mon,jdbcType=INTEGER},
+      </if>
+      <if test="tue != null" >
+        #{tue,jdbcType=INTEGER},
+      </if>
+      <if test="wed != null" >
+        #{wed,jdbcType=INTEGER},
+      </if>
+      <if test="thursday != null" >
+        #{thursday,jdbcType=INTEGER},
+      </if>
+      <if test="fri != null" >
+        #{fri,jdbcType=INTEGER},
+      </if>
+      <if test="state != null" >
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cycleMin != null" >
+        #{cycleMin,jdbcType=VARCHAR},
+      </if>
+      <if test="cycleMinType != null" >
+        #{cycleMinType,jdbcType=VARCHAR},
+      </if>
+      <if test="cycleMax != null" >
+        #{cycleMax,jdbcType=VARCHAR},
+      </if>
+      <if test="cycleMaxType != null" >
+        #{cycleMaxType,jdbcType=VARCHAR},
+      </if>
+      <if test="principalJson != null" >
+        #{principalJson,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="cycleJson != null" >
+        #{cycleJson,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="timeJson != null" >
+        #{timeJson,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jcl.pojo.RiskSettingExample" resultType="java.lang.Integer" >
+    select count(*) from risk_setting
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update risk_setting
+    <set >
+      <if test="record.rid != null" >
+        rid = #{record.rid,jdbcType=INTEGER},
+      </if>
+      <if test="record.principalMin != null" >
+        principal_min = #{record.principalMin,jdbcType=DECIMAL},
+      </if>
+      <if test="record.principalMax != null" >
+        principal_max = #{record.principalMax,jdbcType=DECIMAL},
+      </if>
+      <if test="record.limitscope != null" >
+        limitscope = #{record.limitscope,jdbcType=DOUBLE},
+      </if>
+      <if test="record.upScopeMax != null" >
+        up_scope_max = #{record.upScopeMax,jdbcType=DOUBLE},
+      </if>
+      <if test="record.downScopeMax != null" >
+        down_scope_max = #{record.downScopeMax,jdbcType=DOUBLE},
+      </if>
+      <if test="record.totalMax != null" >
+        total_max = #{record.totalMax,jdbcType=DECIMAL},
+      </if>
+      <if test="record.doubbo != null" >
+        doubbo = #{record.doubbo,jdbcType=INTEGER},
+      </if>
+      <if test="record.lessday != null" >
+        lessday = #{record.lessday,jdbcType=INTEGER},
+      </if>
+      <if test="record.singleTotalMax != null" >
+        single_total_max = #{record.singleTotalMax,jdbcType=DECIMAL},
+      </if>
+      <if test="record.defaultPrincipal != null" >
+        default_principal = #{record.defaultPrincipal,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mon != null" >
+        mon = #{record.mon,jdbcType=INTEGER},
+      </if>
+      <if test="record.tue != null" >
+        tue = #{record.tue,jdbcType=INTEGER},
+      </if>
+      <if test="record.wed != null" >
+        wed = #{record.wed,jdbcType=INTEGER},
+      </if>
+      <if test="record.thursday != null" >
+        thursday = #{record.thursday,jdbcType=INTEGER},
+      </if>
+      <if test="record.fri != null" >
+        fri = #{record.fri,jdbcType=INTEGER},
+      </if>
+      <if test="record.state != null" >
+        state = #{record.state,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.cycleMin != null" >
+        cycle_min = #{record.cycleMin,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cycleMinType != null" >
+        cycle_min_type = #{record.cycleMinType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cycleMax != null" >
+        cycle_max = #{record.cycleMax,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cycleMaxType != null" >
+        cycle_max_type = #{record.cycleMaxType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.principalJson != null" >
+        principal_json = #{record.principalJson,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.cycleJson != null" >
+        cycle_json = #{record.cycleJson,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.timeJson != null" >
+        time_json = #{record.timeJson,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update risk_setting
+    set rid = #{record.rid,jdbcType=INTEGER},
+      principal_min = #{record.principalMin,jdbcType=DECIMAL},
+      principal_max = #{record.principalMax,jdbcType=DECIMAL},
+      limitscope = #{record.limitscope,jdbcType=DOUBLE},
+      up_scope_max = #{record.upScopeMax,jdbcType=DOUBLE},
+      down_scope_max = #{record.downScopeMax,jdbcType=DOUBLE},
+      total_max = #{record.totalMax,jdbcType=DECIMAL},
+      doubbo = #{record.doubbo,jdbcType=INTEGER},
+      lessday = #{record.lessday,jdbcType=INTEGER},
+      single_total_max = #{record.singleTotalMax,jdbcType=DECIMAL},
+      default_principal = #{record.defaultPrincipal,jdbcType=VARCHAR},
+      mon = #{record.mon,jdbcType=INTEGER},
+      tue = #{record.tue,jdbcType=INTEGER},
+      wed = #{record.wed,jdbcType=INTEGER},
+      thursday = #{record.thursday,jdbcType=INTEGER},
+      fri = #{record.fri,jdbcType=INTEGER},
+      state = #{record.state,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      cycle_min = #{record.cycleMin,jdbcType=VARCHAR},
+      cycle_min_type = #{record.cycleMinType,jdbcType=VARCHAR},
+      cycle_max = #{record.cycleMax,jdbcType=VARCHAR},
+      cycle_max_type = #{record.cycleMaxType,jdbcType=VARCHAR},
+      principal_json = #{record.principalJson,jdbcType=LONGVARCHAR},
+      cycle_json = #{record.cycleJson,jdbcType=LONGVARCHAR},
+      time_json = #{record.timeJson,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update risk_setting
+    set rid = #{record.rid,jdbcType=INTEGER},
+      principal_min = #{record.principalMin,jdbcType=DECIMAL},
+      principal_max = #{record.principalMax,jdbcType=DECIMAL},
+      limitscope = #{record.limitscope,jdbcType=DOUBLE},
+      up_scope_max = #{record.upScopeMax,jdbcType=DOUBLE},
+      down_scope_max = #{record.downScopeMax,jdbcType=DOUBLE},
+      total_max = #{record.totalMax,jdbcType=DECIMAL},
+      doubbo = #{record.doubbo,jdbcType=INTEGER},
+      lessday = #{record.lessday,jdbcType=INTEGER},
+      single_total_max = #{record.singleTotalMax,jdbcType=DECIMAL},
+      default_principal = #{record.defaultPrincipal,jdbcType=VARCHAR},
+      mon = #{record.mon,jdbcType=INTEGER},
+      tue = #{record.tue,jdbcType=INTEGER},
+      wed = #{record.wed,jdbcType=INTEGER},
+      thursday = #{record.thursday,jdbcType=INTEGER},
+      fri = #{record.fri,jdbcType=INTEGER},
+      state = #{record.state,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      cycle_min = #{record.cycleMin,jdbcType=VARCHAR},
+      cycle_min_type = #{record.cycleMinType,jdbcType=VARCHAR},
+      cycle_max = #{record.cycleMax,jdbcType=VARCHAR},
+      cycle_max_type = #{record.cycleMaxType,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jcl.pojo.RiskSettingWithBLOBs" >
+    update risk_setting
+    <set >
+      <if test="principalMin != null" >
+        principal_min = #{principalMin,jdbcType=DECIMAL},
+      </if>
+      <if test="principalMax != null" >
+        principal_max = #{principalMax,jdbcType=DECIMAL},
+      </if>
+      <if test="limitscope != null" >
+        limitscope = #{limitscope,jdbcType=DOUBLE},
+      </if>
+      <if test="upScopeMax != null" >
+        up_scope_max = #{upScopeMax,jdbcType=DOUBLE},
+      </if>
+      <if test="downScopeMax != null" >
+        down_scope_max = #{downScopeMax,jdbcType=DOUBLE},
+      </if>
+      <if test="totalMax != null" >
+        total_max = #{totalMax,jdbcType=DECIMAL},
+      </if>
+      <if test="doubbo != null" >
+        doubbo = #{doubbo,jdbcType=INTEGER},
+      </if>
+      <if test="lessday != null" >
+        lessday = #{lessday,jdbcType=INTEGER},
+      </if>
+      <if test="singleTotalMax != null" >
+        single_total_max = #{singleTotalMax,jdbcType=DECIMAL},
+      </if>
+      <if test="defaultPrincipal != null" >
+        default_principal = #{defaultPrincipal,jdbcType=VARCHAR},
+      </if>
+      <if test="mon != null" >
+        mon = #{mon,jdbcType=INTEGER},
+      </if>
+      <if test="tue != null" >
+        tue = #{tue,jdbcType=INTEGER},
+      </if>
+      <if test="wed != null" >
+        wed = #{wed,jdbcType=INTEGER},
+      </if>
+      <if test="thursday != null" >
+        thursday = #{thursday,jdbcType=INTEGER},
+      </if>
+      <if test="fri != null" >
+        fri = #{fri,jdbcType=INTEGER},
+      </if>
+      <if test="state != null" >
+        state = #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cycleMin != null" >
+        cycle_min = #{cycleMin,jdbcType=VARCHAR},
+      </if>
+      <if test="cycleMinType != null" >
+        cycle_min_type = #{cycleMinType,jdbcType=VARCHAR},
+      </if>
+      <if test="cycleMax != null" >
+        cycle_max = #{cycleMax,jdbcType=VARCHAR},
+      </if>
+      <if test="cycleMaxType != null" >
+        cycle_max_type = #{cycleMaxType,jdbcType=VARCHAR},
+      </if>
+      <if test="principalJson != null" >
+        principal_json = #{principalJson,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="cycleJson != null" >
+        cycle_json = #{cycleJson,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="timeJson != null" >
+        time_json = #{timeJson,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where rid = #{rid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.jcl.pojo.RiskSettingWithBLOBs" >
+    update risk_setting
+    set principal_min = #{principalMin,jdbcType=DECIMAL},
+      principal_max = #{principalMax,jdbcType=DECIMAL},
+      limitscope = #{limitscope,jdbcType=DOUBLE},
+      up_scope_max = #{upScopeMax,jdbcType=DOUBLE},
+      down_scope_max = #{downScopeMax,jdbcType=DOUBLE},
+      total_max = #{totalMax,jdbcType=DECIMAL},
+      doubbo = #{doubbo,jdbcType=INTEGER},
+      lessday = #{lessday,jdbcType=INTEGER},
+      single_total_max = #{singleTotalMax,jdbcType=DECIMAL},
+      default_principal = #{defaultPrincipal,jdbcType=VARCHAR},
+      mon = #{mon,jdbcType=INTEGER},
+      tue = #{tue,jdbcType=INTEGER},
+      wed = #{wed,jdbcType=INTEGER},
+      thursday = #{thursday,jdbcType=INTEGER},
+      fri = #{fri,jdbcType=INTEGER},
+      state = #{state,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      cycle_min = #{cycleMin,jdbcType=VARCHAR},
+      cycle_min_type = #{cycleMinType,jdbcType=VARCHAR},
+      cycle_max = #{cycleMax,jdbcType=VARCHAR},
+      cycle_max_type = #{cycleMaxType,jdbcType=VARCHAR},
+      principal_json = #{principalJson,jdbcType=LONGVARCHAR},
+      cycle_json = #{cycleJson,jdbcType=LONGVARCHAR},
+      time_json = #{timeJson,jdbcType=LONGVARCHAR}
+    where rid = #{rid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jcl.pojo.RiskSetting" >
+    update risk_setting
+    set principal_min = #{principalMin,jdbcType=DECIMAL},
+      principal_max = #{principalMax,jdbcType=DECIMAL},
+      limitscope = #{limitscope,jdbcType=DOUBLE},
+      up_scope_max = #{upScopeMax,jdbcType=DOUBLE},
+      down_scope_max = #{downScopeMax,jdbcType=DOUBLE},
+      total_max = #{totalMax,jdbcType=DECIMAL},
+      doubbo = #{doubbo,jdbcType=INTEGER},
+      lessday = #{lessday,jdbcType=INTEGER},
+      single_total_max = #{singleTotalMax,jdbcType=DECIMAL},
+      default_principal = #{defaultPrincipal,jdbcType=VARCHAR},
+      mon = #{mon,jdbcType=INTEGER},
+      tue = #{tue,jdbcType=INTEGER},
+      wed = #{wed,jdbcType=INTEGER},
+      thursday = #{thursday,jdbcType=INTEGER},
+      fri = #{fri,jdbcType=INTEGER},
+      state = #{state,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      cycle_min = #{cycleMin,jdbcType=VARCHAR},
+      cycle_min_type = #{cycleMinType,jdbcType=VARCHAR},
+      cycle_max = #{cycleMax,jdbcType=VARCHAR},
+      cycle_max_type = #{cycleMaxType,jdbcType=VARCHAR}
+    where rid = #{rid,jdbcType=INTEGER}
+  </update>
+</mapper>
