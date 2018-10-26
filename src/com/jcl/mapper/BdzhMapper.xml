@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jcl.dao.BdzhMapper">
+  <resultMap id="BaseResultMap" type="com.jcl.pojo.Bdzh">
+    <id column="bdzhid" jdbcType="INTEGER" property="bdzhid" />
+    <result column="orderid" jdbcType="INTEGER" property="orderid" />
+    <result column="accountid" jdbcType="VARCHAR" property="accountid" />
+    <result column="suminterest" jdbcType="DECIMAL" property="suminterest" />
+    <result column="bzmoney" jdbcType="DECIMAL" property="bzmoney" />
+    <result column="avaamoney" jdbcType="DECIMAL" property="avaamoney" />
+    <result column="subinterest" jdbcType="DECIMAL" property="subinterest" />
+    <result column="symoney" jdbcType="DECIMAL" property="symoney" />
+    <result column="zhstate" jdbcType="INTEGER" property="zhstate" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="broker" jdbcType="VARCHAR" property="broker" />
+    <result column="config" jdbcType="VARCHAR" property="config" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    bdzhid, orderid, accountid, suminterest, bzmoney, avaamoney, subinterest, symoney, 
+    zhstate, password, broker, config
+  </sql>
+  
+   <!--全查询  -->
+    <select id="selectAll" resultMap="BaseResultMap"  >
+    select
+      <include refid="Base_Column_List" />
+ 	from bdzh where zhstate=1 order by bdzhid desc
+  </select>
+  
+  <select id="selectByBdzh" resultMap="BaseResultMap" parameterType="com.jcl.pojo.Bdzh">
+  	select
+      <include refid="Base_Column_List" />
+ 	from bdzh
+ 	<where>
+ 		zhstate=1
+ 		<if test="accountid!=null and accountid!=''">
+ 			and accountid = #{accountid}
+ 		</if>
+ 	</where>
+ 	order by bdzhid desc
+  </select>
+  
+  
+  <select id="isexist" resultMap="BaseResultMap" parameterType="com.jcl.pojo.Bdzh">
+  	select
+      <include refid="Base_Column_List" />
+ 	from bdzh
+ 	<where>
+ 		zhstate=1
+ 		<if test="accountid!=null and accountid!=''">
+ 			and accountid = #{accountid}
+ 		</if>
+ 		<if test="bdzhid!=null">
+ 			and bdzhid != #{bdzhid}
+ 		</if>
+ 	</where>
+  </select>
+  
+  <select id="selectByExample" parameterType="com.jcl.pojo.BdzhExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from bdzh
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from bdzh
+    where bdzhid = #{bdzhid,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from bdzh
+    where bdzhid = #{bdzhid,jdbcType=INTEGER}
+  </delete>
+  
+  <delete id="deleteByExample" parameterType="com.jcl.pojo.BdzhExample">
+    delete from bdzh
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  
+  <insert id="insert" parameterType="com.jcl.pojo.Bdzh">
+    insert into bdzh (bdzhid, orderid, accountid, 
+      suminterest, bzmoney, avaamoney, 
+      subinterest, symoney, zhstate, 
+      password, broker, config
+      )
+    values (#{bdzhid,jdbcType=INTEGER}, #{orderid,jdbcType=INTEGER}, #{accountid,jdbcType=VARCHAR}, 
+      #{suminterest,jdbcType=DECIMAL}, #{bzmoney,jdbcType=DECIMAL}, #{avaamoney,jdbcType=DECIMAL}, 
+      #{subinterest,jdbcType=DECIMAL}, #{symoney,jdbcType=DECIMAL}, #{zhstate,jdbcType=INTEGER}, 
+      #{password,jdbcType=VARCHAR}, #{broker,jdbcType=VARCHAR}, #{config,jdbcType=VARCHAR}
+      )
+  </insert>
+  
+  <insert id="insertSelective" parameterType="com.jcl.pojo.Bdzh">
+    insert into bdzh
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="bdzhid != null">
+        bdzhid,
+      </if>
+      <if test="orderid != null">
+        orderid,
+      </if>
+      <if test="accountid != null">
+        accountid,
+      </if>
+      <if test="suminterest != null">
+        suminterest,
+      </if>
+      <if test="bzmoney != null">
+        bzmoney,
+      </if>
+      <if test="avaamoney != null">
+        avaamoney,
+      </if>
+      <if test="subinterest != null">
+        subinterest,
+      </if>
+      <if test="symoney != null">
+        symoney,
+      </if>
+      <if test="zhstate != null">
+        zhstate,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="broker != null">
+        broker,
+      </if>
+      <if test="config != null">
+        config,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="bdzhid != null">
+        #{bdzhid,jdbcType=INTEGER},
+      </if>
+      <if test="orderid != null">
+        #{orderid,jdbcType=INTEGER},
+      </if>
+      <if test="accountid != null">
+        #{accountid,jdbcType=VARCHAR},
+      </if>
+      <if test="suminterest != null">
+        #{suminterest,jdbcType=DECIMAL},
+      </if>
+      <if test="bzmoney != null">
+        #{bzmoney,jdbcType=DECIMAL},
+      </if>
+      <if test="avaamoney != null">
+        #{avaamoney,jdbcType=DECIMAL},
+      </if>
+      <if test="subinterest != null">
+        #{subinterest,jdbcType=DECIMAL},
+      </if>
+      <if test="symoney != null">
+        #{symoney,jdbcType=DECIMAL},
+      </if>
+      <if test="zhstate != null">
+        #{zhstate,jdbcType=INTEGER},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="broker != null">
+        #{broker,jdbcType=VARCHAR},
+      </if>
+      <if test="config != null">
+        #{config,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jcl.pojo.BdzhExample" resultType="java.lang.Integer">
+    select count(*) from bdzh
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  
+    <!--修改账户信息  （假删除）  -->
+  <update id="updateZhstate" parameterType="java.lang.String">
+  	  update bdzh set zhstate=0 where accountid=#{accountid};
+  </update>
+  
+  <update id="updateByExampleSelective" parameterType="map">
+    update bdzh set zhstate=1 from
+    <set>
+      <if test="record.bdzhid != null">
+        bdzhid = #{record.bdzhid,jdbcType=INTEGER},
+      </if>
+      <if test="record.orderid != null">
+        orderid = #{record.orderid,jdbcType=INTEGER},
+      </if>
+      <if test="record.accountid != null">
+        accountid = #{record.accountid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.suminterest != null">
+        suminterest = #{record.suminterest,jdbcType=DECIMAL},
+      </if>
+      <if test="record.bzmoney != null">
+        bzmoney = #{record.bzmoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.avaamoney != null">
+        avaamoney = #{record.avaamoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.subinterest != null">
+        subinterest = #{record.subinterest,jdbcType=DECIMAL},
+      </if>
+      <if test="record.symoney != null">
+        symoney = #{record.symoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.zhstate != null">
+        zhstate = #{record.zhstate,jdbcType=INTEGER},
+      </if>
+      <if test="record.password != null">
+        password = #{record.password,jdbcType=VARCHAR},
+      </if>
+      <if test="record.broker != null">
+        broker = #{record.broker,jdbcType=VARCHAR},
+      </if>
+      <if test="record.config != null">
+        config = #{record.config,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update bdzh
+    set bdzhid = #{record.bdzhid,jdbcType=INTEGER},
+      orderid = #{record.orderid,jdbcType=INTEGER},
+      accountid = #{record.accountid,jdbcType=VARCHAR},
+      suminterest = #{record.suminterest,jdbcType=DECIMAL},
+      bzmoney = #{record.bzmoney,jdbcType=DECIMAL},
+      avaamoney = #{record.avaamoney,jdbcType=DECIMAL},
+      subinterest = #{record.subinterest,jdbcType=DECIMAL},
+      symoney = #{record.symoney,jdbcType=DECIMAL},
+      zhstate = #{record.zhstate,jdbcType=INTEGER},
+      password = #{record.password,jdbcType=VARCHAR},
+      broker = #{record.broker,jdbcType=VARCHAR},
+      config = #{record.config,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jcl.pojo.Bdzh">
+    update bdzh
+    <set>
+      <if test="orderid != null">
+        orderid = #{orderid,jdbcType=INTEGER},
+      </if>
+      <if test="accountid != null">
+        accountid = #{accountid,jdbcType=VARCHAR},
+      </if>
+      <if test="suminterest != null">
+        suminterest = #{suminterest,jdbcType=DECIMAL},
+      </if>
+      <if test="bzmoney != null">
+        bzmoney = #{bzmoney,jdbcType=DECIMAL},
+      </if>
+      <if test="avaamoney != null">
+        avaamoney = #{avaamoney,jdbcType=DECIMAL},
+      </if>
+      <if test="subinterest != null">
+        subinterest = #{subinterest,jdbcType=DECIMAL},
+      </if>
+      <if test="symoney != null">
+        symoney = #{symoney,jdbcType=DECIMAL},
+      </if>
+      <if test="zhstate != null">
+        zhstate = #{zhstate,jdbcType=INTEGER},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="broker != null">
+        broker = #{broker,jdbcType=VARCHAR},
+      </if>
+      <if test="config != null">
+        config = #{config,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where bdzhid = #{bdzhid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jcl.pojo.Bdzh">
+    update bdzh
+    set orderid = #{orderid,jdbcType=INTEGER},
+      accountid = #{accountid,jdbcType=VARCHAR},
+      suminterest = #{suminterest,jdbcType=DECIMAL},
+      bzmoney = #{bzmoney,jdbcType=DECIMAL},
+      avaamoney = #{avaamoney,jdbcType=DECIMAL},
+      subinterest = #{subinterest,jdbcType=DECIMAL},
+      symoney = #{symoney,jdbcType=DECIMAL},
+      zhstate = #{zhstate,jdbcType=INTEGER},
+      password = #{password,jdbcType=VARCHAR},
+      broker = #{broker,jdbcType=VARCHAR},
+      config = #{config,jdbcType=VARCHAR}
+    where bdzhid = #{bdzhid,jdbcType=INTEGER}
+  </update>
+</mapper>

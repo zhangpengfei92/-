@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="outcrude_v"
+  id="myeclipse.1524277823639"
+  context-root="/outcrude_v"
+  j2ee-spec="6.0"
+  archive="outcrude_v.war">
+  <attributes>
+    <attribute name="webrootdir" value="WebRoot" />
+  </attributes>
+</project-module>
+

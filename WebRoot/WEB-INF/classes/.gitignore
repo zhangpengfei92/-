@@ -1,0 +1,11 @@
+/_log4j.properties
+/appconfig.properties
+/com/
+/db.properties
+/deployconfig.properties
+/generatorConfig.xml
+/log4j.properties
+/mybatis-config.xml
+/pay_config.properties
+/resoure.properties
+/spring/

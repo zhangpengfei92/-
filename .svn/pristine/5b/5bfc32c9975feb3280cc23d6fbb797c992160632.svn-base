@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jcl.dao.DocContentMapper">
+	<resultMap id="BaseResultMap" type="com.jcl.pojo.DocContent">
+		<id column="id" jdbcType="INTEGER" property="id" />
+		<result column="columnid" jdbcType="INTEGER" property="columnid" />
+		<result column="title" jdbcType="VARCHAR" property="title" />
+		<result column="summary" jdbcType="VARCHAR" property="summary" />
+		<result column="photoPath" jdbcType="VARCHAR" property="photopath" />
+		<result column="publishtime" jdbcType="TIMESTAMP" property="publishtime" />
+		<result column="endtime" jdbcType="TIMESTAMP" property="endtime" />
+		<result column="isTop" jdbcType="VARCHAR" property="istop" />
+		<result column="author" jdbcType="VARCHAR" property="author" />
+	</resultMap>
+	<resultMap extends="BaseResultMap" id="ResultMapWithBLOBs"
+		type="com.jcl.pojo.DocContent">
+		<result column="content" jdbcType="CLOB" property="content" />
+	</resultMap>
+
+	<resultMap id="BaseResultMapList" type="com.jcl.pojo.DocContent">
+		<id column="id" jdbcType="INTEGER" property="id" />
+		<result column="columnid" jdbcType="INTEGER" property="columnid" />
+		<result column="title" jdbcType="VARCHAR" property="title" />
+		<result column="summary" jdbcType="VARCHAR" property="summary" />
+		<result column="photoPath" jdbcType="VARCHAR" property="photopath" />
+		<result column="publishtime" jdbcType="TIMESTAMP" property="publishtime" />
+		<result column="endtime" jdbcType="TIMESTAMP" property="endtime" />
+		<result column="isTop" jdbcType="VARCHAR" property="istop" />
+		<result column="content" jdbcType="CLOB" property="content" />
+		<result column="author" jdbcType="VARCHAR" property="author" />
+		<collection property="docColumn" ofType="com.jcl.pojo.DocColumn">
+			<result column="name" jdbcType="VARCHAR" property="name" />
+			<result column="typeid" jdbcType="INTEGER" property="typeid" />
+			<result column="parent_id " jdbcType="INTEGER" property="parentId" />
+			<result column="acronym" jdbcType="VARCHAR" property="acronym" />
+			<result column="lever" jdbcType="INTEGER" property="lever" />
+			<result column="showName" jdbcType="VARCHAR" property="showname" />
+			<result column="sort" jdbcType="VARCHAR" property="sort" />
+			<result column="description" jdbcType="VARCHAR" property="description" />
+		</collection>
+	</resultMap>
+
+	<resultMap id="BaseResultMapContent" type="com.jcl.pojo.DocCommunityContent">
+		<id column="id" jdbcType="INTEGER" property="id" />
+		<result column="columnid" jdbcType="INTEGER" property="columnid" />
+		<result column="name" jdbcType="VARCHAR" property="name" />
+		<result column="title" jdbcType="VARCHAR" property="title" />
+		<result column="author" jdbcType="VARCHAR" property="author" />
+		<result column="endtime" jdbcType="TIMESTAMP" property="endtime" />
+		<result column="publishtime" jdbcType="TIMESTAMP" property="publishtime" />
+	</resultMap>
+
+
+
+	<sql id="Base_Column_List">
+		id, columnid, title, summary, content, photoPath,
+		publishtime, endtime,
+		isTop,author
+	</sql>
+	<sql id="Blob_Column_List">
+		content
+	</sql>
+	<select id="selectByPrimaryKey" parameterType="java.lang.Integer"
+		resultMap="ResultMapWithBLOBs">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from doc_content
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+
+	<select id="selectBycolumnid" resultMap="ResultMapWithBLOBs"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		,
+		<include refid="Blob_Column_List" />
+		from doc_content
+		where columnid = #{columnid,jdbcType=INTEGER}
+
+	</select>
+
+	<select id="getALL" resultMap="BaseResultMapContent">
+		select
+		doc_content.id,name,title,author,publishtime,endtime FROM
+		doc_column,doc_content WHERE doc_column.id =doc_content.columnid AND
+		[parent_id ]=1 AND lever = 2 ORDER BY endtime desc
+	</select>
+
+	<select id="selectByName" resultMap="BaseResultMapContent"
+		parameterType="java.lang.String">
+		select
+		doc_content.id,name,title,author,publishtime FROM
+		doc_column,doc_content WHERE doc_column.id =doc_content.columnid AND
+		[parent_id ]=1 AND lever = 2 and doc_content.title LIKE
+		'%'+#{title}+'%'
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		doc_content
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.jcl.pojo.DocContent">
+		insert into doc_content (
+		columnid, title,
+		summary, photoPath, publishtime,
+		endtime, isTop,author,
+		content
+		)
+		values ( #{columnid,jdbcType=INTEGER},
+		#{title,jdbcType=VARCHAR},
+		#{summary,jdbcType=VARCHAR},
+		#{photopath,jdbcType=VARCHAR}, #{publishtime,jdbcType=TIMESTAMP},
+		#{endtime,jdbcType=TIMESTAMP},
+		#{istop,jdbcType=VARCHAR},#{author,jdbcType=VARCHAR},
+		#{content,jdbcType=CLOB}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.jcl.pojo.DocContent">
+		insert into doc_content
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="columnid != null">
+				columnid,
+			</if>
+			<if test="title != null">
+				title,
+			</if>
+			<if test="summary != null">
+				summary,
+			</if>
+			<if test="photopath != null">
+				photoPath,
+			</if>
+			<if test="publishtime != null">
+				publishtime,
+			</if>
+			<if test="endtime != null">
+				endtime,
+			</if>
+			<if test="istop != null">
+				isTop,
+			</if>
+			<if test="content != null">
+				content,
+			</if>
+			<if test="content != null">
+				author,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="columnid != null">
+				#{columnid,jdbcType=INTEGER},
+			</if>
+			<if test="title != null">
+				#{title,jdbcType=VARCHAR},
+			</if>
+			<if test="summary != null">
+				#{summary,jdbcType=VARCHAR},
+			</if>
+			<if test="photopath != null">
+				#{photopath,jdbcType=VARCHAR},
+			</if>
+			<if test="publishtime != null">
+				#{publishtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="endtime != null">
+				#{endtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="istop != null">
+				#{istop,jdbcType=VARCHAR},
+			</if>
+			<if test="content != null">
+				#{content,jdbcType=CLOB},
+			</if>
+			<if test="author != null">
+				#{author,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.jcl.pojo.DocContent">
+		update doc_content
+		<set>
+			<if test="columnid != null">
+				columnid = #{columnid,jdbcType=INTEGER},
+			</if>
+			<if test="author != null">
+				author = #{author,jdbcType=VARCHAR},
+			</if>
+			<if test="title != null">
+				title = #{title,jdbcType=VARCHAR},
+			</if>
+			<if test="summary != null">
+				summary = #{summary,jdbcType=VARCHAR},
+			</if>
+			<if test="photopath != null">
+				photoPath = #{photopath,jdbcType=VARCHAR},
+			</if>
+			<if test="publishtime != null">
+				publishtime = #{publishtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="endtime != null">
+				endtime = #{endtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="istop != null">
+				isTop = #{istop,jdbcType=VARCHAR},
+			</if>
+			<if test="content != null">
+				content = #{content,jdbcType=CLOB},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKeyWithBLOBs" parameterType="com.jcl.pojo.DocContent">
+		update
+		doc_content
+		set columnid = #{columnid,jdbcType=INTEGER},
+		title =
+		#{title,jdbcType=VARCHAR},
+		summary = #{summary,jdbcType=VARCHAR},
+		photoPath = #{photopath,jdbcType=VARCHAR},
+		publishtime =
+		#{publishtime,jdbcType=TIMESTAMP},
+		endtime =
+		#{endtime,jdbcType=TIMESTAMP},
+		isTop = #{istop,jdbcType=VARCHAR},
+		content = #{content,jdbcType=CLOB}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.jcl.pojo.DocContent">
+		update doc_content
+		set columnid = #{columnid,jdbcType=INTEGER},
+		title =
+		#{title,jdbcType=VARCHAR},author =
+		#{author,jdbcType=VARCHAR},
+		summary =
+		#{summary,jdbcType=VARCHAR},
+		content = #{content,jdbcType=VARCHAR},
+		photoPath =
+		#{photopath,jdbcType=VARCHAR},
+		publishtime =
+		#{publishtime,jdbcType=TIMESTAMP},
+		endtime =
+		#{endtime,jdbcType=TIMESTAMP},
+		isTop = #{istop,jdbcType=VARCHAR}
+		where
+		id = #{id,jdbcType=INTEGER}
+	</update>
+	
+	
+	<select id="getDocContentListByMap" parameterType="map"
+		resultMap="BaseResultMapList">
+		select
+		doc_content.id,name,title,author,publishtime
+		from doc_content,doc_column
+		<trim prefix="where" prefixOverrides="and">
+			1 = 1 and doc_column.id=doc_content.columnid
+			<if test="columnid != null">
+				and doc_content.columnid = #{columnid}
+			</if>
+			<if test="title != null">
+				and doc_content.title like #{title}
+			</if>
+			<if test="columnidlist != null">
+				and doc_content.columnid IN (
+				<foreach collection="columnidlist" item="columnid" index="index"
+					separator=",">
+					#{columnid}
+				</foreach>
+				)
+			</if>
+		</trim>
+		order by endtime desc
+	</select>
+</mapper>

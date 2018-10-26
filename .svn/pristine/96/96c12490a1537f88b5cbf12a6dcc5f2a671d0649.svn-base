@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jcl.dao.DocColumnMapper">
+	<resultMap id="BaseResultMap" type="com.jcl.pojo.DocColumn">
+		<id column="id" jdbcType="INTEGER" property="id" />
+		<result column="name" jdbcType="VARCHAR" property="name" />
+		<result column="typeid" jdbcType="INTEGER" property="typeid" />
+		<result column="parent_id " jdbcType="INTEGER" property="parentId" />
+		<result column="acronym" jdbcType="VARCHAR" property="acronym" />
+		<result column="lever" jdbcType="INTEGER" property="lever" />
+		<result column="showName" jdbcType="VARCHAR" property="showname" />
+		<result column="sort" jdbcType="VARCHAR" property="sort" />
+		<result column="description" jdbcType="VARCHAR" property="description" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		id, name, typeid, "parent_id ", acronym, lever, showName,
+		sort,
+		description
+	</sql>
+	<select id="selectByPrimaryKey" parameterType="java.lang.Integer"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from doc_column
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<select id="selectByname" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from doc_column
+		where name = #{name,jdbcType=VARCHAR}
+	</select>
+
+	<select id="selectByCommunityArticle" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM
+		doc_column WHERE [parent_id ]=1 AND lever =2
+
+	</select>
+
+	<!-- 查询教育学院二级分类 -->
+	<select id="selectTwo" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM doc_column WHERE [parent_id ]=#{parentId} AND lever = 3
+	</select>
+
+	<select id="selectByMap" parameterType="map" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from doc_column
+		<trim prefix="where" prefixOverrides="and">
+			1 = 1
+			<if test="lever != null">
+				and lever = #{lever}
+			</if>
+			<if test="name != null">
+				and name = #{name}
+			</if>
+			<if test="parent_id != null">
+				and parent_id = #{parent_id}
+			</if>
+		</trim>
+	</select>
+
+	<select id="selectOne" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM doc_column WHERE [parent_id ]=2 AND lever = 2
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		doc_column
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.jcl.pojo.DocColumn">
+		insert into doc_column (
+		name,
+		typeid,
+		"parent_id ", acronym, lever,
+		showName, sort, description
+		)
+		values ( #{name,jdbcType=VARCHAR},
+		#{typeid,jdbcType=INTEGER},
+		#{parentId,jdbcType=INTEGER},
+		#{acronym,jdbcType=VARCHAR},
+		#{lever,jdbcType=INTEGER},
+		#{showname,jdbcType=VARCHAR},
+		#{sort,jdbcType=VARCHAR},
+		#{description,jdbcType=VARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.jcl.pojo.DocColumn">
+		insert into doc_column
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="name != null">
+				name,
+			</if>
+			<if test="typeid != null">
+				typeid,
+			</if>
+			<if test="parentId != null">
+				"parent_id ",
+			</if>
+			<if test="acronym != null">
+				acronym,
+			</if>
+			<if test="lever != null">
+				lever,
+			</if>
+			<if test="showname != null">
+				showName,
+			</if>
+			<if test="sort != null">
+				sort,
+			</if>
+			<if test="description != null">
+				description,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="typeid != null">
+				#{typeid,jdbcType=INTEGER},
+			</if>
+			<if test="parentId != null">
+				#{parentId,jdbcType=INTEGER},
+			</if>
+			<if test="acronym != null">
+				#{acronym,jdbcType=VARCHAR},
+			</if>
+			<if test="lever != null">
+				#{lever,jdbcType=INTEGER},
+			</if>
+			<if test="showname != null">
+				#{showname,jdbcType=VARCHAR},
+			</if>
+			<if test="sort != null">
+				#{sort,jdbcType=VARCHAR},
+			</if>
+			<if test="description != null">
+				#{description,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.jcl.pojo.DocColumn">
+		update doc_column
+		<set>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="typeid != null">
+				typeid = #{typeid,jdbcType=INTEGER},
+			</if>
+			<if test="parentId != null">
+				"parent_id " = #{parentId,jdbcType=INTEGER},
+			</if>
+			<if test="acronym != null">
+				acronym = #{acronym,jdbcType=VARCHAR},
+			</if>
+			<if test="lever != null">
+				lever = #{lever,jdbcType=INTEGER},
+			</if>
+			<if test="showname != null">
+				showName = #{showname,jdbcType=VARCHAR},
+			</if>
+			<if test="sort != null">
+				sort = #{sort,jdbcType=VARCHAR},
+			</if>
+			<if test="description != null">
+				description = #{description,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.jcl.pojo.DocColumn">
+		update doc_column
+		set name = #{name,jdbcType=VARCHAR},
+		typeid =
+		#{typeid,jdbcType=INTEGER},
+		"parent_id " =
+		#{parentId,jdbcType=INTEGER},
+		acronym = #{acronym,jdbcType=VARCHAR},
+		lever = #{lever,jdbcType=INTEGER},
+		showName =
+		#{showname,jdbcType=VARCHAR},
+		sort = #{sort,jdbcType=VARCHAR},
+		description = #{description,jdbcType=VARCHAR}
+		where id =
+		#{id,jdbcType=INTEGER}
+	</update>
+	<select id="getDocColumnListByMap" parameterType="map"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from doc_column
+		<trim prefix="where" prefixOverrides="and">
+			1 = 1
+			<if test="parent_id != null">
+				and parent_id = #{parent_id}
+			</if>
+
+		</trim>
+	</select>
+</mapper>

@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcl.dao.RiskContractMapper" >
+  <resultMap id="BaseResultMap" type="com.jcl.pojo.RiskContract" >
+    <id column="contract_code" property="contractCode" jdbcType="VARCHAR" />
+    <result column="variety_code" property="varietyCode" jdbcType="VARCHAR" />
+    <result column="contract_name" property="contractName" jdbcType="VARCHAR" />
+    <result column="minchangeprice" property="minchangeprice" jdbcType="DECIMAL" />
+    <result column="public_day" property="publicDay" jdbcType="DATE" />
+    <result column="prompt_day" property="promptDay" jdbcType="DATE" />
+    <result column="exchange_name" property="exchangeName" jdbcType="VARCHAR" />
+    <result column="contractdetail" property="contractdetail" jdbcType="NUMERIC" />
+    <result column="unit" property="unit" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    contract_code, variety_code, contract_name, minchangeprice, public_day, prompt_day, 
+    exchange_name, contractdetail, unit
+  </sql>
+  
+  
+  <insert id="insertBatchContract">
+  	 INSERT INTO risk_contract
+            (contract_code, contract_name, exchange_name,unit)
+    VALUES
+    <foreach collection ="list" item="user" separator =",">
+         (#{user.contractCode,jdbcType=VARCHAR}, #{user.contractName,jdbcType=VARCHAR}, 
+         #{user.exchangeName,jdbcType=VARCHAR},#{user.unit,jdbcType=VARCHAR})
+    </foreach >
+  </insert>
+  
+  <select id="selectByTime" resultMap="BaseResultMap" parameterType="java.lang.String">
+		  		SELECT
+				*
+				FROM
+				risk_contract
+				WHERE
+				contract_code LIKE '%'+#{keywords}+'%' ORDER BY exchange_name;
+  		
+  </select>
+  
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jcl.pojo.RiskContractExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from risk_contract
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from risk_contract
+    where contract_code = #{contractCode,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from risk_contract
+    where contract_code = #{contractCode,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jcl.pojo.RiskContractExample" >
+    delete from risk_contract
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jcl.pojo.RiskContract" >
+    insert into risk_contract (contract_code, variety_code, contract_name, 
+      minchangeprice, public_day, prompt_day, 
+      exchange_name, contractdetail, unit
+      )
+    values (#{contractCode,jdbcType=VARCHAR}, #{varietyCode,jdbcType=VARCHAR}, #{contractName,jdbcType=VARCHAR}, 
+      #{minchangeprice,jdbcType=DECIMAL}, #{publicDay,jdbcType=DATE}, #{promptDay,jdbcType=DATE}, 
+      #{exchangeName,jdbcType=VARCHAR}, #{contractdetail,jdbcType=NUMERIC}, #{unit,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jcl.pojo.RiskContract" >
+    insert into risk_contract
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="contractCode != null" >
+        contract_code,
+      </if>
+      <if test="varietyCode != null" >
+        variety_code,
+      </if>
+      <if test="contractName != null" >
+        contract_name,
+      </if>
+      <if test="minchangeprice != null" >
+        minchangeprice,
+      </if>
+      <if test="publicDay != null" >
+        public_day,
+      </if>
+      <if test="promptDay != null" >
+        prompt_day,
+      </if>
+      <if test="exchangeName != null" >
+        exchange_name,
+      </if>
+      <if test="contractdetail != null" >
+        contractdetail,
+      </if>
+      <if test="unit != null" >
+        unit,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="contractCode != null" >
+        #{contractCode,jdbcType=VARCHAR},
+      </if>
+      <if test="varietyCode != null" >
+        #{varietyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="contractName != null" >
+        #{contractName,jdbcType=VARCHAR},
+      </if>
+      <if test="minchangeprice != null" >
+        #{minchangeprice,jdbcType=DECIMAL},
+      </if>
+      <if test="publicDay != null" >
+        #{publicDay,jdbcType=DATE},
+      </if>
+      <if test="promptDay != null" >
+        #{promptDay,jdbcType=DATE},
+      </if>
+      <if test="exchangeName != null" >
+        #{exchangeName,jdbcType=VARCHAR},
+      </if>
+      <if test="contractdetail != null" >
+        #{contractdetail,jdbcType=NUMERIC},
+      </if>
+      <if test="unit != null" >
+        #{unit,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jcl.pojo.RiskContractExample" resultType="java.lang.Integer" >
+    select count(*) from risk_contract
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update risk_contract
+    <set >
+      <if test="record.contractCode != null" >
+        contract_code = #{record.contractCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.varietyCode != null" >
+        variety_code = #{record.varietyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contractName != null" >
+        contract_name = #{record.contractName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.minchangeprice != null" >
+        minchangeprice = #{record.minchangeprice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.publicDay != null" >
+        public_day = #{record.publicDay,jdbcType=DATE},
+      </if>
+      <if test="record.promptDay != null" >
+        prompt_day = #{record.promptDay,jdbcType=DATE},
+      </if>
+      <if test="record.exchangeName != null" >
+        exchange_name = #{record.exchangeName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.contractdetail != null" >
+        contractdetail = #{record.contractdetail,jdbcType=NUMERIC},
+      </if>
+      <if test="record.unit != null" >
+        unit = #{record.unit,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update risk_contract
+    set contract_code = #{record.contractCode,jdbcType=VARCHAR},
+      variety_code = #{record.varietyCode,jdbcType=VARCHAR},
+      contract_name = #{record.contractName,jdbcType=VARCHAR},
+      minchangeprice = #{record.minchangeprice,jdbcType=DECIMAL},
+      public_day = #{record.publicDay,jdbcType=DATE},
+      prompt_day = #{record.promptDay,jdbcType=DATE},
+      exchange_name = #{record.exchangeName,jdbcType=VARCHAR},
+      contractdetail = #{record.contractdetail,jdbcType=NUMERIC},
+      unit = #{record.unit,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jcl.pojo.RiskContract" >
+    update risk_contract
+    <set >
+      <if test="varietyCode != null" >
+        variety_code = #{varietyCode,jdbcType=VARCHAR},
+      </if>
+      <if test="contractName != null" >
+        contract_name = #{contractName,jdbcType=VARCHAR},
+      </if>
+      <if test="minchangeprice != null" >
+        minchangeprice = #{minchangeprice,jdbcType=DECIMAL},
+      </if>
+      <if test="publicDay != null" >
+        public_day = #{publicDay,jdbcType=DATE},
+      </if>
+      <if test="promptDay != null" >
+        prompt_day = #{promptDay,jdbcType=DATE},
+      </if>
+      <if test="exchangeName != null" >
+        exchange_name = #{exchangeName,jdbcType=VARCHAR},
+      </if>
+      <if test="contractdetail != null" >
+        contractdetail = #{contractdetail,jdbcType=NUMERIC},
+      </if>
+      <if test="unit != null" >
+        unit = #{unit,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where contract_code = #{contractCode,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jcl.pojo.RiskContract" >
+    update risk_contract
+    set variety_code = #{varietyCode,jdbcType=VARCHAR},
+      contract_name = #{contractName,jdbcType=VARCHAR},
+      minchangeprice = #{minchangeprice,jdbcType=DECIMAL},
+      public_day = #{publicDay,jdbcType=DATE},
+      prompt_day = #{promptDay,jdbcType=DATE},
+      exchange_name = #{exchangeName,jdbcType=VARCHAR},
+      contractdetail = #{contractdetail,jdbcType=NUMERIC},
+      unit = #{unit,jdbcType=VARCHAR}
+    where contract_code = #{contractCode,jdbcType=VARCHAR}
+  </update>
+</mapper>

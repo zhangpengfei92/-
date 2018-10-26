@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcl.dao.FundsetMapper" >
+  <resultMap id="BaseResultMap" type="com.jcl.pojo.Fundset" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="pcswitch" property="pcswitch" jdbcType="INTEGER" />
+    <result column="appswitch" property="appswitch" jdbcType="INTEGER" />
+    <result column="czcost" property="czcost" jdbcType="NUMERIC" />
+    <result column="txcost" property="txcost" jdbcType="NUMERIC" />
+    <result column="minmoney" property="minmoney" jdbcType="DECIMAL" />
+    <result column="maxmoney" property="maxmoney" jdbcType="DECIMAL" />
+    <result column="starttime" property="starttime" jdbcType="TIME" />
+    <result column="endtime" property="endtime" jdbcType="TIME" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, pcswitch, appswitch, czcost, txcost, minmoney, maxmoney, starttime, endtime
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jcl.pojo.FundsetExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from fundset
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from fundset
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from fundset
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jcl.pojo.FundsetExample" >
+    delete from fundset
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jcl.pojo.Fundset" >
+    insert into fundset (id, pcswitch, appswitch, 
+      czcost, txcost, minmoney, 
+      maxmoney, starttime, endtime
+      )
+    values (#{id,jdbcType=INTEGER}, #{pcswitch,jdbcType=INTEGER}, #{appswitch,jdbcType=INTEGER}, 
+      #{czcost,jdbcType=NUMERIC}, #{txcost,jdbcType=NUMERIC}, #{minmoney,jdbcType=DECIMAL}, 
+      #{maxmoney,jdbcType=DECIMAL}, #{starttime,jdbcType=TIME}, #{endtime,jdbcType=TIME}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jcl.pojo.Fundset" >
+    insert into fundset
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="pcswitch != null" >
+        pcswitch,
+      </if>
+      <if test="appswitch != null" >
+        appswitch,
+      </if>
+      <if test="czcost != null" >
+        czcost,
+      </if>
+      <if test="txcost != null" >
+        txcost,
+      </if>
+      <if test="minmoney != null" >
+        minmoney,
+      </if>
+      <if test="maxmoney != null" >
+        maxmoney,
+      </if>
+      <if test="starttime != null" >
+        starttime,
+      </if>
+      <if test="endtime != null" >
+        endtime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="pcswitch != null" >
+        #{pcswitch,jdbcType=INTEGER},
+      </if>
+      <if test="appswitch != null" >
+        #{appswitch,jdbcType=INTEGER},
+      </if>
+      <if test="czcost != null" >
+        #{czcost,jdbcType=NUMERIC},
+      </if>
+      <if test="txcost != null" >
+        #{txcost,jdbcType=NUMERIC},
+      </if>
+      <if test="minmoney != null" >
+        #{minmoney,jdbcType=DECIMAL},
+      </if>
+      <if test="maxmoney != null" >
+        #{maxmoney,jdbcType=DECIMAL},
+      </if>
+      <if test="starttime != null" >
+        #{starttime,jdbcType=TIME},
+      </if>
+      <if test="endtime != null" >
+        #{endtime,jdbcType=TIME},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jcl.pojo.FundsetExample" resultType="java.lang.Integer" >
+    select count(*) from fundset
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update fundset
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.pcswitch != null" >
+        pcswitch = #{record.pcswitch,jdbcType=INTEGER},
+      </if>
+      <if test="record.appswitch != null" >
+        appswitch = #{record.appswitch,jdbcType=INTEGER},
+      </if>
+      <if test="record.czcost != null" >
+        czcost = #{record.czcost,jdbcType=NUMERIC},
+      </if>
+      <if test="record.txcost != null" >
+        txcost = #{record.txcost,jdbcType=NUMERIC},
+      </if>
+      <if test="record.minmoney != null" >
+        minmoney = #{record.minmoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.maxmoney != null" >
+        maxmoney = #{record.maxmoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.starttime != null" >
+        starttime = #{record.starttime,jdbcType=TIME},
+      </if>
+      <if test="record.endtime != null" >
+        endtime = #{record.endtime,jdbcType=TIME},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update fundset
+    set id = #{record.id,jdbcType=INTEGER},
+      pcswitch = #{record.pcswitch,jdbcType=INTEGER},
+      appswitch = #{record.appswitch,jdbcType=INTEGER},
+      czcost = #{record.czcost,jdbcType=NUMERIC},
+      txcost = #{record.txcost,jdbcType=NUMERIC},
+      minmoney = #{record.minmoney,jdbcType=DECIMAL},
+      maxmoney = #{record.maxmoney,jdbcType=DECIMAL},
+      starttime = #{record.starttime,jdbcType=TIME},
+      endtime = #{record.endtime,jdbcType=TIME}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jcl.pojo.Fundset" >
+    update fundset
+    <set >
+      <if test="pcswitch != null" >
+        pcswitch = #{pcswitch,jdbcType=INTEGER},
+      </if>
+      <if test="appswitch != null" >
+        appswitch = #{appswitch,jdbcType=INTEGER},
+      </if>
+      <if test="czcost != null" >
+        czcost = #{czcost,jdbcType=NUMERIC},
+      </if>
+      <if test="txcost != null" >
+        txcost = #{txcost,jdbcType=NUMERIC},
+      </if>
+      <if test="minmoney != null" >
+        minmoney = #{minmoney,jdbcType=DECIMAL},
+      </if>
+      <if test="maxmoney != null" >
+        maxmoney = #{maxmoney,jdbcType=DECIMAL},
+      </if>
+      <if test="starttime != null" >
+        starttime = #{starttime,jdbcType=TIME},
+      </if>
+      <if test="endtime != null" >
+        endtime = #{endtime,jdbcType=TIME},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jcl.pojo.Fundset" >
+    update fundset
+    set pcswitch = #{pcswitch,jdbcType=INTEGER},
+      appswitch = #{appswitch,jdbcType=INTEGER},
+      czcost = #{czcost,jdbcType=NUMERIC},
+      txcost = #{txcost,jdbcType=NUMERIC},
+      minmoney = #{minmoney,jdbcType=DECIMAL},
+      maxmoney = #{maxmoney,jdbcType=DECIMAL},
+      starttime = #{starttime,jdbcType=TIME},
+      endtime = #{endtime,jdbcType=TIME}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,283 @@
+package com.jcl.controller;
+
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.log4j.Logger;
+import org.mongodb.morphia.Datastore;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.jcl.dao.SubzhMapper;
+import com.jcl.mongodb.BeanUtil;
+import com.jcl.mongodb.MongoUtils;
+import com.jcl.pojo.Bdzh;
+import com.jcl.pojo.BzjmbMenu;
+import com.jcl.pojo.CodefeesetMenu;
+import com.jcl.pojo.RiskTempall;
+import com.jcl.pojo.Subzh;
+import com.jcl.pojo.UserInfo;
+import com.jcl.service.BdzhService;
+import com.jcl.service.BzjmbMenuService;
+import com.jcl.service.BzjmbService;
+import com.jcl.service.CodefeesetMenuService;
+import com.jcl.service.RiskTempallService;
+import com.jcl.service.UserInfoService;
+import com.jcl.util.Util;
+import com.jcl.util.sms.MessageUtils;
+import com.jcl.vo.Msm;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
+import com.mongodb.DBObject;
+
+@RequestMapping("/app")
+@Controller
+public class AppController {
+	public static Logger log = Logger.getLogger(AppController.class);
+	@Autowired
+	private SubzhMapper subzhmapper;
+	@Autowired
+	private BdzhService bdzhService;
+	/*保证金方案信息管理service*/
+	@Autowired
+	private BzjmbMenuService bzjmbMenuService;
+	@Autowired
+	private CodefeesetMenuService codefeesetMenuService;
+	
+	//注入用户认证服务
+	@Autowired
+	private UserInfoService userinfoserviceImpl;
+	
+	/*风控方案信息管理service*/
+	@Autowired
+	private RiskTempallService riskTempallService;
+	
+	private static String mainzhzj="main_money";
+	@Autowired
+	private Datastore dsForStock;
+	/**
+	 * 跳转到注册页面
+	 * @param subzh
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("/skipRegister")
+	public String skipRegister(Subzh subzh,Model model) {
+		model.addAttribute("subzh", subzh);
+		return "register_h5/registerDownload";
+	}
+
+	@RequestMapping("/downloadPage")
+	public String skipdownpage() {
+		
+		return "register_h5/downloadPage";
+	}
+	
+	
+	/**
+	 * 注册接口
+	 * @return
+	 */
+	@RequestMapping(value="/reg",produces="text/html;charset=UTF-8")
+	@ResponseBody
+	public String reg(Subzh subzh,String code) {
+		try {
+			if(StringUtils.isEmpty(subzh.getPhone())) return "手机号不能为空";
+			subzh.setSubzh(subzh.getPhone());
+			if(StringUtils.isEmpty(subzh.getPassword())) return "密码不能为空";
+			Subzh subzh2 = subzhmapper.selectByPrimaryKeySubzh(subzh.getPhone());
+			if(subzh2 != null) {
+				return "用户已存在";
+			}
+			MongoUtils.change("sms");	
+			DBObject d = new BasicDBObject();
+			d.put("phone", subzh.getPhone());
+			DBCursor cursor = MongoUtils.queryByDBObject(d);
+			Msm msm = null;
+			while (cursor.hasNext()) {
+				DBObject result = cursor.next();
+				msm = BeanUtil.dbObject2Bean(result, new Msm());
+				long time = (new Date().getTime()-msm.getTime())/1000;
+				System.out.println("进来了？"+time);
+				if((new Date().getTime()-msm.getTime())/1000>60) {
+					
+					
+					return "短信已失效,请重新发送";
+				}
+				if(StringUtils.isEmpty(code)) {
+					return "短信验证码不能为空";
+				}
+				if(!code.equals(msm.getCode())) {
+					return "验证码不匹配";
+				}
+			}
+			if(msm==null) {
+				return "找不到匹配的验证码";
+			}
+			subzh.setIsadmin(6);
+			subzh.setKhdate(new Date());
+			byte[] data = subzh.getPhone().getBytes();
+			long cookie = Util.Hash64(data, 0, data.length);// 生成随机的cookie
+			if (cookie < 0) {
+				subzh.setCookie(String.valueOf(Util.readUnsignedLong(cookie)));
+			} else {
+				subzh.setCookie(String.valueOf(cookie));
+			}
+			subzh.setIsDelete(0);
+			subzh.setZhstate(0);
+			
+			try {
+				Bdzh bdzh1=new Bdzh();
+				bdzh1.setZhstate(1);
+				List<Bdzh> bdzhList = bdzhService.queryBy(bdzh1);
+				DB db = dsForStock.getDB();
+				DBCollection dbCollection=db.getCollection(mainzhzj);//主账号资金 数据
+				int i=0;
+				log.info("h5查关联主账号");
+				if(bdzhList != null && bdzhList.size() > 0) {//默认资金权益
+					for(Bdzh bdzh : bdzhList){
+						/*if(bdzh.getSymoney() != null && bdzh.getSymoney().doubleValue() > 1000){//选择当前报单账户
+							subzh.setBdtd(String.valueOf(bdzh.getBdzhid()));
+							//更新报单账户
+							if(bdzh.getAvaamoney() != null){可用资金
+								bdzh.setAvaamoney(bdzh.getAvaamoney().subtract(new BigDecimal(1000)));
+							} else {
+								bdzh.setAvaamoney(new BigDecimal(-1000));
+							}
+							if(bdzh.getSubinterest() != null){子账户权益
+								bdzh.setSubinterest(bdzh.getSubinterest().add(new BigDecimal(1000)));
+							} else {
+								bdzh.setSubinterest(new BigDecimal(1000));
+							}
+							bdzh.setSymoney(bdzh.getSymoney().subtract(new BigDecimal(1000)));
+							log.info("更新报单账户资金信息：" + bdzhService.updateBdzh(bdzh));
+						} */
+						DBObject condition = new BasicDBObject();
+						condition.put("account", new BasicDBObject("$eq", bdzh.getAccountid()));
+						log.info("H5的注册方法：开始查主账号资金");
+						DBCursor bdzhcursor = dbCollection.find(condition).skip(0).limit(10);
+						log.info("H5的注册方法：查主账号资金结束");
+						while (bdzhcursor.hasNext()) {
+							BasicDBObject dbObj = (BasicDBObject) bdzhcursor.next();
+							log.info("H5的注册方法：取设置主账号资金");
+							if(dbObj.containsField("available")){//可用资金：  available可用资金
+								double available=dbObj.getDouble("available");	
+								if(available>0.01){
+									subzh.setBdtd(String.valueOf(bdzh.getBdzhid()));
+									i=1;
+									break;
+								}
+							}
+							
+						}
+						if(i>0){
+							break;
+						}
+					}
+					if(StringUtils.isEmpty(subzh.getBdtd())){
+						int index=bdzhList.size()-1;
+						subzh.setBdtd(String.valueOf(bdzhList.get(index).getBdzhid()));
+					}
+					
+				}
+			} catch (Exception ebdzh) {
+				ebdzh.printStackTrace();
+				log.error("查询报单账户资金权益信息异常：" + ebdzh.getMessage());
+			}
+			/*收费方案*/
+			try {
+				log.info("h5查关联方案");
+				List<CodefeesetMenu> menuList = codefeesetMenuService.selectAll();
+				if(menuList != null && menuList.size() > 0){
+					boolean isFlag = false;
+					for(CodefeesetMenu codefeesetMenu : menuList){
+						if(codefeesetMenu.getIsdefault() != null && codefeesetMenu.getIsdefault() == 1){
+							subzh.setFeeset(codefeesetMenu.getId().toString());
+							isFlag = true;
+							break;
+						}
+					}
+					if(!isFlag){
+						int index=menuList.size()-1;
+						subzh.setFeeset(menuList.get(index).getId().toString());
+					}
+				} else {
+					subzh.setFeeset("1");//默认1
+				}
+				/*保证金方案*/
+				List<BzjmbMenu> bzjList = bzjmbMenuService.selectAll();
+				if(bzjList != null && bzjList.size() > 0){
+					int index=bzjList.size()-1;
+					subzh.setMarginset(bzjList.get(index).getId().toString());
+				} else {
+					subzh.setMarginset("1");
+				}
+				/*风控方案*/
+				List<RiskTempall> riskTempallList = riskTempallService.selectAll();
+				if(riskTempallList != null && riskTempallList.size() > 0){
+					int index=riskTempallList.size()-1;
+					subzh.setRiskset(riskTempallList.get(index).getId());
+				}  else {
+					subzh.setRiskset(1);
+				}
+				log.info("h5查关联方案完成");
+			} catch (Exception ef) {
+				ef.printStackTrace();
+				log.error("获取方案信息异常：" + ef.getMessage());
+			}
+			
+			subzhmapper.insertSelective(subzh);
+			//将用户信息保存到认证库
+			UserInfo userInfo = new UserInfo();
+			userInfo.setUsername(subzh.getSubzh());
+			userInfo.setPassword(subzh.getPassword());
+			userInfo.setTelephone(subzh.getPhone());
+			userinfoserviceImpl.add(userInfo);
+			return "ok";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "系统异常";
+		}
+	}
+	
+	/**
+	 * 短信发送接口
+	 * @param code
+	 * @return
+	 */
+	@RequestMapping(value = "/sendsms",produces = "text/html;charset=UTF-8")
+	@ResponseBody
+	public String sendsms(String phone) {
+		try {
+			if(StringUtils.isEmpty(phone))return "NoOk";
+			Subzh subzh2 = subzhmapper.selectByPrimaryKeySubzh(phone);
+			if(subzh2 != null) {
+				return "用户已存在";
+			}
+			MongoUtils.change("sms");	
+			DBObject d = new BasicDBObject();
+			d.put("phone", phone);
+			MongoUtils.deleteDB(d);
+			String code = String.valueOf((int)(Math.random()*9000)+1000);
+			MessageUtils.sendMassager(phone, code);
+			DBObject db = new BasicDBObject();
+			db.put("code", code);
+			db.put("phone", phone);
+			db.put("time", new Date().getTime());
+			MongoUtils.addOne(db);
+			return "ok";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "NoOk";
+		}
+	}
+}

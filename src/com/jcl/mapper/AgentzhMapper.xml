@@ -1,0 +1,448 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcl.dao.AgentzhMapper" >
+  <resultMap id="BaseResultMap" type="com.jcl.pojo.Agentzh" >
+    <id column="agentzh" property="agentzh" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="INTEGER" />
+    <result column="mac" property="mac" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="qq" property="qq" jdbcType="VARCHAR" />
+    <result column="starttime" property="starttime" jdbcType="TIMESTAMP" />
+    <result column="endtime" property="endtime" jdbcType="TIMESTAMP" />
+    <result column="mail" property="mail" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
+    <result column="modified_at" property="modifiedAt" jdbcType="TIMESTAMP" />
+    <result column="softfee" property="softfee" jdbcType="NUMERIC" />
+    <result column="softfeeMoney" property="softfeemoney" jdbcType="NUMERIC" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="total" property="total" jdbcType="NUMERIC" />
+    <result column="used" property="used" jdbcType="NUMERIC" />
+    <result column="userid" property="userid" jdbcType="NUMERIC" />
+    <result column="parentagentzh" property="parentagentzh" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    agentzh, name, password, sex, mac, phone, qq, starttime, endtime, mail, address, 
+    created_at, modified_at, softfee, softfeeMoney, status, total, used, userid, parentagentzh
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jcl.pojo.AgentzhExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from agentzh
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from agentzh
+    where agentzh = #{agentzh,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from agentzh
+    where agentzh = #{agentzh,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jcl.pojo.AgentzhExample" >
+    delete from agentzh
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jcl.pojo.Agentzh" >
+    insert into agentzh (agentzh, name, password, 
+      sex, mac, phone, qq, 
+      starttime, endtime, mail, 
+      address, created_at, modified_at, 
+      softfee, softfeeMoney, status, 
+      total, used, userid, 
+      parentagentzh)
+    values (#{agentzh,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{sex,jdbcType=INTEGER}, #{mac,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{qq,jdbcType=VARCHAR}, 
+      #{starttime,jdbcType=TIMESTAMP}, #{endtime,jdbcType=TIMESTAMP}, #{mail,jdbcType=VARCHAR}, 
+      #{address,jdbcType=VARCHAR}, #{createdAt,jdbcType=TIMESTAMP}, #{modifiedAt,jdbcType=TIMESTAMP}, 
+      #{softfee,jdbcType=NUMERIC}, #{softfeemoney,jdbcType=NUMERIC}, #{status,jdbcType=INTEGER}, 
+      #{total,jdbcType=NUMERIC}, #{used,jdbcType=NUMERIC}, #{userid,jdbcType=NUMERIC}, 
+      #{parentagentzh,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jcl.pojo.Agentzh" >
+    insert into agentzh
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="agentzh != null" >
+        agentzh,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="mac != null" >
+        mac,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="qq != null" >
+        qq,
+      </if>
+      <if test="starttime != null" >
+        starttime,
+      </if>
+      <if test="endtime != null" >
+        endtime,
+      </if>
+      <if test="mail != null" >
+        mail,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="createdAt != null" >
+        created_at,
+      </if>
+      <if test="modifiedAt != null" >
+        modified_at,
+      </if>
+      <if test="softfee != null" >
+        softfee,
+      </if>
+      <if test="softfeemoney != null" >
+        softfeeMoney,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="total != null" >
+        total,
+      </if>
+      <if test="used != null" >
+        used,
+      </if>
+      <if test="userid != null" >
+        userid,
+      </if>
+      <if test="parentagentzh != null" >
+        parentagentzh,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="agentzh != null" >
+        #{agentzh,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="mac != null" >
+        #{mac,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null" >
+        #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="starttime != null" >
+        #{starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null" >
+        #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mail != null" >
+        #{mail,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="createdAt != null" >
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedAt != null" >
+        #{modifiedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="softfee != null" >
+        #{softfee,jdbcType=NUMERIC},
+      </if>
+      <if test="softfeemoney != null" >
+        #{softfeemoney,jdbcType=NUMERIC},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="total != null" >
+        #{total,jdbcType=NUMERIC},
+      </if>
+      <if test="used != null" >
+        #{used,jdbcType=NUMERIC},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=NUMERIC},
+      </if>
+      <if test="parentagentzh != null" >
+        #{parentagentzh,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jcl.pojo.AgentzhExample" resultType="java.lang.Integer" >
+    select count(*) from agentzh
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update agentzh
+    <set >
+      <if test="record.agentzh != null" >
+        agentzh = #{record.agentzh,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.password != null" >
+        password = #{record.password,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sex != null" >
+        sex = #{record.sex,jdbcType=INTEGER},
+      </if>
+      <if test="record.mac != null" >
+        mac = #{record.mac,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null" >
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qq != null" >
+        qq = #{record.qq,jdbcType=VARCHAR},
+      </if>
+      <if test="record.starttime != null" >
+        starttime = #{record.starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endtime != null" >
+        endtime = #{record.endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.mail != null" >
+        mail = #{record.mail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.address != null" >
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createdAt != null" >
+        created_at = #{record.createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifiedAt != null" >
+        modified_at = #{record.modifiedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.softfee != null" >
+        softfee = #{record.softfee,jdbcType=NUMERIC},
+      </if>
+      <if test="record.softfeemoney != null" >
+        softfeeMoney = #{record.softfeemoney,jdbcType=NUMERIC},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.total != null" >
+        total = #{record.total,jdbcType=NUMERIC},
+      </if>
+      <if test="record.used != null" >
+        used = #{record.used,jdbcType=NUMERIC},
+      </if>
+      <if test="record.userid != null" >
+        userid = #{record.userid,jdbcType=NUMERIC},
+      </if>
+      <if test="record.parentagentzh != null" >
+        parentagentzh = #{record.parentagentzh,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update agentzh
+    set agentzh = #{record.agentzh,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      password = #{record.password,jdbcType=VARCHAR},
+      sex = #{record.sex,jdbcType=INTEGER},
+      mac = #{record.mac,jdbcType=VARCHAR},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      qq = #{record.qq,jdbcType=VARCHAR},
+      starttime = #{record.starttime,jdbcType=TIMESTAMP},
+      endtime = #{record.endtime,jdbcType=TIMESTAMP},
+      mail = #{record.mail,jdbcType=VARCHAR},
+      address = #{record.address,jdbcType=VARCHAR},
+      created_at = #{record.createdAt,jdbcType=TIMESTAMP},
+      modified_at = #{record.modifiedAt,jdbcType=TIMESTAMP},
+      softfee = #{record.softfee,jdbcType=NUMERIC},
+      softfeeMoney = #{record.softfeemoney,jdbcType=NUMERIC},
+      status = #{record.status,jdbcType=INTEGER},
+      total = #{record.total,jdbcType=NUMERIC},
+      used = #{record.used,jdbcType=NUMERIC},
+      userid = #{record.userid,jdbcType=NUMERIC},
+      parentagentzh = #{record.parentagentzh,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jcl.pojo.Agentzh" >
+    update agentzh
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="mac != null" >
+        mac = #{mac,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null" >
+        qq = #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="starttime != null" >
+        starttime = #{starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endtime != null" >
+        endtime = #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="mail != null" >
+        mail = #{mail,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="createdAt != null" >
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifiedAt != null" >
+        modified_at = #{modifiedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="softfee != null" >
+        softfee = #{softfee,jdbcType=NUMERIC},
+      </if>
+      <if test="softfeemoney != null" >
+        softfeeMoney = #{softfeemoney,jdbcType=NUMERIC},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="total != null" >
+        total = #{total,jdbcType=NUMERIC},
+      </if>
+      <if test="used != null" >
+        used = #{used,jdbcType=NUMERIC},
+      </if>
+      <if test="userid != null" >
+        userid = #{userid,jdbcType=NUMERIC},
+      </if>
+      <if test="parentagentzh != null" >
+        parentagentzh = #{parentagentzh,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where agentzh = #{agentzh,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jcl.pojo.Agentzh" >
+    update agentzh
+    set name = #{name,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=INTEGER},
+      mac = #{mac,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      qq = #{qq,jdbcType=VARCHAR},
+      starttime = #{starttime,jdbcType=TIMESTAMP},
+      endtime = #{endtime,jdbcType=TIMESTAMP},
+      mail = #{mail,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      modified_at = #{modifiedAt,jdbcType=TIMESTAMP},
+      softfee = #{softfee,jdbcType=NUMERIC},
+      softfeeMoney = #{softfeemoney,jdbcType=NUMERIC},
+      status = #{status,jdbcType=INTEGER},
+      total = #{total,jdbcType=NUMERIC},
+      used = #{used,jdbcType=NUMERIC},
+      userid = #{userid,jdbcType=NUMERIC},
+      parentagentzh = #{parentagentzh,jdbcType=VARCHAR}
+    where agentzh = #{agentzh,jdbcType=VARCHAR}
+  </update>
+</mapper>

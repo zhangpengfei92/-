@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcl.tradedao.SettleInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.jcl.pojo.FundMessage" >
+    <id column="creation_date" property="settleDate" jdbcType="INTEGER" />
+    <id column="user_id" property="subzh" jdbcType="VARCHAR" />
+    <result column="total_assets" property="preFundBalance" jdbcType="NUMERIC" />
+    <result column="available_balance" property="enableBalance" jdbcType="NUMERIC" />
+    <result column="dFreeze" property="freezeBalance" jdbcType="NUMERIC" />
+    <result column="init_loan" property="initLoan" jdbcType="NUMERIC" />
+    <result column="init_balance" property="initBalance" jdbcType="NUMERIC" />
+    <result column="no_fetch" property="noFetch" jdbcType="DECIMAL" />
+    <result column="profit" property="totalFloatprofit" jdbcType="DECIMAL" />
+    <result column="mark_balance" property="marketBalance" jdbcType="DECIMAL" />
+    <result column="in_balance" property="incomingBalance" jdbcType="DECIMAL" />
+    <result column="out_balance" property="outcomingBalance" jdbcType="DECIMAL" />
+    <result column="no_avail" property="rate" jdbcType="DECIMAL" />
+    <result column="close_profit" property="totalCloseprofit" jdbcType="DECIMAL" /><!-- 平仓盈亏 -->
+    
+    <!-- <result column="fee" property="fee" jdbcType="DECIMAL" /> --><!-- 手续费总额 -->
+  </resultMap>
+	
+  <sql id="Base_Column_List" >
+    creation_date, user_id, total_assets, available_balance, dFreeze, init_loan, init_balance, 
+    no_fetch, profit, mark_balance, in_balance, out_balance,close_profit, no_avail
+  </sql>
+  
+  <select id="getFundList" resultMap="BaseResultMap" parameterType="java.util.HashMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from settle_info
+    <where>
+    	<if test="intday!=null">
+    		creation_date=#{intday,jdbcType=INTEGER}
+    	</if>
+    </where>
+  </select>
+  
+
+ 
+</mapper>

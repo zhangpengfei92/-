@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!--配置整合mybatis过程
+    1.配置数据库相关参数-->
+    <context:property-placeholder location="classpath*:db.properties"
+    ignore-unresolvable="true"/>
+
+    <!--2.数据库连接池-->
+    <bean id="dataSourceBase" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <!--配置连接池属性-->
+        <property name="driverClass" value="${driver}" />
+
+        <!-- 基本属性 url、user、password -->
+        <property name="jdbcUrl" value="${url}" />
+        <property name="user" value="${dbuser}" />
+        <property name="password" value="${password}" />
+
+        <!--c3p0私有属性-->
+        <property name="maxPoolSize" value="30"/>
+        <property name="minPoolSize" value="10"/>
+        <!--关闭连接后不自动commit-->
+        <property name="autoCommitOnClose" value="false"/>
+
+        <!--获取连接超时时间-->
+        <property name="checkoutTimeout" value="10000"/>
+        <!--当获取连接失败重试次数-->
+        <property name="acquireRetryAttempts" value="5"/>
+    </bean>
+
+    <!--约定大于配置-->
+    <!--３.配置SqlSessionFactory对象-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!--往下才是mybatis和spring真正整合的配置-->
+        <!--注入数据库连接池-->
+        <property name="dataSource" ref="dataSourceBase"/>
+        <!--配置mybatis全局配置文件:mybatis-config.xml-->
+        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+        <!--扫描entity包,使用别名,多个用;隔开-->
+        <property name="typeAliasesPackage" value="com.jcl.pojo"/>
+        <!--扫描sql配置文件:mapper需要的xml文件-->
+        <property name="mapperLocations" value="classpath*:com/jcl/mapper/*.xml"/>
+    </bean>
+
+    <!--４:配置扫描Dao接口包,动态实现DAO接口,注入到spring容器-->
+    <bean id="sqlsession" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!--注入SqlSessionFactory-->
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+        <!-- 给出需要扫描的Dao接口-->
+        <property name="basePackage" value="com.jcl.dao"/>
+    </bean>
+    
+	<!-- ==================认证库====================== -->
+	
+	    
+    <!-- 认证数据库 -->
+	<bean id="dataSourceAuth" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="${driver}" />
+		<property name="jdbcUrl" value="${authurl}" />
+		<property name="user" value="${authdbuser}" />
+		<property name="password" value="${authpassword}" />
+		<property name="maxPoolSize" value="30"/>
+        <property name="minPoolSize" value="10"/>
+        <property name="autoCommitOnClose" value="false"/>
+        <property name="checkoutTimeout" value="10000"/>
+        <property name="acquireRetryAttempts" value="5"/>
+	</bean>
+
+    <!--约定大于配置-->
+    <!--３.配置SqlSessionFactory对象-->
+    <bean id="sqlSessionFactoryAuth" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!--往下才是mybatis和spring真正整合的配置-->
+        <!--注入数据库连接池-->
+        <property name="dataSource" ref="dataSourceAuth"/>
+        <!--配置mybatis全局配置文件:mybatis-config.xml-->
+        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+        <!--扫描entity包,使用别名,多个用;隔开-->
+        <property name="typeAliasesPackage" value="com.jcl.pojo"/>
+        <!--扫描sql配置文件:mapper需要的xml文件-->
+        <property name="mapperLocations" value="classpath*:com/jcl/authMapper/*.xml"/>
+    </bean>
+
+    <!--４:配置扫描Dao接口包,动态实现DAO接口,注入到spring容器-->
+    <bean id="sqlsessionAuth" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!--注入SqlSessionFactory-->
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactoryAuth"/>
+        <!-- 给出需要扫描的Dao接口-->
+        <property name="basePackage" value="com.jcl.authdao"/>
+    </bean>
+    
+    
+    <!-- ==================交易记录查历史柜台数据====================== -->
+    
+     <!-- 交易记录数据库 -->
+	<bean id="dataSourceTrade" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="${driver}" />
+		<property name="jdbcUrl" value="${jdbc.urljy}" />
+		<property name="user" value="${jdbc.usernamejy}" />
+		<property name="password" value="${jdbc.passwordjy}" />
+		<property name="maxPoolSize" value="30"/>
+        <property name="minPoolSize" value="10"/>
+        <property name="autoCommitOnClose" value="false"/>
+        <property name="checkoutTimeout" value="10000"/>
+        <property name="acquireRetryAttempts" value="5"/>
+	</bean>
+
+    <!--约定大于配置-->
+    <!--３.配置SqlSessionFactory对象-->
+    <bean id="sqlSessionFactoryTrade" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!--往下才是mybatis和spring真正整合的配置-->
+        <!--注入数据库连接池-->
+        <property name="dataSource" ref="dataSourceTrade"/>
+        <!--配置mybatis全局配置文件:mybatis-config.xml-->
+        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+        <!--扫描entity包,使用别名,多个用;隔开-->
+        <property name="typeAliasesPackage" value="com.jcl.pojo"/>
+        <!--扫描sql配置文件:mapper需要的xml文件-->
+        <property name="mapperLocations" value="classpath*:com/jcl/tradeMapper/*.xml"/>
+    </bean>
+
+    <!--４:配置扫描Dao接口包,动态实现DAO接口,注入到spring容器-->
+    <bean id="sqlsessionTrade" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!--注入SqlSessionFactory-->
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactoryTrade"/>
+        <!-- 给出需要扫描的Dao接口-->
+        <property name="basePackage" value="com.jcl.tradedao"/>
+    </bean>
+    
+    
+</beans>

@@ -1,0 +1,178 @@
+/**
+ * Copyright (C) 2009 武汉金策略信息科技有限公司
+ *
+ * 版权所有。
+ *
+ * 类名　　  : @FundController.java
+ * 功能概要  : 
+ * 做成日期  : @2018年6月13日
+ * 修改日期  :
+ */
+package com.jcl.controller;
+/** 
+ * @author zpf
+ * @version 1.0
+ */
+
+
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+
+import com.jcl.pojo.AgentzhfundLog;
+
+import com.jcl.service.FundService;
+import com.jcl.util.Constant;
+
+
+
+/**
+ * 资金充值提现的控制层
+ */
+
+@Controller
+@RequestMapping("/subzhfund")
+public class FundController {
+	public static Logger log = Logger.getLogger(FundController.class);
+	
+	public static final  String URL="http://6shun.masakn.top:1818/Pay_Index.html";//充值地址
+
+	
+	@Autowired
+	private FundService fundServiceimpl;
+	
+	//去h5充值页面
+	@RequestMapping("/goH5Pay")
+	public String goH5Pay(String subzh,HttpSession session) {
+		session.setAttribute(Constant.SESSION_LOGINNAME, subzh);
+		return "register_h5/fund_h5";
+	}
+	
+	//去h5充值页面
+	@RequestMapping("/goPCPay")
+	public String goPCPay(String subzh,HttpSession session) {
+		session.setAttribute(Constant.SESSION_LOGINNAME, subzh);
+		return "register_h5/fund_pc";
+	}
+	
+	//去提现页面
+	@RequestMapping("goGetMoney")
+	public  String  goGetMoney(String subzh,HttpSession session) {
+		session.setAttribute(Constant.SESSION_LOGINNAME, subzh);
+		return "register_h5/fundRaising";
+	}
+	
+	@RequestMapping("/ispay/{bankco}/{moneys}")
+	public String ispay(@PathVariable String bankco, @PathVariable Double moneys,Model model,HttpSession session) {
+		String subzh = (String) session.getAttribute(Constant.SESSION_LOGINNAME);
+		Map<String, Object> map= fundServiceimpl.savePay(bankco, moneys/100, subzh);
+		if(map!=null||map.size()>0) {
+			model.addAttribute("map", map);
+			model.addAttribute("url", URL);
+		}else {
+			map.put("error","充值失败，请联系管理员");
+			model.addAttribute("map", map);
+		}
+			return "register_h5/payMentFive";
+
+	}
+	
+	
+	//支付成功跳转的页面
+	@RequestMapping(value = "/payCallBack",produces="text/html;charset=UTF-8;")
+	public String  payCallBack(HttpServletRequest request,Model model) {
+		Map<String, Object> map=fundServiceimpl.payCallBack(request);
+		
+		if((Boolean) map.get("status")) {
+			model.addAttribute("msg", map.get("ok"));
+			log.info(map.get("ok"));
+			  
+		}else {
+			model.addAttribute("msg", map.get("error"));
+			log.info(map.get("error"));
+		}
+
+		
+		return "register_h5/callback";
+	}
+	
+	//充值回调的方法payNotyfy
+	@RequestMapping(value = "/payNotyfy",method=RequestMethod.POST,produces="text/html;charset=UTF-8;")
+	@ResponseBody
+	public  String  payNotyfy(HttpServletRequest request,Model model,HttpSession session) {
+		String subzh = (String) session.getAttribute(Constant.SESSION_LOGINNAME);
+		String notifystr="";
+		try {
+			
+			fundServiceimpl.payNotyfy(request,subzh);
+			
+		} catch (Exception e) {
+			log.error("充值回调操作失败", e);
+		}
+	
+
+		return "ok";
+	}
+	
+	//保存提现信息
+	@RequestMapping(value = "/savePay",produces="text/html;charset=UTF-8;")
+	@ResponseBody
+	public  String  savePay(AgentzhfundLog afl, HttpSession session,Model model) {
+		log.info("保存提现信息");
+		String subzh = (String) session.getAttribute(Constant.SESSION_LOGINNAME);
+		log.info("subzh===》"+subzh);
+		Map<String, Object> map =null;
+		if (subzh == null) {
+			log.info("subzh:账户为null");	
+			return "用户不存在";
+		}
+		try {
+			map=fundServiceimpl.savePay(afl,subzh);
+		} catch (Exception e) {
+			log.error("savePay--保存体提现信息异常", e);
+		}
+		if(map!=null&&map.size()>0){
+			log.info("保存提现信息状态===》"+map.get("status"));	
+			if((Boolean) map.get("status")){
+				return "true";
+			}else {
+				return (String) map.get("error");
+			}
+		}else {
+			return (String) map.get("error");
+		}	
+	}
+	
+	//审核并且提现
+	@RequestMapping(value = "/isPay",produces="text/html;charset=UTF-8;")
+	@ResponseBody
+	public String isPay(Integer id, Integer status) {
+		log.info("提现审核开始");
+		Map<String, Object>map=fundServiceimpl.isPay(id,status);
+		return "true";	
+	}
+	
+	//拒绝通过审核
+		@RequestMapping("/checkWithdraw")
+		@ResponseBody
+		public String checkWithdraw(Integer id, Integer status) {
+			
+			Map<String, Object>map=fundServiceimpl.checkWithdraw(id,status);
+			if(map.get("msg")=="true") {
+				return "true";
+			}else {
+				return "false";
+			}
+		}
+}

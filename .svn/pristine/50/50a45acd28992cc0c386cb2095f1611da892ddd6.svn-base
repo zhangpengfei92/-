@@ -1,0 +1,21 @@
+#db config
+driverLocation=D:/workspace/hqmall/WebContent/WEB-INF/lib/jtds-1.2.jar
+driver=net.sourceforge.jtds.jdbc.Driver
+url=jdbc:jtds:sqlserver://192.168.0.200:15033/gjqh_PrimeBroker_ghc_want_20180726;useCursors\=true
+dbuser=dev
+password=dev
+
+authurl=jdbc:jtds:sqlserver://192.168.23.69:1433/gjqh_user_auth;useCursors=true
+authdbuser=gjqh_user
+authpassword=pwLKFDSLLFSDF321SXGJQH
+
+#\u8FDE\u63A5c++\u4EA4\u6613\u6570\u636E\u5E93(\u76F8\u5E94\u7684\u4EA4\u6613\u5E93)\u7684\uFF08\u53BB\u67E5\u8BE2\u4E00\u4E9B\u5386\u53F2\u6570\u636E\uFF09
+jdbc.urljy=jdbc:jtds:sqlserver://192.168.23.69:1433/gjqh_trader0;useCursors\=true
+jdbc.usernamejy=gjqh_user
+jdbc.passwordjy=pwLKFDSLLFSDF321SXGJQH
+
+#MongoDB
+mongodb.user.dburi=mongodb\://192.168.3.64\:27017/db_pbox
+mongo.host=192.168.3.64
+mongo.port=27017
+mongo.dbName=db_pbox

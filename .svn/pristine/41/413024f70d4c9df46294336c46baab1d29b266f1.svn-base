@@ -1,0 +1,163 @@
+package com.jcl.task;
+
+import java.math.BigDecimal;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+
+import org.apache.log4j.Logger;
+import org.mongodb.morphia.Datastore;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
+
+import com.jcl.dao.FundSettlelogMapper;
+import com.jcl.dao.SubzhContractMapper;
+import com.jcl.dao.SubzhMapper;
+import com.jcl.pojo.DealCj;
+import com.jcl.pojo.EntrustOrder;
+import com.jcl.pojo.FundMessage;
+import com.jcl.pojo.FundSettlelog;
+import com.jcl.pojo.FundSettlelogExample;
+import com.jcl.pojo.FundSettlelogExample.Criteria;
+import com.jcl.pojo.Holder;
+import com.jcl.pojo.Subzh;
+import com.jcl.pojo.SubzhContract;
+import com.jcl.tradedao.HisOrderMapper;
+import com.jcl.tradedao.HisTradeMapper;
+import com.jcl.tradedao.HolderMapper;
+import com.jcl.tradedao.SettleInfoMapper;
+import com.jcl.util.Arith;
+import com.jcl.util.DateUtil;
+import com.jcl.util.StringUtil;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
+
+@Component 
+public class CountfundTask {
+
+	
+	public static Logger log = Logger.getLogger(CountfundTask.class);
+	@Autowired
+	private SettleInfoMapper funddao;
+
+	@Autowired
+	private HisTradeMapper dealdao;
+
+	@Autowired
+	private SubzhMapper subzhdao;
+	@Autowired
+	private FundSettlelogMapper fundSettlelogMapper;
+	@Autowired
+	private SubzhContractMapper subzhContractMapper;
+	
+	@Resource(name = "dsForStock")
+	private Datastore dsForStock;
+	
+	Map<String,Subzh> storeSubzhs=new HashMap<String,Subzh>();
+	
+	
+	
+	//保存手续费的定时任务
+	@Scheduled(cron="00 36 09 * * ? ")   //下午17点执行操作 
+	public void countPoundage() {
+		List<FundSettlelog> flist=null;
+
+		try {
+			log.info("保存手续费的定时任务开始");
+			
+			FundSettlelogExample example=new FundSettlelogExample();
+			Criteria createCriteria = example.createCriteria();
+			createCriteria.andSettletimeEqualTo(DateUtil.getymd(new Date()));
+			flist=fundSettlelogMapper.selectByExample(example);
+			log.info("查询手续费分成报表==》"+flist.size());	
+			for (FundSettlelog fundSettlelog : flist) {						
+			Subzh subzh=subzhdao.selectBySubzh(fundSettlelog.getSubzh());
+			
+			log.info("当前用户==》"+subzh);
+			log.info("合约品种==》"+fundSettlelog.getSettledesc());
+			String[] str = fundSettlelog.getSettledesc().split(" ");
+			log.info("合约品种==》"+str.toString());
+			
+
+			if(null!=subzh&&StringUtil.isAnyNullOrEmpty(str[0])) {
+			//渠道的手续费分成
+			if(subzh.getAllocchannel()!=null) {			
+				SubzhContract sc=subzhContractMapper.selectOneByNameAndSubzh(str[0], subzh.getAllocchannel());
+				if(null==sc) {
+					return;	
+				}
+				
+				fundSettlelog.setFeenextbalance(sc.getCost().multiply(fundSettlelog.getFeebalance()));
+				
+				sumfundbalance(subzh.getAllocchannel(),"feenextbalance");
+			}
+			//代理商手续费分成
+			if(subzh.getAllocagent()!=null) {
+				SubzhContract sc=subzhContractMapper.selectOneByNameAndSubzh(str[0], subzh.getAllocagent());
+				if(null==sc) {
+					return;
+				}
+				fundSettlelog.setAddbalance(sc.getCost().multiply(fundSettlelog.getFeebalance()));
+				sumfundbalance(subzh.getAgentname(),"addbalance");
+			}
+			
+			//经纪人手续费分成
+			if(subzh.getAllocbroker()!=null) {
+				SubzhContract sc=subzhContractMapper.selectOneByNameAndSubzh(str[0], subzh.getAllocbroker());
+				if(null==sc) {
+					
+					return;
+				}
+				fundSettlelog.setOverbalance(sc.getCost().multiply(fundSettlelog.getFeebalance()));
+				sumfundbalance(subzh.getAllocbroker(),"overbalance");
+			}
+			
+			try {
+				
+				fundSettlelogMapper.updateByPrimaryKeySelective(fundSettlelog);
+				
+			} catch (Exception e) {
+				
+				log.error("保存手续费发生异常", e);
+					}
+				}
+		   }		
+		} catch (Exception e) {
+			log.error("保存手续费发定时任务生异常", e);
+		}
+	
+	}
+	
+	//将产生的手续费保存到对应的用户的fundbalance字段
+	public String sumfundbalance(String username,String columnName) {
+		try {
+			Subzh subzh = subzhdao.selectBySubzh(username);
+			if(subzh==null) {
+				log.info("查询用户信息为null");
+				return "error";
+			}
+			
+			Double sumMoney= fundSettlelogMapper.selectSumMoney(username,columnName);
+			if(subzh.getFundbalance()==null) {
+				subzh.setFundbalance(new BigDecimal(sumMoney));
+			}else {
+				subzh.setFundbalance(subzh.getFundbalance().add(new BigDecimal(sumMoney)));
+			}
+			subzhdao.updateByPrimaryKeySelective(subzh);
+		} catch (Exception e){
+			
+			log.error("计算用户资金异常",e);
+		}
+		return null;
+		
+		
+	}
+}

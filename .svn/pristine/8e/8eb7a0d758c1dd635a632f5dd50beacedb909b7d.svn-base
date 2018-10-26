@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcl.dao.SubzhPreMenuMapper" >
+  <resultMap id="BaseResultMap" type="com.jcl.pojo.SubzhPreMenu" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="pmid" property="pmid" jdbcType="INTEGER" />
+    <result column="subzh" property="subzh" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, pmid, subzh
+  </sql>
+  
+  <select id="selectSubPreMenu" parameterType="java.lang.String" resultMap="BaseResultMap">
+  		select  
+  		<include refid="Base_Column_List" />
+  		 from subzh_pre_menu 
+  		 where subzh=#{subzh}
+  </select>
+  
+  
+  <select id="getAllSubPre" parameterType="com.jcl.pojo.Subzh" resultType="com.jcl.pojo.SubzhPreMenu">
+  		select a.id, a.pmid, a.subzh from subzh_pre_menu a left join subzh b on a.subzh=b.subzh
+  		<where>
+  			b.isadmin != 6
+  			<if test="isadmin == 2">
+  				and b.allocpt=#{subzh}
+  			</if>
+  			<if test="isadmin == 3">
+  				and b.allocchannel=#{subzh}
+  			</if>
+  			<if test="isadmin == 4">
+  				and b.allocagent=#{subzh}
+  			</if>
+  		</where>
+  </select>
+  
+  
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jcl.pojo.SubzhPreMenuExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from subzh_pre_menu
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from subzh_pre_menu
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from subzh_pre_menu
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jcl.pojo.SubzhPreMenuExample" >
+    delete from subzh_pre_menu
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jcl.pojo.SubzhPreMenu" >
+    insert into subzh_pre_menu (id, pmid, subzh
+      )
+    values (#{id,jdbcType=INTEGER}, #{pmid,jdbcType=INTEGER}, #{subzh,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jcl.pojo.SubzhPreMenu" >
+    insert into subzh_pre_menu
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="pmid != null" >
+        pmid,
+      </if>
+      <if test="subzh != null" >
+        subzh,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="pmid != null" >
+        #{pmid,jdbcType=INTEGER},
+      </if>
+      <if test="subzh != null" >
+        #{subzh,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jcl.pojo.SubzhPreMenuExample" resultType="java.lang.Integer" >
+    select count(*) from subzh_pre_menu
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update subzh_pre_menu
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.pmid != null" >
+        pmid = #{record.pmid,jdbcType=INTEGER},
+      </if>
+      <if test="record.subzh != null" >
+        subzh = #{record.subzh,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update subzh_pre_menu
+    set id = #{record.id,jdbcType=INTEGER},
+      pmid = #{record.pmid,jdbcType=INTEGER},
+      subzh = #{record.subzh,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jcl.pojo.SubzhPreMenu" >
+    update subzh_pre_menu
+    <set >
+      <if test="pmid != null" >
+        pmid = #{pmid,jdbcType=INTEGER},
+      </if>
+      <if test="subzh != null" >
+        subzh = #{subzh,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jcl.pojo.SubzhPreMenu" >
+    update subzh_pre_menu
+    set pmid = #{pmid,jdbcType=INTEGER},
+      subzh = #{subzh,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

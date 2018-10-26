@@ -1,0 +1,172 @@
+/* CSS Document */
+html {
+	width:100%;
+	height:100%;
+	border:none;
+	padding:0px;
+	margin:0px;
+}
+body {
+	min-width:1100px;
+	min-height:630px;
+	width:100%;
+	height:100%;
+	border:0px;
+	padding:0px;
+	margin:0px;
+	font-size:12px;
+	font-family:verdana,simsun;
+	color:#999;
+	background:#333333;
+	position:relative;
+}
+
+/*----------------------登陆用户-开始----------------------*/
+
+#contaniner{
+	width:100%;
+	height:536px;
+	background:#7acdff url(../images/login/bg_login.jpg) center top no-repeat;
+	position:absolute;
+	top:50%;
+	margin-top:-268px;
+}
+
+/*页面层*/
+#login_wrap {
+	width:1010px;
+	height:545px;
+	margin:auto;
+	position:relative;
+}
+
+/* logo */
+.logo{
+	width:250px;
+	height:50px;
+	background:url(../images/login/logo.gif) no-repeat;
+	position:absolute;
+	left:50px;
+	top:-50px;
+}
+
+/*登录框*/
+.loginDiv {
+	width:250px;
+	padding:14px 34px;
+	position:absolute;
+	top:77px;
+	right:-2px;
+}
+.loginDiv h6 {
+	line-height:40px;
+	color:#000;
+	text-indent:14px;
+	font-size:16px;
+	padding:0;
+	margin:0;
+}
+.loginDiv p {
+	line-height:40px;
+	padding:5px 0;
+	margin:0px;
+	position:relative;
+}
+.loginDiv p input {
+	width:250px;
+	height:38px;
+	line-height:38px;
+	text-indent:10px;
+	vertical-align:middle;
+	background:url(../images/login/bg_login.gif) 0 0 no-repeat;
+	padding:0;
+	border:none;
+}
+.loginDiv p label {
+	line-height:40px;
+	color:#999;
+	font-size:14px;
+	position:absolute;
+	left:10px;
+	top: 5px;
+}
+.loginDiv p input.yzm {
+	width:114px;
+	background-position:0 -39px;
+	margin-right:10px;
+}
+.loginDiv p img {
+	width:119px;
+	height:36px;
+	vertical-align:middle;
+	background:#f3f3f3;
+	border:1px solid #e0e0e0;
+	border-radius: 6px;
+	cursor: pointer;
+}
+.loginDiv div{
+	height:40px;
+	text-align:right;
+	padding:0;
+	margin:0px;
+}
+.loginDiv div a{
+	line-height:20px;
+	color:#aa0000;
+	vertical-align:middle;
+	margin:0 4px;
+	text-decoration:none;
+	
+}
+.loginDiv div a:hover{
+	text-decoration:underline;
+}
+
+/*注册*/
+.signinDiv{
+	height:50px;
+	line-height:50px;
+	position:absolute;
+	top:-50px;
+	right:10px;
+}
+.signinDiv a{
+	color:#fff;
+	text-decoration:none;
+	margin:0 4px;
+}
+.signinDiv a:hover{
+	color:#a33;
+	text-decoration:none;
+}
+.signinDiv .help{
+	padding-right:14px;
+	background:url(../images/login/bg_login.gif) right -44px no-repeat;
+}
+
+
+/*登录 按钮*/
+.btn_login {
+	width:250px;
+	height:36px;
+	line-height:36px;
+	color:#fff;
+	font-size:16px;
+	font-weight:bold;
+	text-align:center;
+	vertical-align:middle;
+	background:url(../images/login/bg_login.gif) 0 -80px no-repeat;
+	padding:0;
+	border:none;
+	cursor:pointer;
+}
+
+/* 版权信息 */
+.footer{
+	color:#fff;
+	position:absolute;
+	bottom:-20px;
+	right:10px;
+}
+
+/*----------------------登陆用户-结束----------------------*/

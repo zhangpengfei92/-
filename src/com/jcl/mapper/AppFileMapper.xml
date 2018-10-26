@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcl.dao.AppFileMapper" >
+  <resultMap id="BaseResultMap" type="com.jcl.pojo.AppFile" >
+    <id column="lsh" property="lsh" jdbcType="INTEGER" />
+    <result column="filename" property="filename" jdbcType="VARCHAR" />
+    <result column="filepath" property="filepath" jdbcType="VARCHAR" />
+    <result column="versionName" property="versionname" jdbcType="VARCHAR" />
+    <result column="versionCode" property="versioncode" jdbcType="INTEGER" />
+    <result column="introduce" property="introduce" jdbcType="VARCHAR" />
+    <result column="filetype" property="filetype" jdbcType="TINYINT" />
+    <result column="createtime" property="createtime" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    lsh, filename, filepath, versionName, versionCode, introduce, filetype, createtime
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jcl.pojo.AppFileExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from app_file
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from app_file
+    where lsh = #{lsh,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from app_file
+    where lsh = #{lsh,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jcl.pojo.AppFileExample" >
+    delete from app_file
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jcl.pojo.AppFile" >
+    insert into app_file (lsh, filename, filepath, 
+      versionName, versionCode, introduce, 
+      filetype, createtime)
+    values (#{lsh,jdbcType=INTEGER}, #{filename,jdbcType=VARCHAR}, #{filepath,jdbcType=VARCHAR}, 
+      #{versionname,jdbcType=VARCHAR}, #{versioncode,jdbcType=INTEGER}, #{introduce,jdbcType=VARCHAR}, 
+      #{filetype,jdbcType=TINYINT}, #{createtime,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jcl.pojo.AppFile" >
+    insert into app_file
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="lsh != null" >
+        lsh,
+      </if>
+      <if test="filename != null" >
+        filename,
+      </if>
+      <if test="filepath != null" >
+        filepath,
+      </if>
+      <if test="versionname != null" >
+        versionName,
+      </if>
+      <if test="versioncode != null" >
+        versionCode,
+      </if>
+      <if test="introduce != null" >
+        introduce,
+      </if>
+      <if test="filetype != null" >
+        filetype,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="lsh != null" >
+        #{lsh,jdbcType=INTEGER},
+      </if>
+      <if test="filename != null" >
+        #{filename,jdbcType=VARCHAR},
+      </if>
+      <if test="filepath != null" >
+        #{filepath,jdbcType=VARCHAR},
+      </if>
+      <if test="versionname != null" >
+        #{versionname,jdbcType=VARCHAR},
+      </if>
+      <if test="versioncode != null" >
+        #{versioncode,jdbcType=INTEGER},
+      </if>
+      <if test="introduce != null" >
+        #{introduce,jdbcType=VARCHAR},
+      </if>
+      <if test="filetype != null" >
+        #{filetype,jdbcType=TINYINT},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jcl.pojo.AppFileExample" resultType="java.lang.Integer" >
+    select count(*) from app_file
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update app_file
+    <set >
+      <if test="record.lsh != null" >
+        lsh = #{record.lsh,jdbcType=INTEGER},
+      </if>
+      <if test="record.filename != null" >
+        filename = #{record.filename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.filepath != null" >
+        filepath = #{record.filepath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.versionname != null" >
+        versionName = #{record.versionname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.versioncode != null" >
+        versionCode = #{record.versioncode,jdbcType=INTEGER},
+      </if>
+      <if test="record.introduce != null" >
+        introduce = #{record.introduce,jdbcType=VARCHAR},
+      </if>
+      <if test="record.filetype != null" >
+        filetype = #{record.filetype,jdbcType=TINYINT},
+      </if>
+      <if test="record.createtime != null" >
+        createtime = #{record.createtime,jdbcType=DATE},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update app_file
+    set lsh = #{record.lsh,jdbcType=INTEGER},
+      filename = #{record.filename,jdbcType=VARCHAR},
+      filepath = #{record.filepath,jdbcType=VARCHAR},
+      versionName = #{record.versionname,jdbcType=VARCHAR},
+      versionCode = #{record.versioncode,jdbcType=INTEGER},
+      introduce = #{record.introduce,jdbcType=VARCHAR},
+      filetype = #{record.filetype,jdbcType=TINYINT},
+      createtime = #{record.createtime,jdbcType=DATE}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jcl.pojo.AppFile" >
+    update app_file
+    <set >
+      <if test="filename != null" >
+        filename = #{filename,jdbcType=VARCHAR},
+      </if>
+      <if test="filepath != null" >
+        filepath = #{filepath,jdbcType=VARCHAR},
+      </if>
+      <if test="versionname != null" >
+        versionName = #{versionname,jdbcType=VARCHAR},
+      </if>
+      <if test="versioncode != null" >
+        versionCode = #{versioncode,jdbcType=INTEGER},
+      </if>
+      <if test="introduce != null" >
+        introduce = #{introduce,jdbcType=VARCHAR},
+      </if>
+      <if test="filetype != null" >
+        filetype = #{filetype,jdbcType=TINYINT},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=DATE},
+      </if>
+    </set>
+    where lsh = #{lsh,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jcl.pojo.AppFile" >
+    update app_file
+    set filename = #{filename,jdbcType=VARCHAR},
+      filepath = #{filepath,jdbcType=VARCHAR},
+      versionName = #{versionname,jdbcType=VARCHAR},
+      versionCode = #{versioncode,jdbcType=INTEGER},
+      introduce = #{introduce,jdbcType=VARCHAR},
+      filetype = #{filetype,jdbcType=TINYINT},
+      createtime = #{createtime,jdbcType=DATE}
+    where lsh = #{lsh,jdbcType=INTEGER}
+  </update>
+</mapper>

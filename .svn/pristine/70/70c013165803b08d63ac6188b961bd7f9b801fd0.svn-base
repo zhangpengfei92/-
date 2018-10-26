@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jcl.dao.CodefeesetMapper">
+  <resultMap id="BaseResultMap" type="com.jcl.pojo.Codefeeset">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="marketcode" jdbcType="INTEGER" property="marketcode" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="hyname" jdbcType="VARCHAR" property="hyname" />
+    <result column="bbbz" jdbcType="NUMERIC" property="bbbz" />
+    <result column="counterfee1" jdbcType="NUMERIC" property="counterfee1" />
+    <result column="counterfee2" jdbcType="NUMERIC" property="counterfee2" />
+    <result column="pcfee1" jdbcType="NUMERIC" property="pcfee1" />
+    <result column="pcfee2" jdbcType="NUMERIC" property="pcfee2" />
+    <result column="sqfs" jdbcType="INTEGER" property="sqfs" />
+    <result column="servicefee" jdbcType="NUMERIC" property="servicefee" />
+    <result column="gjwhgylx" jdbcType="NUMERIC" property="gjwhgylx" />
+    <result column="bzj" jdbcType="NUMERIC" property="bzj" />
+    <result column="parentId" jdbcType="INTEGER" property="parentid" />
+    <result column="bz" jdbcType="VARCHAR" property="bz" />
+    <result column="userid" jdbcType="NUMERIC" property="userid" />
+    <result column="agentzh" jdbcType="VARCHAR" property="agentzh" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, marketcode, code, hyname, bbbz, counterfee1, counterfee2, pcfee1, pcfee2, sqfs, 
+    servicefee, gjwhgylx, bzj, parentId, bz, userid, agentzh
+  </sql>
+  <select id="selectByExample" parameterType="com.jcl.pojo.CodefeesetExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from codefeeset
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from codefeeset
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from codefeeset
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jcl.pojo.CodefeesetExample">
+    delete from codefeeset
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  
+  <delete id="deleteByMenu" parameterType="java.lang.Integer">
+  	delete from codefeeset
+    where parentId = #{parentid,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="com.jcl.pojo.Codefeeset">
+    insert into codefeeset (id, marketcode, code, 
+      hyname, bbbz, counterfee1, 
+      counterfee2, pcfee1, pcfee2, 
+      sqfs, servicefee, gjwhgylx, 
+      bzj, parentId, bz, 
+      userid, agentzh)
+    values (#{id,jdbcType=INTEGER}, #{marketcode,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR}, 
+      #{hyname,jdbcType=VARCHAR}, #{bbbz,jdbcType=NUMERIC}, #{counterfee1,jdbcType=NUMERIC}, 
+      #{counterfee2,jdbcType=NUMERIC}, #{pcfee1,jdbcType=NUMERIC}, #{pcfee2,jdbcType=NUMERIC}, 
+      #{sqfs,jdbcType=INTEGER}, #{servicefee,jdbcType=NUMERIC}, #{gjwhgylx,jdbcType=NUMERIC}, 
+      #{bzj,jdbcType=NUMERIC}, #{parentid,jdbcType=INTEGER}, #{bz,jdbcType=VARCHAR}, 
+      #{userid,jdbcType=NUMERIC}, #{agentzh,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jcl.pojo.Codefeeset" useGeneratedKeys="true" keyProperty="id">
+    insert into codefeeset
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="marketcode != null">
+        marketcode,
+      </if>
+      <if test="code != null">
+        code,
+      </if>
+      <if test="hyname != null">
+        hyname,
+      </if>
+      <if test="bbbz != null">
+        bbbz,
+      </if>
+      <if test="counterfee1 != null">
+        counterfee1,
+      </if>
+      <if test="counterfee2 != null">
+        counterfee2,
+      </if>
+      <if test="pcfee1 != null">
+        pcfee1,
+      </if>
+      <if test="pcfee2 != null">
+        pcfee2,
+      </if>
+      <if test="sqfs != null">
+        sqfs,
+      </if>
+      <if test="servicefee != null">
+        servicefee,
+      </if>
+      <if test="gjwhgylx != null">
+        gjwhgylx,
+      </if>
+      <if test="bzj != null">
+        bzj,
+      </if>
+      <if test="parentid != null">
+        parentId,
+      </if>
+      <if test="bz != null">
+        bz,
+      </if>
+      <if test="userid != null">
+        userid,
+      </if>
+      <if test="agentzh != null">
+        agentzh,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="marketcode != null">
+        #{marketcode,jdbcType=INTEGER},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="hyname != null">
+        #{hyname,jdbcType=VARCHAR},
+      </if>
+      <if test="bbbz != null">
+        #{bbbz,jdbcType=NUMERIC},
+      </if>
+      <if test="counterfee1 != null">
+        #{counterfee1,jdbcType=NUMERIC},
+      </if>
+      <if test="counterfee2 != null">
+        #{counterfee2,jdbcType=NUMERIC},
+      </if>
+      <if test="pcfee1 != null">
+        #{pcfee1,jdbcType=NUMERIC},
+      </if>
+      <if test="pcfee2 != null">
+        #{pcfee2,jdbcType=NUMERIC},
+      </if>
+      <if test="sqfs != null">
+        #{sqfs,jdbcType=INTEGER},
+      </if>
+      <if test="servicefee != null">
+        #{servicefee,jdbcType=NUMERIC},
+      </if>
+      <if test="gjwhgylx != null">
+        #{gjwhgylx,jdbcType=NUMERIC},
+      </if>
+      <if test="bzj != null">
+        #{bzj,jdbcType=NUMERIC},
+      </if>
+      <if test="parentid != null">
+        #{parentid,jdbcType=INTEGER},
+      </if>
+      <if test="bz != null">
+        #{bz,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=NUMERIC},
+      </if>
+      <if test="agentzh != null">
+        #{agentzh,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jcl.pojo.CodefeesetExample" resultType="java.lang.Long">
+    select count(*) from codefeeset
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update codefeeset
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.marketcode != null">
+        marketcode = #{record.marketcode,jdbcType=INTEGER},
+      </if>
+      <if test="record.code != null">
+        code = #{record.code,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hyname != null">
+        hyname = #{record.hyname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bbbz != null">
+        bbbz = #{record.bbbz,jdbcType=NUMERIC},
+      </if>
+      <if test="record.counterfee1 != null">
+        counterfee1 = #{record.counterfee1,jdbcType=NUMERIC},
+      </if>
+      <if test="record.counterfee2 != null">
+        counterfee2 = #{record.counterfee2,jdbcType=NUMERIC},
+      </if>
+      <if test="record.pcfee1 != null">
+        pcfee1 = #{record.pcfee1,jdbcType=NUMERIC},
+      </if>
+      <if test="record.pcfee2 != null">
+        pcfee2 = #{record.pcfee2,jdbcType=NUMERIC},
+      </if>
+      <if test="record.sqfs != null">
+        sqfs = #{record.sqfs,jdbcType=INTEGER},
+      </if>
+      <if test="record.servicefee != null">
+        servicefee = #{record.servicefee,jdbcType=NUMERIC},
+      </if>
+      <if test="record.gjwhgylx != null">
+        gjwhgylx = #{record.gjwhgylx,jdbcType=NUMERIC},
+      </if>
+      <if test="record.bzj != null">
+        bzj = #{record.bzj,jdbcType=NUMERIC},
+      </if>
+      <if test="record.parentid != null">
+        parentId = #{record.parentid,jdbcType=INTEGER},
+      </if>
+      <if test="record.bz != null">
+        bz = #{record.bz,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userid != null">
+        userid = #{record.userid,jdbcType=NUMERIC},
+      </if>
+      <if test="record.agentzh != null">
+        agentzh = #{record.agentzh,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update codefeeset
+    set id = #{record.id,jdbcType=INTEGER},
+      marketcode = #{record.marketcode,jdbcType=INTEGER},
+      code = #{record.code,jdbcType=VARCHAR},
+      hyname = #{record.hyname,jdbcType=VARCHAR},
+      bbbz = #{record.bbbz,jdbcType=NUMERIC},
+      counterfee1 = #{record.counterfee1,jdbcType=NUMERIC},
+      counterfee2 = #{record.counterfee2,jdbcType=NUMERIC},
+      pcfee1 = #{record.pcfee1,jdbcType=NUMERIC},
+      pcfee2 = #{record.pcfee2,jdbcType=NUMERIC},
+      sqfs = #{record.sqfs,jdbcType=INTEGER},
+      servicefee = #{record.servicefee,jdbcType=NUMERIC},
+      gjwhgylx = #{record.gjwhgylx,jdbcType=NUMERIC},
+      bzj = #{record.bzj,jdbcType=NUMERIC},
+      parentId = #{record.parentid,jdbcType=INTEGER},
+      bz = #{record.bz,jdbcType=VARCHAR},
+      userid = #{record.userid,jdbcType=NUMERIC},
+      agentzh = #{record.agentzh,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jcl.pojo.Codefeeset">
+    update codefeeset
+    <set>
+      <if test="marketcode != null">
+        marketcode = #{marketcode,jdbcType=INTEGER},
+      </if>
+      <if test="code != null">
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="hyname != null">
+        hyname = #{hyname,jdbcType=VARCHAR},
+      </if>
+      <if test="bbbz != null">
+        bbbz = #{bbbz,jdbcType=NUMERIC},
+      </if>
+      <if test="counterfee1 != null">
+        counterfee1 = #{counterfee1,jdbcType=NUMERIC},
+      </if>
+      <if test="counterfee2 != null">
+        counterfee2 = #{counterfee2,jdbcType=NUMERIC},
+      </if>
+      <if test="pcfee1 != null">
+        pcfee1 = #{pcfee1,jdbcType=NUMERIC},
+      </if>
+      <if test="pcfee2 != null">
+        pcfee2 = #{pcfee2,jdbcType=NUMERIC},
+      </if>
+      <if test="sqfs != null">
+        sqfs = #{sqfs,jdbcType=INTEGER},
+      </if>
+      <if test="servicefee != null">
+        servicefee = #{servicefee,jdbcType=NUMERIC},
+      </if>
+      <if test="gjwhgylx != null">
+        gjwhgylx = #{gjwhgylx,jdbcType=NUMERIC},
+      </if>
+      <if test="bzj != null">
+        bzj = #{bzj,jdbcType=NUMERIC},
+      </if>
+      <if test="parentid != null">
+        parentId = #{parentid,jdbcType=INTEGER},
+      </if>
+      <if test="bz != null">
+        bz = #{bz,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null">
+        userid = #{userid,jdbcType=NUMERIC},
+      </if>
+      <if test="agentzh != null">
+        agentzh = #{agentzh,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jcl.pojo.Codefeeset">
+    update codefeeset
+    set marketcode = #{marketcode,jdbcType=INTEGER},
+      code = #{code,jdbcType=VARCHAR},
+      hyname = #{hyname,jdbcType=VARCHAR},
+      bbbz = #{bbbz,jdbcType=NUMERIC},
+      counterfee1 = #{counterfee1,jdbcType=NUMERIC},
+      counterfee2 = #{counterfee2,jdbcType=NUMERIC},
+      pcfee1 = #{pcfee1,jdbcType=NUMERIC},
+      pcfee2 = #{pcfee2,jdbcType=NUMERIC},
+      sqfs = #{sqfs,jdbcType=INTEGER},
+      servicefee = #{servicefee,jdbcType=NUMERIC},
+      gjwhgylx = #{gjwhgylx,jdbcType=NUMERIC},
+      bzj = #{bzj,jdbcType=NUMERIC},
+      parentId = #{parentid,jdbcType=INTEGER},
+      bz = #{bz,jdbcType=VARCHAR},
+      userid = #{userid,jdbcType=NUMERIC},
+      agentzh = #{agentzh,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="selectAll" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM codefeeset 
+		ORDER BY id desc
+  </select>
+  <select id="isExist" resultMap="BaseResultMap" >
+	select * from codefeeset 
+	<where>
+		1 = 1
+		<if test="subzhName != null"> AND code = #{subzhName} </if>
+		<if test="id != null"> AND id != #{id} </if>
+		<if test="parentId != null"> AND parentId = #{parentId} </if>
+	</where>
+  </select>
+  
+</mapper>

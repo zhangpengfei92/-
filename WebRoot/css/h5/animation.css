@@ -1,0 +1,77 @@
+
+@charset "utf-8";
+/* CSS Document */
+
+
+/**************************************  名称  时间 速度曲线  开始时间  被播次数  动画结束停在最后画面 */
+.leftMove{ opacity:0; -webkit-animation:leftMove .5s ease-out .3s 1 forwards; animation:leftMove .5s ease-out .3s 1 forwards;}
+.rightMove{ opacity:0; -webkit-animation:rightMove .5s ease-out .3s 1 forwards; animation:rightMove .5s ease-out .3s 1 forwards;}
+.topMove{ opacity:0; -webkit-animation:topMove .5s ease-out .3s 1 forwards; animation:topMove .5s ease-out .3s 1 forwards;}
+.bottomMove{ opacity:0; -webkit-animation:bottomMove .7s ease-out .3s 1 forwards; animation:bottomMove .7s ease-out .3s 1 forwards;}
+.opacitymM{opacity:0;-webkit-animation:opacitymM .7s ease-out 1s 1 forwards; animation:opacitymM .7s ease-out 1s 1 forwards;}
+.opacitymM01{opacity:0;-webkit-animation:opacitymM 1s ease-out 2s 1 forwards; animation:opacitymM 1s ease-out 1.5s 1 forwards;}
+
+
+@-webkit-keyframes opacitymM{
+	0%{ -webkit-transform:opacity:0;}
+	100%{ -webkit-transform:opacity:100;}
+	
+}
+@keyframes opacitymM{
+	0%{ transform:opacity:0;}
+	100%{ opacity:100;}
+}
+@-webkit-keyframes flashDown{
+	0%{ -webkit-transform:translateY(0); opacity:100;}
+	50%{ opacity:60;}
+	100%{ -webkit-transform:translateY(16px); opacity:0;}
+}
+@keyframes flashDown{
+	0%{ transform:translateY(0);opacity:100;}
+	50%{ opacity:60;}
+	100%{ transform:translateY(16px);opacity:0;}
+}
+@-webkit-keyframes leftBottomMove{
+	0%{ -webkit-transform:translateX(-100%) translateY(100%);opacity:0;}
+	100%{ -webkit-transform:translateX(0) translateY(0);opacity:100;}
+}
+@keyframes leftBottomMove{
+	0%{ transform:translateX(-100%) translateY(100%);opacity:0;}
+	100%{ transform:translateX(0) translateY(0); opacity:100;}
+}
+@-webkit-keyframes leftMove{
+	0%{ -webkit-transform:translateX(-150px);opacity:0;}
+	100%{ -webkit-transform:translateX(0);opacity:100;}
+}
+@keyframes leftMove{
+	0%{ transform:translateX(-150px);opacity:0;}
+	100%{ transform:translateX(0);opacity:100;}
+
+}
+@-webkit-keyframes rightMove{
+	0%{ -webkit-transform:translateX(150px); opacity:0;}
+	100%{ -webkit-transform:translateX(0);opacity:100;}
+}
+@keyframes rightMove{
+	0%{ transform:translateX(150px);opacity:0;}
+	100%{ transform:translateX(0);opacity:100;}
+}
+@-webkit-keyframes bottomMove{
+	0%{ -webkit-transform:translateY(60px);opacity:0;}
+	100%{ -webkit-transform:translateY(0);opacity:100;}
+}
+@keyframes bottomMove{
+	0%{ transform:translateY(60px);opacity:0;}
+	100%{ transform:translateY(0);opacity:100;}
+}
+@-webkit-keyframes topMove{
+	0%{ -webkit-transform:translateY(-60px); opacity:0;}
+	100%{ -webkit-transform:translateY(0); opacity:100;}
+}
+@keyframes topMove{
+	0%{ transform:translateY(-60px); opacity:0;}
+	100%{ transform:translateY(0);opacity:100;}
+}
+
+
+

@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcl.dao.AppHelpMapper" >
+  <resultMap id="BaseResultMap" type="com.jcl.pojo.AppHelp" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="aboutus" property="aboutus" jdbcType="VARCHAR" />
+    <result column="jylc" property="jylc" jdbcType="VARCHAR" />
+    <result column="pttd" property="pttd" jdbcType="VARCHAR" />
+    <result column="sfbz" property="sfbz" jdbcType="VARCHAR" />
+    <result column="lybzj" property="lybzj" jdbcType="VARCHAR" />
+    <result column="ylfp" property="ylfp" jdbcType="VARCHAR" />
+    <result column="mrfw" property="mrfw" jdbcType="VARCHAR" />
+    <result column="jysj" property="jysj" jdbcType="VARCHAR" />
+    <result column="gyyjpc" property="gyyjpc" jdbcType="VARCHAR" />
+    <result column="gytp" property="gytp" jdbcType="VARCHAR" />
+    <result column="lxkf" property="lxkf" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, aboutus, jylc, pttd, sfbz, lybzj, ylfp, mrfw, jysj, gyyjpc, gytp, lxkf
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jcl.pojo.AppHelpExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from app_help
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from app_help
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from app_help
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jcl.pojo.AppHelpExample" >
+    delete from app_help
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jcl.pojo.AppHelp" >
+    insert into app_help (id, aboutus, jylc, 
+      pttd, sfbz, lybzj, 
+      ylfp, mrfw, jysj, gyyjpc, 
+      gytp, lxkf)
+    values (#{id,jdbcType=INTEGER}, #{aboutus,jdbcType=VARCHAR}, #{jylc,jdbcType=VARCHAR}, 
+      #{pttd,jdbcType=VARCHAR}, #{sfbz,jdbcType=VARCHAR}, #{lybzj,jdbcType=VARCHAR}, 
+      #{ylfp,jdbcType=VARCHAR}, #{mrfw,jdbcType=VARCHAR}, #{jysj,jdbcType=VARCHAR}, #{gyyjpc,jdbcType=VARCHAR}, 
+      #{gytp,jdbcType=VARCHAR}, #{lxkf,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jcl.pojo.AppHelp" >
+    insert into app_help
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="aboutus != null" >
+        aboutus,
+      </if>
+      <if test="jylc != null" >
+        jylc,
+      </if>
+      <if test="pttd != null" >
+        pttd,
+      </if>
+      <if test="sfbz != null" >
+        sfbz,
+      </if>
+      <if test="lybzj != null" >
+        lybzj,
+      </if>
+      <if test="ylfp != null" >
+        ylfp,
+      </if>
+      <if test="mrfw != null" >
+        mrfw,
+      </if>
+      <if test="jysj != null" >
+        jysj,
+      </if>
+      <if test="gyyjpc != null" >
+        gyyjpc,
+      </if>
+      <if test="gytp != null" >
+        gytp,
+      </if>
+      <if test="lxkf != null" >
+        lxkf,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="aboutus != null" >
+        #{aboutus,jdbcType=VARCHAR},
+      </if>
+      <if test="jylc != null" >
+        #{jylc,jdbcType=VARCHAR},
+      </if>
+      <if test="pttd != null" >
+        #{pttd,jdbcType=VARCHAR},
+      </if>
+      <if test="sfbz != null" >
+        #{sfbz,jdbcType=VARCHAR},
+      </if>
+      <if test="lybzj != null" >
+        #{lybzj,jdbcType=VARCHAR},
+      </if>
+      <if test="ylfp != null" >
+        #{ylfp,jdbcType=VARCHAR},
+      </if>
+      <if test="mrfw != null" >
+        #{mrfw,jdbcType=VARCHAR},
+      </if>
+      <if test="jysj != null" >
+        #{jysj,jdbcType=VARCHAR},
+      </if>
+      <if test="gyyjpc != null" >
+        #{gyyjpc,jdbcType=VARCHAR},
+      </if>
+      <if test="gytp != null" >
+        #{gytp,jdbcType=VARCHAR},
+      </if>
+      <if test="lxkf != null" >
+        #{lxkf,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jcl.pojo.AppHelpExample" resultType="java.lang.Integer" >
+    select count(*) from app_help
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update app_help
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.aboutus != null" >
+        aboutus = #{record.aboutus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jylc != null" >
+        jylc = #{record.jylc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pttd != null" >
+        pttd = #{record.pttd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sfbz != null" >
+        sfbz = #{record.sfbz,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lybzj != null" >
+        lybzj = #{record.lybzj,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ylfp != null" >
+        ylfp = #{record.ylfp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mrfw != null" >
+        mrfw = #{record.mrfw,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jysj != null" >
+        jysj = #{record.jysj,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gyyjpc != null" >
+        gyyjpc = #{record.gyyjpc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gytp != null" >
+        gytp = #{record.gytp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lxkf != null" >
+        lxkf = #{record.lxkf,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update app_help
+    set id = #{record.id,jdbcType=INTEGER},
+      aboutus = #{record.aboutus,jdbcType=VARCHAR},
+      jylc = #{record.jylc,jdbcType=VARCHAR},
+      pttd = #{record.pttd,jdbcType=VARCHAR},
+      sfbz = #{record.sfbz,jdbcType=VARCHAR},
+      lybzj = #{record.lybzj,jdbcType=VARCHAR},
+      ylfp = #{record.ylfp,jdbcType=VARCHAR},
+      mrfw = #{record.mrfw,jdbcType=VARCHAR},
+      jysj = #{record.jysj,jdbcType=VARCHAR},
+      gyyjpc = #{record.gyyjpc,jdbcType=VARCHAR},
+      gytp = #{record.gytp,jdbcType=VARCHAR},
+      lxkf = #{record.lxkf,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jcl.pojo.AppHelp" >
+    update app_help
+    <set >
+      <if test="aboutus != null" >
+        aboutus = #{aboutus,jdbcType=VARCHAR},
+      </if>
+      <if test="jylc != null" >
+        jylc = #{jylc,jdbcType=VARCHAR},
+      </if>
+      <if test="pttd != null" >
+        pttd = #{pttd,jdbcType=VARCHAR},
+      </if>
+      <if test="sfbz != null" >
+        sfbz = #{sfbz,jdbcType=VARCHAR},
+      </if>
+      <if test="lybzj != null" >
+        lybzj = #{lybzj,jdbcType=VARCHAR},
+      </if>
+      <if test="ylfp != null" >
+        ylfp = #{ylfp,jdbcType=VARCHAR},
+      </if>
+      <if test="mrfw != null" >
+        mrfw = #{mrfw,jdbcType=VARCHAR},
+      </if>
+      <if test="jysj != null" >
+        jysj = #{jysj,jdbcType=VARCHAR},
+      </if>
+      <if test="gyyjpc != null" >
+        gyyjpc = #{gyyjpc,jdbcType=VARCHAR},
+      </if>
+      <if test="gytp != null" >
+        gytp = #{gytp,jdbcType=VARCHAR},
+      </if>
+      <if test="lxkf != null" >
+        lxkf = #{lxkf,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jcl.pojo.AppHelp" >
+    update app_help
+    set aboutus = #{aboutus,jdbcType=VARCHAR},
+      jylc = #{jylc,jdbcType=VARCHAR},
+      pttd = #{pttd,jdbcType=VARCHAR},
+      sfbz = #{sfbz,jdbcType=VARCHAR},
+      lybzj = #{lybzj,jdbcType=VARCHAR},
+      ylfp = #{ylfp,jdbcType=VARCHAR},
+      mrfw = #{mrfw,jdbcType=VARCHAR},
+      jysj = #{jysj,jdbcType=VARCHAR},
+      gyyjpc = #{gyyjpc,jdbcType=VARCHAR},
+      gytp = #{gytp,jdbcType=VARCHAR},
+      lxkf = #{lxkf,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

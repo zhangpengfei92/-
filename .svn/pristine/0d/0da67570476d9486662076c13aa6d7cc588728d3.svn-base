@@ -1,0 +1,21 @@
+#db config
+driverLocation=D:/workspace/hqmall/WebContent/WEB-INF/lib/jtds-1.2.jar
+driver=net.sourceforge.jtds.jdbc.Driver
+url=jdbc:jtds:sqlserver://192.168.3.45:1433/PrimeBroker_crude;useCursors=true
+dbuser=jzq123
+password=jzq123
+
+authurl=jdbc:jtds:sqlserver://192.168.3.45:1433/Prime_user_crude;useCursors=true
+authdbuser=jzq123
+authpassword=jzq123
+
+#连接c++交易数据库(相应的交易库)的（去查询一些历史数据）
+jdbc.urljy=jdbc\:jtds\:sqlserver\://192.168.0.200\:15033/ctp_trader0;useCursors\=true
+jdbc.usernamejy=dev
+jdbc.passwordjy=dev
+
+#MongoDB
+mongodb.user.dburi=mongodb\://192.168.0.200\:50017/db_pbox
+mongo.host=192.168.0.200
+mongo.port=50017
+mongo.dbName=pbox

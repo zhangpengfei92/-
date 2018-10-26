@@ -1,0 +1,815 @@
+/**
+ * Copyright (C) 2009 武汉金策略信息科技有限公司
+ *
+ * 版权所有。
+ *
+ * 类名　　  : @FundServiceImpl.java
+ * 功能概要  : 
+ * 做成日期  : @2018年6月29日
+ * 修改日期  :
+ */
+package com.jcl.service.impl;
+
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.jcl.controller.FundController;
+import com.jcl.dao.AgentzhfundLogMapper;
+import com.jcl.dao.FundPzlogMapper;
+import com.jcl.dao.SubzhMapper;
+import com.jcl.pojo.AgentzhfundLog;
+import com.jcl.pojo.FundPzlog;
+import com.jcl.pojo.FundPzlogExample;
+import com.jcl.pojo.FundPzlogExample.Criteria;
+import com.jcl.pojo.Subzh;
+import com.jcl.service.FundPzLogService;
+import com.jcl.service.FundService;
+import com.jcl.stock.entity.CONST;
+import com.jcl.stock.simulate.DefineNumber;
+import com.jcl.stock.simulate.service.SimulateStockService;
+import com.jcl.util.Base64;
+import com.jcl.util.Constant;
+import com.jcl.util.DateUtil;
+import com.jcl.util.DeployProperties;
+import com.jcl.util.StringUtil;
+import com.jcl.util.spt.HttpRequest;
+import com.jcl.util.spt.MD5Utils;
+import com.jcl.util.spt.SignMd5Utils;
+
+/** 
+ * @author zpf
+ * @version 1.0
+ */
+/**
+ * 出入金
+ */
+@Service
+public class FundServiceImpl implements FundService{
+	//资金明细的mapper
+	@Autowired
+	private AgentzhfundLogMapper agentzhfundLogMapper;
+	
+	//用户的mapper
+	@Autowired
+	private SubzhMapper subzhMapper;
+	
+	//用户配资的mapper
+	@Autowired
+	private FundPzlogMapper pzlogMapper;
+	
+	//调协议的服务
+	@Autowired
+	private  SimulateStockService simulateStockService;
+	
+	public static Logger log = Logger.getLogger(FundServiceImpl.class);
+	
+	public static final  String pay_memberid="10025";//商务号
+	public static final  String keyValue="wetj942no7e5r8xh7sttibs77nhytvn9";//秘钥
+	private static final String project_path = DeployProperties.getInstance().getSptReturn();
+	public static final  String GRTURL="http://6shun.masakn.top:1818/Payment_Dfpay_add.html";//提现地址
+	public static final  String QUERYURL="http://6shun.masakn.top:1818/Payment_Dfpay_query.html";//提现地址
+	
+	//生成充值信息
+	@Override
+	public Map<String, Object> savePay(String bankco, Double moneys, String subzh) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("pay_memberid", pay_memberid);//商务号
+		map.put("keyValue", keyValue);//秘钥	
+		String 	pay_bankcode=null;
+		if(bankco.equals("wgzf")){  
+				pay_bankcode="907";   //'银行编码
+			}else if(bankco.equals("kjzf")){
+				pay_bankcode="911";   //'银行编码
+			}
+		map.put("pay_bankcode", pay_bankcode);
+		
+		
+		String dates = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date());
+		String	pay_orderid= dates + StringUtil.getRandomString(3);//20位订单号 时间戳+6位随机字符串组成
+		map.put("pay_orderid", pay_orderid);
+			
+		String	pay_applydate=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());//yyyy-MM-dd HH:mm:ss
+		map.put("pay_applydate", pay_applydate);//交易时间
+			
+		String	pay_notifyurl=project_path+"/subzhfund/payNotyfy";//通知地址
+		map.put("pay_notifyurl", pay_notifyurl);
+			
+		String	pay_callbackurl=project_path+"/subzhfund/payCallBack";//回调地址
+		map.put("pay_callbackurl", pay_callbackurl);
+			
+		BigDecimal 	pay_amount=new BigDecimal(moneys);//订单金额  
+		map.put("pay_amount", pay_amount);
+			
+		String	pay_productname="账户充值";
+		map.put("pay_productname", pay_productname);
+			
+		String stringSignTemp="pay_amount="+pay_amount+
+				"&pay_applydate="+pay_applydate+"&pay_bankcode="+pay_bankcode+
+				"&pay_callbackurl="+pay_callbackurl+"&pay_memberid="+pay_memberid+
+				"&pay_notifyurl="+pay_notifyurl+"&pay_orderid="+pay_orderid+"&key="+keyValue+"";
+		String pay_md5sign=MD5Utils.md5(stringSignTemp);
+		map.put("pay_md5sign", pay_md5sign);
+		
+		return map;
+	}
+
+	//充值异步回调操作
+	@Override
+	public  Map<String, Object>  payNotyfy(HttpServletRequest request,String username) {
+		Map<String, Object>map=new HashMap<String, Object>();
+		String orderid=request.getParameter("orderid");//订单号
+		String amount=request.getParameter("amount");//金额
+		String datetime=request.getParameter("datetime");//交易时间
+		String returncode=request.getParameter("returncode");//交易状态
+		String transaction_id=request.getParameter("transaction_id");//交易流水号
+		String attach=request.getParameter("attach");//扩展返回
+		String sign=request.getParameter("sign");//签名
+		String SignTemp="amount="+amount+"&datetime="+datetime+"&memberid="+pay_memberid+"&orderid="+orderid+
+				"&returncode="+returncode+"&transaction_id="+transaction_id+"&key="+keyValue;
+		String md5sign=MD5Utils.md5(SignTemp);//MD5加密
+		
+		AgentzhfundLog afl=new AgentzhfundLog();
+	    if (sign.equals(md5sign)){
+	        if(returncode.equals("00")){
+	        	log.info("datetime===>:"+datetime);
+	    		log.info("orderid===>:"+orderid);
+	    		List<AgentzhfundLog> alist= null;
+	    			try {
+	    				alist = agentzhfundLogMapper.selectByorderno(orderid);
+	    			
+	    			} catch (Exception e) {
+	    				log.info("查询失败",e);
+	    			}
+	    		
+	    			log.info("alist ===>"+alist.size());
+	    			if(alist!=null&&alist.size()>0) {
+	    				log.info("该单号充值已完成,时间==>"+new Date().toString());
+	    				map.put("msg", "该单号充值已完成");
+	    				return map;
+	    			}
+	    		
+	    		afl.setStatus(2);
+	   
+	    		log.info("当前充值用户===》：" + username);
+	    		Subzh sub=null;
+	    		try {
+	    			 sub = subzhMapper.selectBySubzh(username);
+	    		} catch (Exception e1) {
+	    			log.info("根据subzh查询账户信息失败", e1);
+	    		}
+	    		
+	    		if(username!=null) {
+	    		try {
+	    			afl.setSubzh(username);
+	    			log.info("log1:"+username);
+	    			
+	    			afl.setOrderno(orderid);
+	    			
+	    			afl.setType("1");
+	    			log.info("logtype:"+afl.getType());
+	    			
+	    			afl.setBz((byte)1);
+	    			log.info("logbz:"+afl.getBz());
+	    			afl.setModifytime(DateUtil.stringToDate(datetime, "yyyy-MM-dd HH:mm:ss"));
+	    			
+	    			log.info("log4:"+(new BigDecimal(amount)));
+	    			afl.setFund(new BigDecimal(amount));
+	    			
+	    			afl.setStatus(1);
+	    			afl.setName(sub.getSubzh());
+	    			log.info("log5:"+sub.getSubzh());
+	    			
+	    			TreeMap<String, Object> tmap =new TreeMap<String, Object>();
+	    			tmap.put("充值人", afl.getName());
+	    			tmap.put("充值单号", orderid);
+	    			tmap.put("充值金额", afl.getFund());
+	    			tmap.put("充值时间", afl.getModifytime());
+	    			JSONObject description = JSONObject.parseObject(JSON.toJSONString(tmap));
+	    			
+	    			afl.setDescription(description.toJSONString());
+	    			
+	    			log.info("log6:"+afl.getDescription());
+	    			
+	    			int num=agentzhfundLogMapper.insertSelective(afl);
+	    			
+	    			log.info("log7:agentzhfundLogService"+num);
+	    			
+	    			
+	    			if(null!=sub) {
+	    				log.info("log8:subzh"+sub);
+	    	
+	    				sub.setZhstate(1);
+	    				int count=subzhMapper.updateByPrimaryKey(sub);
+	    				log.info("log11:subzhService"+count);
+	    			}
+	    			
+	    			
+	    			FundPzlog fundPzlog = new FundPzlog();
+	    			
+	    			
+	    				log.info("log:开始记录配资"+username+
+	    						"---6--充值"+"--"+afl.getFund()+
+	    						"--"+afl.getModifytime());
+	    					fundPzlog.setSubzh(username);
+	    					fundPzlog.setFundtype(6);//充值
+	    					fundPzlog.setSetpro(0);
+	    					fundPzlog.setFundbalance(afl.getFund());
+	    					fundPzlog.setCreatetime(afl.getModifytime());
+	    					
+	    					int n=pzlogMapper.insertSelective(fundPzlog);
+	    					log.info("insertFundPzlog:"+n);
+	    					
+	    					try {
+	    						log.info("开始调协议");
+	    						Double fundValue = fundPzlog.getFundbalance().doubleValue();
+	    						log.info("fundValue===》"+fundValue);
+	    						log.info("fundPzlog.getId()===》"+fundPzlog.getId());
+	    						String rbStr = simulateStockService.commonFunction("{\"seq_no\":"+fundPzlog.getId()+",\"client_id\":\""+username+"\",\"fund_type\":5,\"prev_fund\":0.00,\"after_fund\":"+fundValue+
+	    								",\"warning_line\":0.00,\"open_line\":0.00}",DefineNumber.JCL_PROTOCOL_ID_REQ_FUNDMESSAGE);
+	    						if(!StringUtil.isAnyNullOrEmpty(rbStr) && rbStr.indexOf("{") > -1){
+	    							JsonParser parser = new JsonParser();
+	    							JsonElement element = parser.parse(rbStr);
+	    							JsonObject jsonObj = element.getAsJsonObject();
+	    							log.info("添加账户资金状态1：" + rbStr+"---"+DefineNumber.JCL_PROTOCOL_ID_REQ_FUNDMESSAGE);
+	    				    		if(CONST.STATUS_INT_INSTANCE_SUCCESS == jsonObj.get("status").getAsInt()){
+	    				    		//掉协议成功，入金成功
+	    				    			log.info("添加账户资金状态2：" + rbStr);
+	    				    		} else {
+	    				    			//入金失败
+	    				    			log.info("添加账户资金状态3====>调协议失败：" + rbStr);
+	    				    			try {
+	    				    				//当用户入金失败，判断用户是否是第一次入金，如果是则还是把用户状态改为未激活
+	    				    				FundPzlogExample example=new FundPzlogExample();
+	    				    				Criteria createCriteria = example.createCriteria();
+	    				    				createCriteria.andSubzhEqualTo(sub.getSubzh());
+	    				    				List<FundPzlog> sfplist = pzlogMapper.selectByExample(example);
+	    				    				if(sfplist==null&&sfplist.size()<=1) {
+	    				    					sub.setZhstate(0);
+	    				    				}
+	    				    			
+	    				    			} catch (Exception e) {
+	    				    				log.error("查询该用户资金流水失败", e);
+	    								}
+	    				    			
+	    				    		}
+	    						}else {
+	    							log.info("添加账户资金状态4====>调协议失败：" + rbStr);
+	    							try {
+	    								//当用户入金失败，判断用户是否是第一次入金，如果是则还是把用户状态改为未激活
+	    								FundPzlogExample example=new FundPzlogExample();
+    				    				Criteria createCriteria = example.createCriteria();
+    				    				createCriteria.andSubzhEqualTo(sub.getSubzh());
+    				    				List<FundPzlog> sfplist = pzlogMapper.selectByExample(example);
+	    			    				if(sfplist==null&&sfplist.size()<=1) {
+	    			    					sub.setZhstate(0);
+	    			    				}
+	    			    			
+	    			    			} catch (Exception e) {
+	    			    				log.error("查询该用户资金流水失败", e);
+	    							}
+	    							
+	    						}
+	    						//修改用户状态
+	    						try {
+	    							int count=subzhMapper.updateByPrimaryKey(sub);
+	    							log.info("log11:subzhService"+count);
+	    						} catch (Exception e) {
+	    							log.error("更改用户状态异常", e);
+	    						}
+	    						
+	    						map.put("return_code","");
+	    						
+	    					} catch (Exception e) {
+	    						if(null!=sub) {
+	    							
+	    							try {
+	    								//当用户入金出现异常，判断用户是否是第一次入金，如果是则还是把用户状态改为未激活
+	    								log.info("log_e:subzh===>"+sub);	
+	    								FundPzlogExample example=new FundPzlogExample();
+    				    				Criteria createCriteria = example.createCriteria();
+    				    				createCriteria.andSubzhEqualTo(sub.getSubzh());
+    				    				List<FundPzlog> sfplist = pzlogMapper.selectByExample(example);
+	    			    				if(sfplist==null&&sfplist.size()<=1) {
+	    			    					sub.setZhstate(0);
+	    			    				}
+	    			    			
+	    			    			} catch (Exception e1) {
+	    			    				log.error("查询该用户资金流水失败", e1);
+	    							}
+	    							//修改用户状态
+	    							try {
+	    								int count=subzhMapper.updateByPrimaryKey(sub);
+	    								log.info("log11:subzhService"+count);
+	    							} catch (Exception e1) {
+	    								log.error("更改用户状态异常", e1);
+	    							}
+	    						}						
+	    						log.error("追加保证金异常：" + e);					
+	    					}
+	    		} catch (Exception e) {
+	    			log.error("异步返回支付信息失败", e);
+	    		}
+	        	
+	        	map.put("status", true);
+	        	map.put("ok", "充值成功");
+	        }else{
+	        	map.put("status", false);
+	        	map.put("error", "充值失败");
+	        }
+	    }else{
+        	map.put("status", false);
+        	map.put("error", "验签失败");
+	    }
+	    }  
+		return map;
+		
+	}
+	
+	//操作完成后跳转的页面
+	@Override
+	public Map<String, Object> payCallBack(HttpServletRequest request) {
+		Map<String, Object>map=new HashMap<String, Object>();
+		
+		String orderid=request.getParameter("orderid");//订单号
+		String amount=request.getParameter("amount");//金额
+		String datetime=request.getParameter("datetime");//交易时间
+		String returncode=request.getParameter("returncode");//交易状态
+		String transaction_id=request.getParameter("transaction_id");//交易流水号
+		String attach=request.getParameter("attach");//扩展返回
+		String sign=request.getParameter("sign");//签名
+		String SignTemp="amount="+amount+"&datetime="+datetime+"&memberid="+pay_memberid+"&orderid="+orderid+
+				"&returncode="+returncode+"&transaction_id="+transaction_id+"&key="+keyValue;
+		
+		System.out.println(SignTemp);
+		String md5sign=MD5Utils.md5(SignTemp);//MD5加密
+    
+	    if (sign.equals(md5sign)){
+	        if(returncode.equals("00")){
+	        	map.put("status", true);
+	        	map.put("ok", "充值成功");
+	        }else{
+	        	map.put("status", false);
+	        	map.put("error", "充值失败");
+	        }
+	    }else{
+        	map.put("status", false);
+        	map.put("error", "验签失败");
+	    }
+		return map;
+		
+	}
+
+	//保存提现信息
+	@Override
+	public  Map<String, Object> savePay(AgentzhfundLog afl, String subzh) {
+		Map<String, Object> map=new HashMap<String, Object>();
+		Subzh sub=null;
+		try {
+			sub = subzhMapper.selectBySubzh(subzh);
+			 log.info("sub===》"+sub);
+		} catch (Exception e) {
+			log.error("根据用户subzh查询用户异常", e);
+		}
+		
+		if(null==sub) {
+			log.info("sub==null:用户信息为null");	
+			map.put("error", "用户信息为null");
+			return map;
+		}
+		if (sub.getFundbalance() == null) {
+			log.info("result1:余额不足");	
+			map.put("error", "余额不足1");
+			return map;
+		}
+		log.info("sub.getFundbalance===》"+sub.getFundbalance());
+		//sub.getFundbalance获取限制可用资金
+		
+		if (sub.getFundbalance().doubleValue() - Double.valueOf(afl.getAmount()) < 0) {
+			map.put("error", "余额不足2");
+			return map;
+		}
+		sub.setFundbalance(sub.getFundbalance().subtract(new BigDecimal(afl.getAmount())));
+		try {
+			subzhMapper.updateByPrimaryKey(sub);
+		} catch (Exception e) {
+			log.error("修改用户可以资金失败", e);
+			map.put("error", "修改用户可以资金失败");
+			return map;
+		}
+		log.info("getSubzh:==》"+afl.getSubzh());
+		TreeMap<String, Object> tmap =new TreeMap<String, Object>();
+		tmap.put("amount",afl.getAmount() );
+		tmap.put("bankCardNumber",afl.getBankCardNumber());
+		tmap.put("phoneNum", afl.getPhoneNum());
+		tmap.put("idcard", afl.getIdcard());
+		tmap.put("bankcode", afl.getBankcode());
+		JSONObject description = JSONObject.parseObject(JSON.toJSONString(tmap));
+		
+		afl.setDescription(description.toJSONString());
+		log.info("setDescription:==》"+afl.getDescription());
+		
+		afl.setSubzh(subzh);
+		log.info("setSubzh:==》"+afl.getBanchname());
+		
+		afl.setBz((byte)2);
+		afl.setFund(new BigDecimal(afl.getAmount()));
+		afl.setStatus(4);
+		afl.setType("1");
+		afl.setModifytime(DateUtil.getSystemDate());
+		log.info("setBz==》:"+afl.getBz());
+		
+		try {
+			int num=agentzhfundLogMapper.insertSelective(afl);
+			log.info("agentzhfundLogService:==》"+num);
+		} catch (Exception e) {	
+			log.error("保存提现信息失败", e);
+			map.put("error", "修改用户可以资金失败");
+			return map;
+		}
+		map.put("status", true);
+		return map;
+	}
+	
+	//提现审核服务
+	@Override
+	public Map<String, Object> isPay(Integer id, Integer status) {
+		Map<String, Object> map=new HashMap<String, Object>();
+		AgentzhfundLog afl=null;
+		try {
+			afl = agentzhfundLogMapper.selectByPrimaryKey(id);
+		} catch (Exception e) {
+			log.info("查询待提现信息异常"+e);
+		}
+		
+		if(afl!=null){
+			if(status!=5) {
+				map.put("error", "审核未通过");
+				return map;
+			}
+		}else {
+			map.put("error", "提现信息不存在");
+			return map;
+		}
+		
+		String description= afl.getDescription();
+ 		JSONObject jsonobj = JSONObject.parseObject(description);
+		
+		afl.setAmount(jsonobj.getString("amount"));
+		afl.setBankCardNumber(jsonobj.getString("bankCardNumber"));	
+		afl.setPhoneNum(jsonobj.getString("phoneNum"));
+		afl.setIdcard(jsonobj.getString("idcard"));
+		afl.setBankcode(jsonobj.getString("bankcode"));
+		
+		try {
+			String subzh = afl.getSubzh();
+			String dates = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date());
+			String uuid =  dates + StringUtil.getRandomString(4)+subzh;
+		if (subzh == null) {
+			map.put("error", "result用户不存在");
+			return map;
+		}
+		
+			Subzh sub = subzhMapper.selectBySubzh(subzh);
+			String	pay_orderid= dates + StringUtil.getRandomString(3);//20位订单号 时间戳+6位随机字符串组成
+			TreeMap<String, String> sortedMap = new TreeMap();
+			sortedMap.put("mchid", pay_memberid);//商户号
+			sortedMap.put("out_trade_no", pay_orderid);//商户订单号
+			sortedMap.put("money", afl.getAmount());//提现金额
+			sortedMap.put("bankname", afl.getBankname());//银行卡开户行名称
+			sortedMap.put("subbranch", afl.getBanchname());//银行卡开户支行名称
+			sortedMap.put("accountname", afl.getName());//收款人姓名
+			sortedMap.put("cardnumber", afl.getBankCardNumber());//收款人银行账号
+			sortedMap.put("extends", "");//附加字段
+			sortedMap.put("province", afl.getProvince());//开户所在省
+			sortedMap.put("city", afl.getCity());//开户所在市
+		
+			String psy_sign="accountname="+afl.getName()+"&bankname="+afl.getBankname()
+					+ "&cardnumber="+afl.getBankCardNumber()+"&city="+afl.getCity()
+					+ "&mchid="+pay_memberid+"&money="+afl.getAmount()
+					+"&out_trade_no="+pay_orderid+"&province="+afl.getProvince()
+					+"&subbranch="+afl.getBanchname()+"&key="+keyValue;
+			String pay_md5sign=MD5Utils.md5(psy_sign);
+			sortedMap.put("pay_md5sign",pay_md5sign.toUpperCase());
+			System.out.println(sortedMap.toString());
+	
+			//发送提现的post请求
+			String result = HttpRequest.sendPostNotEncoder(GRTURL, sortedMap);
+			
+			Map<String, String> resmap = JSON.parseObject(result, Map.class);
+			
+			String recode = resmap.get("transaction_id");
+			String msg = resmap.get("msg");
+			String tstatus = resmap.get("status");
+			log.info("提现申请状态:===>"+msg+"提现申请状态码：====》"+recode);
+			
+			if("success".equals(tstatus)&&recode!=null&&recode!="") {//状态码00表示提现成功
+				saveGetMoney(pay_orderid,subzh);
+				
+				afl.setStatus(5);//审核通过
+				afl.setOrderno(uuid);
+				int num=agentzhfundLogMapper.updateByPrimaryKeySelective(afl);
+				map.put("status", "true");
+				log.info("log2"+num);
+					
+			}else {
+				map.put("status", "false");
+				map.put("error", msg);
+				return map;
+			}
+		} catch (Exception e) {
+			log.info("提现记录异常=>"+e);
+			map.put("error", "result提现失败");
+			return map;
+		}
+		return map;
+	}
+	
+	public String  saveGetMoney(String pay_orderid,String username) {
+		TreeMap<String, String> tmap = new TreeMap();
+		tmap.put("out_trade_no", pay_orderid);
+		tmap.put("mchid", pay_memberid);
+		//封装验签参数
+		String pay_sign="out_trade_no="+pay_orderid+"&mchid="+pay_memberid;
+		//加密验签
+		String pay_md5sign=MD5Utils.md5(pay_sign);
+		tmap.put("pay_md5sign", pay_md5sign);
+		
+		String result = HttpRequest.sendPostNotEncoder(QUERYURL, tmap);
+		Map<String, String> resmap = JSON.parseObject(result, Map.class);
+		
+		String status=resmap.get("status");
+		String msg=resmap.get("msg");
+		String mchid=resmap.get("mchid");
+		String out_trade_no=resmap.get("out_trade_no");
+		String amount=resmap.get("amount");
+		String transaction_id=resmap.get("transaction_id");
+		Integer refCode=Integer.parseInt(resmap.get("refCode"));
+		String refMsg=resmap.get("refMsg");
+		String success_time=resmap.get("success_time");
+		String sign=resmap.get("pay_md5sign");
+		if(sign!=pay_md5sign) {
+			log.info("查询提现结果验签不匹配sign="+sign+"<======>pay_md5sign="+pay_md5sign);
+			return "查询提现结果验签不匹配";
+		}
+			
+		if("success".equals(status)&&refCode==1) {
+			log.info("提现成功");
+			Subzh subzh = subzhMapper.selectBySubzh(username);
+			log.info("username:"+username+"-----subzh:"+subzh);
+			List<AgentzhfundLog> alist = agentzhfundLogMapper.selectByorderno(out_trade_no);
+			log.info("alist"+alist.size()+"---"+alist);
+				
+			//判断是否是通过了审核的回调
+			AgentzhfundLog agentzhfundLog=null;
+				
+			if(alist!=null) {
+				agentzhfundLog=alist.get(0);
+			}
+				log.info("提现审核状态：===》"+agentzhfundLog.getStatus());
+				
+				//操作资金明细表
+				FundPzlog fundPzlog = new FundPzlog();
+				
+				if(agentzhfundLog!=null&&agentzhfundLog.getStatus()==5) {
+					
+					String description= agentzhfundLog.getDescription();
+					JSONObject jsonobj = JSONObject.parseObject(description);
+					log.info("jsonobj===>"+jsonobj);
+					agentzhfundLog.setAmount(jsonobj.getString("amount"));
+					agentzhfundLog.setBankCardNumber(jsonobj.getString("bankCardNumber"));	
+					agentzhfundLog.setPhoneNum(jsonobj.getString("phoneNum"));
+					agentzhfundLog.setIdcard(jsonobj.getString("idcard"));
+					agentzhfundLog.setBankcode(jsonobj.getString("bankcode"));	
+
+				log.info("log:开始记录配资"+username+
+						"---6--提现"+"--"+amount+
+						"--");
+					fundPzlog.setSubzh(username);
+					fundPzlog.setFundtype(7);//提现值
+					fundPzlog.setSetpro(0);
+					fundPzlog.setFundbalance(new BigDecimal(agentzhfundLog.getAmount()));
+					fundPzlog.setCreatetime(DateUtil.getSystemDate());
+					
+					TreeMap<String, Object> map =new TreeMap<String, Object>();
+					map.put("提现人", fundPzlog.getSubzh());
+					map.put("提现单号",out_trade_no);
+					map.put("提现金额",amount);
+					map.put("提现时间", agentzhfundLog.getModifytime());
+					map.put("提现银行卡", agentzhfundLog.getBankCardNumber());
+					JSONObject descriptions = JSONObject.parseObject(JSON.toJSONString(map));
+					fundPzlog.setSetdesc(descriptions.toJSONString());
+					
+					try {
+						int n=pzlogMapper.insertSelective(fundPzlog);
+						log.info("log提现"+n+fundPzlog.getSetdesc());
+					} catch (Exception e) {
+						log.info("添加用户提现流水异常", e);
+					}
+				
+			
+			  }else {//当回调成功，且提现状态不是5的时候，把用户的钱还原到用户账户账户中
+					if(null!=subzh) {
+						if(subzh.getFundbalance()!=null) {
+							subzh.setFundbalance(subzh.getFundbalance().add((fundPzlog.getFundbalance())));
+						}
+						subzhMapper.updateByPrimaryKey(subzh);
+					}
+			  } 
+				log.info("SUCCESS--提现成功");
+				return "SUCCESS";
+		}
+		return "";
+		
+	}
+
+	@Override
+	public Map<String, Object> checkWithdraw(Integer id, Integer status) {
+		Map<String, Object> map=new HashMap<String, Object>();
+		try {
+			AgentzhfundLog fundLog = agentzhfundLogMapper.selectByPrimaryKey(id); 
+			
+			
+			Subzh subzhEntity=null;
+			if(fundLog != null){
+				if(status!=null && status==6){
+					try {
+		 				fundLog.setStatus(6);/*状态   0是申请姿态。1是成功 5：审核通过  6：拒绝*/
+		 				fundLog.setModifytime(Calendar.getInstance().getTime());
+		 				log.info("审核通过保存状态：" + agentzhfundLogMapper.updateByPrimaryKey(fundLog));
+		 			} catch (Exception efundlog) {
+		 				log.error("保存预提现信息异常：" + efundlog.getMessage());
+		 				map.put("msg", "false");
+		 				return map;
+		 			}
+					
+					try {
+						subzhEntity = subzhMapper.selectBySubzh(fundLog.getSubzh());
+						Object obj=new Object();
+						synchronized (obj) {
+			 				if(subzhEntity.getFundbalance() != null){
+			 					BigDecimal fund=new BigDecimal(String.valueOf(fundLog.getFund()));
+			 					subzhEntity.setFundbalance(subzhEntity.getFundbalance().add(fund));
+			 				} else {
+			 					subzhEntity.setFundbalance(fundLog.getFund());
+			 				}
+			 				log.info("审核拒绝返现，保存资产状态：" + subzhMapper.updateByPrimaryKey(subzhEntity));
+			 			}
+					} catch (Exception es) {
+		 				log.error("审核拒绝返现，保存资产信息异常：" + es.getMessage());
+		 				map.put("msg", "false");
+		 				return map;
+		 			}
+					
+					map.put("msg", "true");
+	 				return map;
+				}
+			}
+		}catch(Exception e) {
+			map.put("msg", "false");
+			return map;
+		}
+		return map;
+	}
+
+	@Override
+	public Map<String, Object> saveAccount(String username, String accmoney) {
+		Map<String, Object> map=new HashMap<String, Object>();
+		if(StringUtil.isAnyNullOrEmpty(username,accmoney)) {
+			map.put("status", false);
+			map.put("msg", "调账账户或者调账金额输入有误，请检查");
+			return map;
+		}
+		
+		BigDecimal total_fee=new BigDecimal(accmoney);//调账金额
+		
+		String dates = new SimpleDateFormat("yyyyMMddHHmmssSSS").format(new Date());
+		String orderno =  dates + StringUtil.getRandomString(4)+username;
+		try {
+			
+			AgentzhfundLog afl=saveAgentzhfundLog(username, orderno, DateUtil.getSystemDate(), total_fee, 0);
+
+			if(null!=afl&&afl.getId()!=null&&afl.getId()!=0) {
+				//对于原油项目，1:出金 2:入金 3:增加不可取资金 4:减少不可取资金 5:追加保证金
+				//计算税率
+				BigDecimal fund=afl.getFund().divide(new BigDecimal(7.7),2);
+				try {
+					log.info("提现调柜台协议开始");
+					String rbStr = simulateStockService.commonFunction("{\"seq_no\":"+afl.getId()+",\"client_id\":\""+username+"\",\"fund_type\":5,"
+							+ "\"prev_fund\":0.00,\"after_fund\":"+fund+",\"warning_line\":0.00,\"open_line\":0.00}", DefineNumber.JCL_PROTOCOL_ID_REQ_FUNDMESSAGE);
+					log.info("传到柜台的参数"+rbStr);
+					if(!StringUtil.isAnyNullOrEmpty(rbStr) && rbStr.indexOf("{") > -1){
+						JsonParser parser = new JsonParser();
+						JsonElement element = parser.parse(rbStr);
+						JsonObject jsonObj = element.getAsJsonObject();
+			    		if(CONST.STATUS_INT_INSTANCE_SUCCESS == jsonObj.get("status").getAsInt()){
+			    			log.info("提现成功调柜台协议成功");
+			    			afl.setStatus(2);//调账成功
+			    			saveFundpzlog(username, total_fee, orderno, DateUtil.getSystemDate());
+			    			map.put("status", true);
+			    			map.put("msg", "调账成功");
+			    		} else{
+			    			//调柜台协议失败删除该条记录
+			    			log.info(jsonObj.get("describe"));
+			    			afl.setStatus(3);//调账失败
+			    		}
+					}
+				} catch (Exception efund) {
+					//调柜台协议失败删除该条记录
+					afl.setStatus(3);//调账失败
+					log.error("柜台调协议异常：" + efund.getMessage());
+				}
+			}
+			
+			try {
+    			
+    			int num=agentzhfundLogMapper.updateByPrimaryKeySelective(afl);
+    			log.info("updateByPrimaryKeySelective==success"+num);	
+				} catch (Exception e) {
+					log.error("修该调账信息专题异常", e);
+					map.put("status", false);
+					map.put("msg", "调账出现异常，请联系管理员");
+					return map;
+				}
+		} catch (Exception e) {
+			log.error("调账出现异常", e);
+			map.put("status", false);
+			map.put("msg", "调账出现异常，请联系管理员");
+			return map;
+		}
+		
+		return map;
+	}
+	
+	private AgentzhfundLog saveAgentzhfundLog(String username,String order_no,Date pay_time,BigDecimal total_fee,int paystate ){
+		AgentzhfundLog agentzhfundLog=new AgentzhfundLog();
+		try{
+			agentzhfundLog.setSubzh(username);
+			agentzhfundLog.setOrderno(order_no);
+			agentzhfundLog.setType("tz");
+			agentzhfundLog.setBz((byte)1);//充值
+			agentzhfundLog.setModifytime(pay_time);
+			agentzhfundLog.setFund(total_fee);
+			agentzhfundLog.setStatus(paystate);//支付成功
+			agentzhfundLog.setName(username);
+			
+			TreeMap<String, Object> tmap =new TreeMap<String, Object>();
+			tmap.put("充值方式","调账");
+			tmap.put("充值人", agentzhfundLog.getName());
+			tmap.put("充值单号", order_no);
+			tmap.put("充值金额", agentzhfundLog.getFund());
+			tmap.put("充值时间", agentzhfundLog.getModifytime());
+			JSONObject description = JSONObject.parseObject(JSON.toJSONString(tmap));
+			agentzhfundLog.setDescription(description.toJSONString());
+			log.info("log6:"+agentzhfundLog.getDescription());
+			int num=agentzhfundLogMapper.insertSelective(agentzhfundLog);
+			log.info("agentzhfundLogMapper==SUCCESS:"+num);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return agentzhfundLog;
+	}
+	
+	public FundPzlog saveFundpzlog(String username,BigDecimal accmoney,String orderno,Date paytime) {
+		FundPzlog fundPzlog =new FundPzlog(); 
+		log.info("log:开始记录配资"+username+
+				"---8--"+"--"+accmoney+"--");
+			fundPzlog.setSubzh(username);
+			fundPzlog.setFundtype(8);//调账
+			fundPzlog.setSetpro(0);
+			fundPzlog.setFundbalance(accmoney);
+			fundPzlog.setCreatetime(DateUtil.getSystemDate());
+			
+			TreeMap<String, Object> tmap =new TreeMap<String, Object>();
+			tmap.put("调账人", fundPzlog.getSubzh());
+			tmap.put("调账单号", orderno);
+			tmap.put("调账金额",accmoney);
+			tmap.put("调账时间",paytime);
+			JSONObject descriptions = JSONObject.parseObject(JSON.toJSONString(tmap));
+			fundPzlog.setSetdesc(descriptions.toJSONString());
+			try {
+				int n=pzlogMapper.insertSelective(fundPzlog);
+				log.info("log调账配资===》"+n+"=====>"+fundPzlog.getSetdesc());
+			} catch (Exception e) {
+				log.info("调账配资失败", e);
+			}
+			return fundPzlog;
+	}
+}

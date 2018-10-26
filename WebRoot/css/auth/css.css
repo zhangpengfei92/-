@@ -1,0 +1,33 @@
+@charset "utf-8";
+/* CSS Document */
+*{padding:0px;margin:0px;font-family:"微软雅黑";list-style:none;border:none;text-decoration:none;list-style:none; }
+ul,li{list-style-type:none;}
+img{ border:0;}
+em,i{ font-style:normal;}
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,br,pre,form,fieldset,input,textarea,p,blockquote,th,td,img,select,input,a,div,strong,span,b,a,input,i{ margin: 0; padding: 0; font-weight:normal; } 
+body{ width:100%;}
+table { border-collapse: collapse; } 
+/*头部开始*/
+.wrap{ width:1000px; margin:20px auto;}
+.numbox{padding:0px 0;}
+.numbox .inputbox{ /* width:800px; padding:30px 250px; */ overflow:hidden;}
+.numbox .inputbox h2{color:#deae30; font-size:16px; font-weight:bold; /* padding-bottom:30px; */}
+.numbox .inputbox .line{ overflow:hidden; font-size:16px; padding-bottom:15px; position:relative;}
+.inputbox .line label{ display:inline-block; float:left; line-height:40px; width:180px; text-align:right; padding-right:10px;}
+.inputbox .line input{ width:300px; line-height:40px; height:40px; padding:0 10px; border:1px solid #ddd;font-size:16px;}
+.inputbox .line i{ display:inline-block; height:40px; line-height:40px; width:10px; text-align:center;}
+.inputbox .line strong{display:inline-block; float:left; line-height:40px;color:#f00;}
+/*step02*/
+.main{ width:1000px;}
+.main ul{ overflow:hidden; /* padding:0 60px; */}
+.main ul li{ float:left; padding-left:10px;}
+.main ul li .headfile {background:url(../../images/auth/peop.png) 0 0 no-repeat;width:260px;height:172px;}
+.main ul li .ghfile{background:url(../../images/auth/gh.png) 0 0 no-repeat;width:260px;height:172px;}
+.main ul li .cfile{background:url(../../images/auth/yhk.png) 0 0 no-repeat;width:260px;height:172px;}
+.main ul li .headfile .upload {position: relative;text-decoration: none;text-align: center;width: 260px;display: block;cursor: pointer; height:172px;}
+.main ul li .headfile .change {position: absolute;overflow: hidden;top: 0;left: 0;-webkit-opacity: 0;-moz-opacity: 0;-khtml-opacity: 0;opacity: .0;
+filter: alpha(opacity=0);-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=0);width: 260px;height:172px; line-height:172px;cursor: pointer;}
+.button{ padding:50px 190px;}
+.button a{ width:200px; text-align:center; display:inline-block;color:#fff; height:40px; line-height:40px;display:inline-block;vertical-align:middle;-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px;behavior: url(js/PIE.htc);position:relative;overflow:hidden;font-size:16px }
+.button a.pstep{ background:#ebbc50; margin-right:50px;}
+.button a.pstep:hover{background:#dfae33;}

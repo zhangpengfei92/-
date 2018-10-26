@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcl.dao.OperateSchemeMapper" >
+  <resultMap id="BaseResultMap" type="com.jcl.pojo.OperateScheme" >
+    <id column="osid" property="osid" jdbcType="INTEGER" />
+    <result column="schemename" property="schemename" jdbcType="VARCHAR" />
+    <result column="operatermoney" property="operatermoney" jdbcType="DECIMAL" />
+    <result column="operaterbzmoney" property="operaterbzmoney" jdbcType="DECIMAL" />
+    <result column="sxmoney" property="sxmoney" jdbcType="DECIMAL" />
+    <result column="ksyjxbalance" property="ksyjxbalance" jdbcType="DECIMAL" />
+    <result column="kspcxBalance" property="kspcxbalance" jdbcType="DECIMAL" />
+    <result column="risk_template_id" property="riskTemplateId" jdbcType="INTEGER" />
+    <result column="zhglmoney" property="zhglmoney" jdbcType="DECIMAL" />
+    <result column="osremark" property="osremark" jdbcType="VARCHAR" />
+    <result column="osstate" property="osstate" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    osid, schemename, operatermoney, operaterbzmoney, sxmoney, ksyjxbalance, kspcxBalance, 
+    risk_template_id, zhglmoney, osremark, osstate
+  </sql>
+  <!--关联风控模板菜单表的全查询  -->
+    <select id="selectAll" resultType="com.jcl.pojo.OperateScheme">
+  		select t1.*,t2.type 
+  		from operatescheme t1 ,risk_tempall t2
+  		where t1.risk_template_id=t2.id and t1.osstate=1;
+  </select>
+  <!--根据查询输入用户名关键字查询  -->
+  <select id="selectByName" resultType="com.jcl.pojo.OperateScheme">
+  		select t1.*,t2.type 
+  		from operatescheme t1 ,risk_tempall t2
+  		where t1.risk_template_id=t2.id  
+  		and t1.osstate=1 
+  		and t1.schemename like '%'+#{str}+'%';
+  </select>
+  
+  <!--根据操盘方案ID查询  -->
+  <select id="selectByID" resultType="com.jcl.pojo.OperateScheme" parameterType="java.lang.Integer">
+  		select t1.*,t2.type 
+  		from operatescheme t1 ,risk_tempall t2
+  		where t1.risk_template_id=t2.id and t1.osstate=1 and osid=#{id};
+  </select>
+  
+  <update id="updateOsstate" parameterType="java.lang.Integer">
+  		update operatescheme set osstate=0 where osid=#{osid};
+  </update>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jcl.pojo.OperateSchemeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from operatescheme
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from operatescheme
+    where osid = #{osid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from operatescheme
+    where osid = #{osid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jcl.pojo.OperateSchemeExample" >
+    delete from operatescheme
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jcl.pojo.OperateScheme" >
+    insert into operatescheme (osid, schemename, operatermoney, 
+      operaterbzmoney, sxmoney, ksyjxbalance, 
+      kspcxBalance, risk_template_id, zhglmoney, 
+      osremark, osstate)
+    values (#{osid,jdbcType=INTEGER}, #{schemename,jdbcType=VARCHAR}, #{operatermoney,jdbcType=DECIMAL}, 
+      #{operaterbzmoney,jdbcType=DECIMAL}, #{sxmoney,jdbcType=DECIMAL}, #{ksyjxbalance,jdbcType=DECIMAL}, 
+      #{kspcxbalance,jdbcType=DECIMAL}, #{riskTemplateId,jdbcType=INTEGER}, #{zhglmoney,jdbcType=DECIMAL}, 
+      #{osremark,jdbcType=VARCHAR}, #{osstate,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jcl.pojo.OperateScheme" >
+    insert into operatescheme
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="osid != null" >
+        osid,
+      </if>
+      <if test="schemename != null" >
+        schemename,
+      </if>
+      <if test="operatermoney != null" >
+        operatermoney,
+      </if>
+      <if test="operaterbzmoney != null" >
+        operaterbzmoney,
+      </if>
+      <if test="sxmoney != null" >
+        sxmoney,
+      </if>
+      <if test="ksyjxbalance != null" >
+        ksyjxbalance,
+      </if>
+      <if test="kspcxbalance != null" >
+        kspcxBalance,
+      </if>
+      <if test="riskTemplateId != null" >
+        risk_template_id,
+      </if>
+      <if test="zhglmoney != null" >
+        zhglmoney,
+      </if>
+      <if test="osremark != null" >
+        osremark,
+      </if>
+      <if test="osstate != null" >
+        osstate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="osid != null" >
+        #{osid,jdbcType=INTEGER},
+      </if>
+      <if test="schemename != null" >
+        #{schemename,jdbcType=VARCHAR},
+      </if>
+      <if test="operatermoney != null" >
+        #{operatermoney,jdbcType=DECIMAL},
+      </if>
+      <if test="operaterbzmoney != null" >
+        #{operaterbzmoney,jdbcType=DECIMAL},
+      </if>
+      <if test="sxmoney != null" >
+        #{sxmoney,jdbcType=DECIMAL},
+      </if>
+      <if test="ksyjxbalance != null" >
+        #{ksyjxbalance,jdbcType=DECIMAL},
+      </if>
+      <if test="kspcxbalance != null" >
+        #{kspcxbalance,jdbcType=DECIMAL},
+      </if>
+      <if test="riskTemplateId != null" >
+        #{riskTemplateId,jdbcType=INTEGER},
+      </if>
+      <if test="zhglmoney != null" >
+        #{zhglmoney,jdbcType=DECIMAL},
+      </if>
+      <if test="osremark != null" >
+        #{osremark,jdbcType=VARCHAR},
+      </if>
+      <if test="osstate != null" >
+        #{osstate,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jcl.pojo.OperateSchemeExample" resultType="java.lang.Integer" >
+    select count(*) from operatescheme
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update operatescheme
+    <set >
+      <if test="record.osid != null" >
+        osid = #{record.osid,jdbcType=INTEGER},
+      </if>
+      <if test="record.schemename != null" >
+        schemename = #{record.schemename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operatermoney != null" >
+        operatermoney = #{record.operatermoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.operaterbzmoney != null" >
+        operaterbzmoney = #{record.operaterbzmoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.sxmoney != null" >
+        sxmoney = #{record.sxmoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.ksyjxbalance != null" >
+        ksyjxbalance = #{record.ksyjxbalance,jdbcType=DECIMAL},
+      </if>
+      <if test="record.kspcxbalance != null" >
+        kspcxBalance = #{record.kspcxbalance,jdbcType=DECIMAL},
+      </if>
+      <if test="record.riskTemplateId != null" >
+        risk_template_id = #{record.riskTemplateId,jdbcType=INTEGER},
+      </if>
+      <if test="record.zhglmoney != null" >
+        zhglmoney = #{record.zhglmoney,jdbcType=DECIMAL},
+      </if>
+      <if test="record.osremark != null" >
+        osremark = #{record.osremark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.osstate != null" >
+        osstate = #{record.osstate,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update operatescheme
+    set osid = #{record.osid,jdbcType=INTEGER},
+      schemename = #{record.schemename,jdbcType=VARCHAR},
+      operatermoney = #{record.operatermoney,jdbcType=DECIMAL},
+      operaterbzmoney = #{record.operaterbzmoney,jdbcType=DECIMAL},
+      sxmoney = #{record.sxmoney,jdbcType=DECIMAL},
+      ksyjxbalance = #{record.ksyjxbalance,jdbcType=DECIMAL},
+      kspcxBalance = #{record.kspcxbalance,jdbcType=DECIMAL},
+      risk_template_id = #{record.riskTemplateId,jdbcType=INTEGER},
+      zhglmoney = #{record.zhglmoney,jdbcType=DECIMAL},
+      osremark = #{record.osremark,jdbcType=VARCHAR},
+      osstate = #{record.osstate,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jcl.pojo.OperateScheme" >
+    update operatescheme
+    <set >
+      <if test="schemename != null" >
+        schemename = #{schemename,jdbcType=VARCHAR},
+      </if>
+      <if test="operatermoney != null" >
+        operatermoney = #{operatermoney,jdbcType=DECIMAL},
+      </if>
+      <if test="operaterbzmoney != null" >
+        operaterbzmoney = #{operaterbzmoney,jdbcType=DECIMAL},
+      </if>
+      <if test="sxmoney != null" >
+        sxmoney = #{sxmoney,jdbcType=DECIMAL},
+      </if>
+      <if test="ksyjxbalance != null" >
+        ksyjxbalance = #{ksyjxbalance,jdbcType=DECIMAL},
+      </if>
+      <if test="kspcxbalance != null" >
+        kspcxBalance = #{kspcxbalance,jdbcType=DECIMAL},
+      </if>
+      <if test="riskTemplateId != null" >
+        risk_template_id = #{riskTemplateId,jdbcType=INTEGER},
+      </if>
+      <if test="zhglmoney != null" >
+        zhglmoney = #{zhglmoney,jdbcType=DECIMAL},
+      </if>
+      <if test="osremark != null" >
+        osremark = #{osremark,jdbcType=VARCHAR},
+      </if>
+      <if test="osstate != null" >
+        osstate = #{osstate,jdbcType=INTEGER},
+      </if>
+    </set>
+    where osid = #{osid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jcl.pojo.OperateScheme" >
+    update operatescheme
+    set schemename = #{schemename,jdbcType=VARCHAR},
+      operatermoney = #{operatermoney,jdbcType=DECIMAL},
+      operaterbzmoney = #{operaterbzmoney,jdbcType=DECIMAL},
+      sxmoney = #{sxmoney,jdbcType=DECIMAL},
+      ksyjxbalance = #{ksyjxbalance,jdbcType=DECIMAL},
+      kspcxBalance = #{kspcxbalance,jdbcType=DECIMAL},
+      risk_template_id = #{riskTemplateId,jdbcType=INTEGER},
+      zhglmoney = #{zhglmoney,jdbcType=DECIMAL},
+      osremark = #{osremark,jdbcType=VARCHAR},
+      osstate = #{osstate,jdbcType=INTEGER}
+    where osid = #{osid,jdbcType=INTEGER}
+  </update>
+</mapper>

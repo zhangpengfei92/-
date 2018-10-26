@@ -1,0 +1,63 @@
+/**
+ * Copyright (C) 2009 武汉金策略信息科技有限公司
+ *
+ * 版权所有。
+ *
+ * 类名　　  : @AccountsController.java
+ * 功能概要  : 
+ * 做成日期  : @2018年7月6日
+ * 修改日期  :
+ */
+package com.jcl.controller;
+
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
+
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.jcl.service.FundService;
+import com.jcl.util.Constant;
+
+/** 
+ * @author zpf
+ * @version 1.0
+ */
+
+@Controller		  
+@RequestMapping("/accounts")
+public class AccountsController {
+	
+	public static Logger log = Logger.getLogger(AccountsController.class);
+	
+	@Autowired
+	public FundService fundService;
+	
+	@RequestMapping("/toAccount")
+	public String toAccount(Model model,HttpSession session) {
+		session.setAttribute(Constant.SESSION_LEFTMENU, "22");
+		
+		return "fund/acccounts";
+	}	
+	@RequestMapping("/saveAccount")
+	public String saveAccount(String username,String accmoney,Integer mstatus,Model model) {
+		String msg="";
+		try {
+		Map<String, Object> map=fundService.saveAccount(username,accmoney);
+		
+		if((Boolean) map.get("status")) {
+				msg="调账成功";
+			}else {
+				msg="调账失败,"+map.get("msg");
+			}
+		} catch (Exception e) {
+			log.error("保存用户调账信息失败", e);
+		}
+		
+		return msg;
+	}
+}

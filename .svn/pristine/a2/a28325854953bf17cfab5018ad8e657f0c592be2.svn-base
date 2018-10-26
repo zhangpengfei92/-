@@ -1,0 +1,18 @@
+http_apache=http://192.168.3.64:8086/image
+file_path=D\:/Apache2.2/htdocs/image
+
+#ZeroMQ
+#zeromq.server=tcp://192.168.0.200:6666，tcp://120.26.132.141:6666，tcp://172.19.151.118:6666
+zeromq.server=tcp://192.168.23.71:6666
+#zookeeper.server=192.168.3.51:7181,192.168.3.51:7182,192.168.3.51:7183，
+zookeeper.address=/QuantTradeGrid
+#ZeroMQ GUID
+fund.server.guid=7FC51A87-F6AA-4418-9837-DA94C1F6907E
+
+#unspay
+public.unspay.marketno=2120180316170728001
+public.unspay.password=12345678cqc
+public.unspay.quickpay=http://114.80.54.74:8082/quickpay-front/
+public.unspay.paywithdraw=http://pay.unspay.com:8081/delegate-pay-front/
+public.unspay.successserver=http\://web.pb.jclkj.cn\:9999/pb-cms/agentzh/agentzh\!getUnspaySuccess.action
+public.unspay.callbackaddr=http\://web.pb.jclkj.cn\:9999/pb-cms/clientshow/phonePay\!callback.action

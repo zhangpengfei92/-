@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcl.dao.CoursetableMapper">
+	<resultMap id="BaseResultMap" type="com.jcl.pojo.Coursetable">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="podName" property="podname" jdbcType="VARCHAR" />
+		<result column="date" property="date" jdbcType="VARCHAR" />
+		<result column="teacher" property="teacher" jdbcType="VARCHAR" />
+		<result column="yy_id" property="yyId" jdbcType="VARCHAR" />
+		<result column="yy_sid" property="yySid" jdbcType="VARCHAR" />
+		<result column="starttime" property="starttime" jdbcType="VARCHAR" />
+		<result column="endtime" property="endtime" jdbcType="VARCHAR" />
+		<result column="coursename" property="coursename" jdbcType="VARCHAR" />
+		<result column="coursetype" property="coursetype" jdbcType="VARCHAR" />
+		<result column="teacherhead" property="teacherhead" jdbcType="VARCHAR" />
+		<result column="teacherDec" property="teacherdec" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" suffix=")" prefixOverrides="and">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem"
+										open="(" close=")" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		id, podName, date, teacher, yy_id, yy_sid, starttime, endtime,
+		coursename, coursetype,
+		teacherhead, teacherDec
+	</sql>
+	<select id="selectByExample" resultMap="BaseResultMap"
+		parameterType="com.jcl.pojo.CoursetableExample">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		'true' as QUERYID,
+		<include refid="Base_Column_List" />
+		from course_table
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectCountByDate" resultType="java.lang.Integer">
+		select COUNT(DISTINCT [date]) FROM course_table
+	</select>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from course_table
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from course_table
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByDate" parameterType="java.lang.String">
+		delete from course_table
+		where date = #{date,jdbcType=VARCHAR}
+	</delete>
+
+
+	<delete id="deleteByExample" parameterType="com.jcl.pojo.CoursetableExample">
+		delete from course_table
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.jcl.pojo.Coursetable">
+		insert into course_table (id, podName, date,
+		teacher, yy_id, yy_sid,
+		starttime, endtime, coursename,
+		coursetype, teacherhead, teacherDec
+		)
+		values (#{id,jdbcType=INTEGER}, #{podname,jdbcType=VARCHAR},
+		#{date,jdbcType=VARCHAR},
+		#{teacher,jdbcType=VARCHAR}, #{yyId,jdbcType=VARCHAR}, #{yySid,jdbcType=VARCHAR},
+		#{starttime,jdbcType=VARCHAR}, #{endtime,jdbcType=VARCHAR},
+		#{coursename,jdbcType=VARCHAR},
+		#{coursetype,jdbcType=VARCHAR}, #{teacherhead,jdbcType=VARCHAR}, #{teacherdec,jdbcType=VARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.jcl.pojo.Coursetable">
+		insert into course_table
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="podname != null">
+				podName,
+			</if>
+			<if test="date != null">
+				date,
+			</if>
+			<if test="teacher != null">
+				teacher,
+			</if>
+			<if test="yyId != null">
+				yy_id,
+			</if>
+			<if test="yySid != null">
+				yy_sid,
+			</if>
+			<if test="starttime != null">
+				starttime,
+			</if>
+			<if test="endtime != null">
+				endtime,
+			</if>
+			<if test="coursename != null">
+				coursename,
+			</if>
+			<if test="coursetype != null">
+				coursetype,
+			</if>
+			<if test="teacherhead != null">
+				teacherhead,
+			</if>
+			<if test="teacherdec != null">
+				teacherDec,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="podname != null">
+				#{podname,jdbcType=VARCHAR},
+			</if>
+			<if test="date != null">
+				#{date,jdbcType=VARCHAR},
+			</if>
+			<if test="teacher != null">
+				#{teacher,jdbcType=VARCHAR},
+			</if>
+			<if test="yyId != null">
+				#{yyId,jdbcType=VARCHAR},
+			</if>
+			<if test="yySid != null">
+				#{yySid,jdbcType=VARCHAR},
+			</if>
+			<if test="starttime != null">
+				#{starttime,jdbcType=VARCHAR},
+			</if>
+			<if test="endtime != null">
+				#{endtime,jdbcType=VARCHAR},
+			</if>
+			<if test="coursename != null">
+				#{coursename,jdbcType=VARCHAR},
+			</if>
+			<if test="coursetype != null">
+				#{coursetype,jdbcType=VARCHAR},
+			</if>
+			<if test="teacherhead != null">
+				#{teacherhead,jdbcType=VARCHAR},
+			</if>
+			<if test="teacherdec != null">
+				#{teacherdec,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample" parameterType="com.jcl.pojo.CoursetableExample"
+		resultType="java.lang.Integer">
+		select count(*) from course_table
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update course_table
+		<set>
+			<if test="record.id != null">
+				id = #{record.id,jdbcType=INTEGER},
+			</if>
+			<if test="record.podname != null">
+				podName = #{record.podname,jdbcType=VARCHAR},
+			</if>
+			<if test="record.date != null">
+				date = #{record.date,jdbcType=VARCHAR},
+			</if>
+			<if test="record.teacher != null">
+				teacher = #{record.teacher,jdbcType=VARCHAR},
+			</if>
+			<if test="record.yyId != null">
+				yy_id = #{record.yyId,jdbcType=VARCHAR},
+			</if>
+			<if test="record.yySid != null">
+				yy_sid = #{record.yySid,jdbcType=VARCHAR},
+			</if>
+			<if test="record.starttime != null">
+				starttime = #{record.starttime,jdbcType=VARCHAR},
+			</if>
+			<if test="record.endtime != null">
+				endtime = #{record.endtime,jdbcType=VARCHAR},
+			</if>
+			<if test="record.coursename != null">
+				coursename = #{record.coursename,jdbcType=VARCHAR},
+			</if>
+			<if test="record.coursetype != null">
+				coursetype = #{record.coursetype,jdbcType=VARCHAR},
+			</if>
+			<if test="record.teacherhead != null">
+				teacherhead = #{record.teacherhead,jdbcType=VARCHAR},
+			</if>
+			<if test="record.teacherdec != null">
+				teacherDec = #{record.teacherdec,jdbcType=VARCHAR},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update course_table
+		set id = #{record.id,jdbcType=INTEGER},
+		podName = #{record.podname,jdbcType=VARCHAR},
+		date = #{record.date,jdbcType=VARCHAR},
+		teacher = #{record.teacher,jdbcType=VARCHAR},
+		yy_id = #{record.yyId,jdbcType=VARCHAR},
+		yy_sid = #{record.yySid,jdbcType=VARCHAR},
+		starttime = #{record.starttime,jdbcType=VARCHAR},
+		endtime = #{record.endtime,jdbcType=VARCHAR},
+		coursename = #{record.coursename,jdbcType=VARCHAR},
+		coursetype = #{record.coursetype,jdbcType=VARCHAR},
+		teacherhead = #{record.teacherhead,jdbcType=VARCHAR},
+		teacherDec = #{record.teacherdec,jdbcType=VARCHAR}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.jcl.pojo.Coursetable">
+		update course_table
+		<set>
+			<if test="podname != null">
+				podName = #{podname,jdbcType=VARCHAR},
+			</if>
+			<if test="date != null">
+				date = #{date,jdbcType=VARCHAR},
+			</if>
+			<if test="teacher != null">
+				teacher = #{teacher,jdbcType=VARCHAR},
+			</if>
+			<if test="yyId != null">
+				yy_id = #{yyId,jdbcType=VARCHAR},
+			</if>
+			<if test="yySid != null">
+				yy_sid = #{yySid,jdbcType=VARCHAR},
+			</if>
+			<if test="starttime != null">
+				starttime = #{starttime,jdbcType=VARCHAR},
+			</if>
+			<if test="endtime != null">
+				endtime = #{endtime,jdbcType=VARCHAR},
+			</if>
+			<if test="coursename != null">
+				coursename = #{coursename,jdbcType=VARCHAR},
+			</if>
+			<if test="coursetype != null">
+				coursetype = #{coursetype,jdbcType=VARCHAR},
+			</if>
+			<if test="teacherhead != null">
+				teacherhead = #{teacherhead,jdbcType=VARCHAR},
+			</if>
+			<if test="teacherdec != null">
+				teacherDec = #{teacherdec,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.jcl.pojo.Coursetable">
+		update course_table
+		set podName = #{podname,jdbcType=VARCHAR},
+		date = #{date,jdbcType=VARCHAR},
+		teacher = #{teacher,jdbcType=VARCHAR},
+		yy_id = #{yyId,jdbcType=VARCHAR},
+		yy_sid = #{yySid,jdbcType=VARCHAR},
+		starttime = #{starttime,jdbcType=VARCHAR},
+		endtime = #{endtime,jdbcType=VARCHAR},
+		coursename = #{coursename,jdbcType=VARCHAR},
+		coursetype = #{coursetype,jdbcType=VARCHAR},
+		teacherhead = #{teacherhead,jdbcType=VARCHAR},
+		teacherDec = #{teacherdec,jdbcType=VARCHAR}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<select id="selectDate" resultType="com.jcl.pojo.Coursetable">
+		SELECT  distinct top 12 date FROM course_table order by date desc
+	</select>
+</mapper>
