@@ -1,0 +1,89 @@
+package com.jcl.util.mapay;
+/**
+ * 
+ * @author zhenghuayi
+ * 支付回调实体类
+ * 
+ */
+public class PayCallBackBean {
+	private String account_name;
+	private String pay_time;
+	private String status;
+	private String amount;
+	private String out_trade_no;
+	private String trade_no;
+	private String fees;
+	private String callback_time;
+	private String type;
+	private String account_key;
+	private String sign;
+	public String getSign() {
+		return sign;
+	}
+	public void setSign(String sign) {
+		this.sign = sign;
+	}
+	public String getAccount_name() {
+		return account_name;
+	}
+	public void setAccount_name(String account_name) {
+		this.account_name = account_name;
+	}
+	public String getPay_time() {
+		return pay_time;
+	}
+	public void setPay_time(String pay_time) {
+		this.pay_time = pay_time;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	public String getAmount() {
+		return amount;
+	}
+	public void setAmount(String amount) {
+		this.amount = amount;
+	}
+	public String getOut_trade_no() {
+		return out_trade_no;
+	}
+	public void setOut_trade_no(String out_trade_no) {
+		this.out_trade_no = out_trade_no;
+	}
+	public String getTrade_no() {
+		return trade_no;
+	}
+	public void setTrade_no(String trade_no) {
+		this.trade_no = trade_no;
+	}
+	public String getFees() {
+		return fees;
+	}
+	public void setFees(String fees) {
+		this.fees = fees;
+	}
+	public String getCallback_time() {
+		return callback_time;
+	}
+	public void setCallback_time(String callback_time) {
+		this.callback_time = callback_time;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
+	public String getAccount_key() {
+		return account_key;
+	}
+	public void setAccount_key(String account_key) {
+		this.account_key = account_key;
+	}
+	
+	
+	
+}

@@ -1,0 +1,14 @@
+public.message.url=http://111.231.69.46:18083/hy/
+public.message.uid=10026
+public.message.username=gqcl
+public.message.password=a123456
+#SMS config
+#\u963F\u91CC\u4E91\u77ED\u4FE1\u7B7E\u540D
+message.accesskeyid=LTAIUIKM7rDSmak0
+message.accesskeysecret=YJQLVXBq1EigaCixL9VNUeTjMcQK7L
+message.signname=\u0057\u0053\u0051\u0042
+message.templatecode=SMS_139977065
+
+public.message.url=http://api.qirui.com:7891/mt
+public.message.apiKey=905001180001
+public.message.apiSecret=D56F0928B395C65AB920DBF458B0D825

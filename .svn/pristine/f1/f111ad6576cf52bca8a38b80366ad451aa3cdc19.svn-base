@@ -1,0 +1,163 @@
+package com.jcl.util.mapay;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+import com.alibaba.fastjson.JSONObject;
+
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
+public class callback_Demo {
+	private static final String CALLBACK_URL = "http://www.baidu.com/";
+	private static final String SUCCESS_URL = "http://www.baidu.com/";
+	private static final String ERROT_URL = "http://www.baidu.com/";
+	private static final String KEY = "4C61C86ABEBC7249";
+	private static OkHttpClient client = new OkHttpClient();
+
+	public static void main(String[] args) {
+		HashMap<String, String> params = new HashMap<String, String>();
+		params.put("account_id", "10000");// �̻�ID
+		params.put("content_type", "json");// ��ҳ����
+		params.put("thoroughfare", "service_auto");// ֧��ͨ��
+		params.put("out_trade_no", "201806261212440");// ������Ϣ
+		params.put("robin", "2");// ��ѵ״̬ //2����1�ر�
+		params.put("amount", "20.01");// ֧�����
+		params.put("callback_url", CALLBACK_URL);// �첽֪ͨurl
+		params.put("success_url", SUCCESS_URL);// ֧���ɹ�����ת��url
+		params.put("error_url", ERROT_URL);// ֧��ʧ�ܺ���ת��url
+		String sign = Demo.getSign("20.01", "201806261212440");
+		params.put("sign", sign);// ǩ���㷨
+		params.put("type", "1");// ֧������ //1Ϊ΢�ţ�2Ϊ֧����
+		params.put("keyId", "");// �豸KEY ��ѯ������д
+
+		String order = Demo.post("https://payme.cn.com", params);
+		// ��ȡ���
+		System.out.println("result:" + order);
+
+		JSONObject object = JSONObject.parseObject(order);
+		JSONObject object2 = object.getJSONObject("data");
+		String order_id = object2.getString("order_id");
+
+		String result = Demo.get("https://payme.cn.com/gateway/pay/service.do?content_type=json&id=" + order_id);
+		System.out.println("result:" + result);
+	}
+
+	/**
+	 * 
+	 * @param account_name
+	 *            �̻�����
+	 * @param pay_time
+	 *            ֧��ʱ���
+	 * @param status
+	 *            ֧��״̬
+	 * @param amount
+	 *            ֧�����
+	 * @param out_trade_no
+	 *            ������Ϣ
+	 * @param trade_no
+	 *            ������ˮ��
+	 * @param fees
+	 *            �ö���������
+	 * @param sign
+	 *            ����ǩ��
+	 * @param callback_time
+	 *            �ص�ʱ��
+	 * @param type
+	 *            ֧������
+	 * @param account_key
+	 *            �̻�KEY��S_KEY��
+	 * @return
+	 */
+	public static String notify(String account_name, //
+			String pay_time, //
+			String status, //
+			String amount, //
+			String out_trade_no, //
+			String trade_no, //
+			String fees, //
+			String sign, //
+			String callback_time, //
+			String type, //
+			String account_key) {
+		
+		if (!KEY.equalsIgnoreCase(account_key)) {
+			return "error";
+		}
+		
+		String s = Demo.getSign(amount, out_trade_no);
+		if (!s.equalsIgnoreCase(sign)) {
+			return "sign error";
+		}
+		return "success";
+	}
+
+	/**
+	 * ���sign
+	 * 
+	 * @param amount
+	 *            ���
+	 * @param orderNo
+	 *            ������Ϣ
+	 * @return
+	 */
+	public static String getSign(String amount, String orderNo) {
+		String data = amount + orderNo;
+
+		System.out.println("data:" + data);
+
+		String md5Crypt = MD5Utils.md5(data.getBytes());
+
+		System.out.println("md5Crypt:" + md5Crypt);
+
+		byte[] rc4_string = RC4.encry_RC4_byte(md5Crypt, KEY);
+
+		System.out.println("rc4_string:" + rc4_string);
+
+		String sign = MD5Utils.md5(rc4_string);
+
+		System.out.println("sign:" + sign);
+		return sign;
+	}
+
+	public static String post(String url, Map<String, String> params) {
+		FormBody.Builder builder = new FormBody.Builder();
+		for (String key : params.keySet()) {
+			builder.add(key, params.get(key).toString());
+		}
+
+		RequestBody formBody = builder.build();
+		Request request = new Request.Builder().url(url).post(formBody).build();
+		String result = null;
+		try {
+			Response response = client.newCall(request).execute();
+			int code = response.code();
+			System.err.println("״̬��:" + code);
+			result = response.body().string();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	public static String get(String url) {
+
+		Request request = new Request.Builder().url(url).build();
+		String json = null;
+		okhttp3.Response response = null;
+		try {
+
+			response = client.newCall(request).execute();
+			json = response.body().string();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return json;
+	}
+}

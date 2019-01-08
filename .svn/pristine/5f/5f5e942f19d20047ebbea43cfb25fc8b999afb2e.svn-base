@@ -1,0 +1,455 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jcl.dao.BzjmbMapper">
+  <resultMap id="BaseResultMap" type="com.jcl.pojo.Bzjmb">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="sc" jdbcType="INTEGER" property="sc" />
+    <result column="bzjdm" jdbcType="VARCHAR" property="bzjdm" />
+    <result column="bzjname" jdbcType="VARCHAR" property="bzjname" />
+    <result column="bbbz" jdbcType="NUMERIC" property="bbbz" />
+    <result column="tjdtbzj1" jdbcType="NUMERIC" property="tjdtbzj1" />
+    <result column="tjdtbzj2" jdbcType="NUMERIC" property="tjdtbzj2" />
+    <result column="tjktbzj1" jdbcType="NUMERIC" property="tjktbzj1" />
+    <result column="tjktbzj2" jdbcType="NUMERIC" property="tjktbzj2" />
+    <result column="tldtbzj1" jdbcType="NUMERIC" property="tldtbzj1" />
+    <result column="tldtbzj2" jdbcType="NUMERIC" property="tldtbzj2" />
+    <result column="tlktbzj1" jdbcType="NUMERIC" property="tlktbzj1" />
+    <result column="tlktbzj2" jdbcType="NUMERIC" property="tlktbzj2" />
+    <result column="sqfs" jdbcType="INTEGER" property="sqfs" />
+    <result column="month" jdbcType="INTEGER" property="month" />
+    <result column="parentId" jdbcType="INTEGER" property="parentid" />
+    <result column="bz" jdbcType="VARCHAR" property="bz" />
+    <result column="userid" jdbcType="NUMERIC" property="userid" />
+    <result column="agentzh" jdbcType="VARCHAR" property="agentzh" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, sc, bzjdm, bzjname, bbbz, tjdtbzj1, tjdtbzj2, tjktbzj1, tjktbzj2, tldtbzj1, tldtbzj2, 
+    tlktbzj1, tlktbzj2, sqfs, month, parentId, bz, userid, agentzh
+  </sql>
+  <select id="selectByExample" parameterType="com.jcl.pojo.BzjmbExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from bzjmb
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from bzjmb
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from bzjmb
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jcl.pojo.BzjmbExample">
+    delete from bzjmb
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  
+  <delete id="deleteByParent" parameterType="java.lang.Integer">
+  	delete from bzjmb
+    where parentId = #{parentid,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="com.jcl.pojo.Bzjmb">
+    insert into bzjmb (id, sc, bzjdm, 
+      bzjname, bbbz, tjdtbzj1, 
+      tjdtbzj2, tjktbzj1, tjktbzj2, 
+      tldtbzj1, tldtbzj2, tlktbzj1, 
+      tlktbzj2, sqfs, month, 
+      parentId, bz, userid, 
+      agentzh)
+    values (#{id,jdbcType=INTEGER}, #{sc,jdbcType=INTEGER}, #{bzjdm,jdbcType=VARCHAR}, 
+      #{bzjname,jdbcType=VARCHAR}, #{bbbz,jdbcType=NUMERIC}, #{tjdtbzj1,jdbcType=NUMERIC}, 
+      #{tjdtbzj2,jdbcType=NUMERIC}, #{tjktbzj1,jdbcType=NUMERIC}, #{tjktbzj2,jdbcType=NUMERIC}, 
+      #{tldtbzj1,jdbcType=NUMERIC}, #{tldtbzj2,jdbcType=NUMERIC}, #{tlktbzj1,jdbcType=NUMERIC}, 
+      #{tlktbzj2,jdbcType=NUMERIC}, #{sqfs,jdbcType=INTEGER}, #{month,jdbcType=INTEGER}, 
+      #{parentid,jdbcType=INTEGER}, #{bz,jdbcType=VARCHAR}, #{userid,jdbcType=NUMERIC}, 
+      #{agentzh,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jcl.pojo.Bzjmb">
+    insert into bzjmb
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="sc != null">
+        sc,
+      </if>
+      <if test="bzjdm != null">
+        bzjdm,
+      </if>
+      <if test="bzjname != null">
+        bzjname,
+      </if>
+      <if test="bbbz != null">
+        bbbz,
+      </if>
+      <if test="tjdtbzj1 != null">
+        tjdtbzj1,
+      </if>
+      <if test="tjdtbzj2 != null">
+        tjdtbzj2,
+      </if>
+      <if test="tjktbzj1 != null">
+        tjktbzj1,
+      </if>
+      <if test="tjktbzj2 != null">
+        tjktbzj2,
+      </if>
+      <if test="tldtbzj1 != null">
+        tldtbzj1,
+      </if>
+      <if test="tldtbzj2 != null">
+        tldtbzj2,
+      </if>
+      <if test="tlktbzj1 != null">
+        tlktbzj1,
+      </if>
+      <if test="tlktbzj2 != null">
+        tlktbzj2,
+      </if>
+      <if test="sqfs != null">
+        sqfs,
+      </if>
+      <if test="month != null">
+        month,
+      </if>
+      <if test="parentid != null">
+        parentId,
+      </if>
+      <if test="bz != null">
+        bz,
+      </if>
+      <if test="userid != null">
+        userid,
+      </if>
+      <if test="agentzh != null">
+        agentzh,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="sc != null">
+        #{sc,jdbcType=INTEGER},
+      </if>
+      <if test="bzjdm != null">
+        #{bzjdm,jdbcType=VARCHAR},
+      </if>
+      <if test="bzjname != null">
+        #{bzjname,jdbcType=VARCHAR},
+      </if>
+      <if test="bbbz != null">
+        #{bbbz,jdbcType=NUMERIC},
+      </if>
+      <if test="tjdtbzj1 != null">
+        #{tjdtbzj1,jdbcType=NUMERIC},
+      </if>
+      <if test="tjdtbzj2 != null">
+        #{tjdtbzj2,jdbcType=NUMERIC},
+      </if>
+      <if test="tjktbzj1 != null">
+        #{tjktbzj1,jdbcType=NUMERIC},
+      </if>
+      <if test="tjktbzj2 != null">
+        #{tjktbzj2,jdbcType=NUMERIC},
+      </if>
+      <if test="tldtbzj1 != null">
+        #{tldtbzj1,jdbcType=NUMERIC},
+      </if>
+      <if test="tldtbzj2 != null">
+        #{tldtbzj2,jdbcType=NUMERIC},
+      </if>
+      <if test="tlktbzj1 != null">
+        #{tlktbzj1,jdbcType=NUMERIC},
+      </if>
+      <if test="tlktbzj2 != null">
+        #{tlktbzj2,jdbcType=NUMERIC},
+      </if>
+      <if test="sqfs != null">
+        #{sqfs,jdbcType=INTEGER},
+      </if>
+      <if test="month != null">
+        #{month,jdbcType=INTEGER},
+      </if>
+      <if test="parentid != null">
+        #{parentid,jdbcType=INTEGER},
+      </if>
+      <if test="bz != null">
+        #{bz,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=NUMERIC},
+      </if>
+      <if test="agentzh != null">
+        #{agentzh,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jcl.pojo.BzjmbExample" resultType="java.lang.Long">
+    select count(*) from bzjmb
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update bzjmb
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.sc != null">
+        sc = #{record.sc,jdbcType=INTEGER},
+      </if>
+      <if test="record.bzjdm != null">
+        bzjdm = #{record.bzjdm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bzjname != null">
+        bzjname = #{record.bzjname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bbbz != null">
+        bbbz = #{record.bbbz,jdbcType=NUMERIC},
+      </if>
+      <if test="record.tjdtbzj1 != null">
+        tjdtbzj1 = #{record.tjdtbzj1,jdbcType=NUMERIC},
+      </if>
+      <if test="record.tjdtbzj2 != null">
+        tjdtbzj2 = #{record.tjdtbzj2,jdbcType=NUMERIC},
+      </if>
+      <if test="record.tjktbzj1 != null">
+        tjktbzj1 = #{record.tjktbzj1,jdbcType=NUMERIC},
+      </if>
+      <if test="record.tjktbzj2 != null">
+        tjktbzj2 = #{record.tjktbzj2,jdbcType=NUMERIC},
+      </if>
+      <if test="record.tldtbzj1 != null">
+        tldtbzj1 = #{record.tldtbzj1,jdbcType=NUMERIC},
+      </if>
+      <if test="record.tldtbzj2 != null">
+        tldtbzj2 = #{record.tldtbzj2,jdbcType=NUMERIC},
+      </if>
+      <if test="record.tlktbzj1 != null">
+        tlktbzj1 = #{record.tlktbzj1,jdbcType=NUMERIC},
+      </if>
+      <if test="record.tlktbzj2 != null">
+        tlktbzj2 = #{record.tlktbzj2,jdbcType=NUMERIC},
+      </if>
+      <if test="record.sqfs != null">
+        sqfs = #{record.sqfs,jdbcType=INTEGER},
+      </if>
+      <if test="record.month != null">
+        month = #{record.month,jdbcType=INTEGER},
+      </if>
+      <if test="record.parentid != null">
+        parentId = #{record.parentid,jdbcType=INTEGER},
+      </if>
+      <if test="record.bz != null">
+        bz = #{record.bz,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userid != null">
+        userid = #{record.userid,jdbcType=NUMERIC},
+      </if>
+      <if test="record.agentzh != null">
+        agentzh = #{record.agentzh,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update bzjmb
+    set id = #{record.id,jdbcType=INTEGER},
+      sc = #{record.sc,jdbcType=INTEGER},
+      bzjdm = #{record.bzjdm,jdbcType=VARCHAR},
+      bzjname = #{record.bzjname,jdbcType=VARCHAR},
+      bbbz = #{record.bbbz,jdbcType=NUMERIC},
+      tjdtbzj1 = #{record.tjdtbzj1,jdbcType=NUMERIC},
+      tjdtbzj2 = #{record.tjdtbzj2,jdbcType=NUMERIC},
+      tjktbzj1 = #{record.tjktbzj1,jdbcType=NUMERIC},
+      tjktbzj2 = #{record.tjktbzj2,jdbcType=NUMERIC},
+      tldtbzj1 = #{record.tldtbzj1,jdbcType=NUMERIC},
+      tldtbzj2 = #{record.tldtbzj2,jdbcType=NUMERIC},
+      tlktbzj1 = #{record.tlktbzj1,jdbcType=NUMERIC},
+      tlktbzj2 = #{record.tlktbzj2,jdbcType=NUMERIC},
+      sqfs = #{record.sqfs,jdbcType=INTEGER},
+      month = #{record.month,jdbcType=INTEGER},
+      parentId = #{record.parentid,jdbcType=INTEGER},
+      bz = #{record.bz,jdbcType=VARCHAR},
+      userid = #{record.userid,jdbcType=NUMERIC},
+      agentzh = #{record.agentzh,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jcl.pojo.Bzjmb">
+    update bzjmb
+    <set>
+      <if test="sc != null">
+        sc = #{sc,jdbcType=INTEGER},
+      </if>
+      <if test="bzjdm != null">
+        bzjdm = #{bzjdm,jdbcType=VARCHAR},
+      </if>
+      <if test="bzjname != null">
+        bzjname = #{bzjname,jdbcType=VARCHAR},
+      </if>
+      <if test="bbbz != null">
+        bbbz = #{bbbz,jdbcType=NUMERIC},
+      </if>
+      <if test="tjdtbzj1 != null">
+        tjdtbzj1 = #{tjdtbzj1,jdbcType=NUMERIC},
+      </if>
+      <if test="tjdtbzj2 != null">
+        tjdtbzj2 = #{tjdtbzj2,jdbcType=NUMERIC},
+      </if>
+      <if test="tjktbzj1 != null">
+        tjktbzj1 = #{tjktbzj1,jdbcType=NUMERIC},
+      </if>
+      <if test="tjktbzj2 != null">
+        tjktbzj2 = #{tjktbzj2,jdbcType=NUMERIC},
+      </if>
+      <if test="tldtbzj1 != null">
+        tldtbzj1 = #{tldtbzj1,jdbcType=NUMERIC},
+      </if>
+      <if test="tldtbzj2 != null">
+        tldtbzj2 = #{tldtbzj2,jdbcType=NUMERIC},
+      </if>
+      <if test="tlktbzj1 != null">
+        tlktbzj1 = #{tlktbzj1,jdbcType=NUMERIC},
+      </if>
+      <if test="tlktbzj2 != null">
+        tlktbzj2 = #{tlktbzj2,jdbcType=NUMERIC},
+      </if>
+      <if test="sqfs != null">
+        sqfs = #{sqfs,jdbcType=INTEGER},
+      </if>
+      <if test="month != null">
+        month = #{month,jdbcType=INTEGER},
+      </if>
+      <if test="parentid != null">
+        parentId = #{parentid,jdbcType=INTEGER},
+      </if>
+      <if test="bz != null">
+        bz = #{bz,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null">
+        userid = #{userid,jdbcType=NUMERIC},
+      </if>
+      <if test="agentzh != null">
+        agentzh = #{agentzh,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jcl.pojo.Bzjmb">
+    update bzjmb
+    set sc = #{sc,jdbcType=INTEGER},
+      bzjdm = #{bzjdm,jdbcType=VARCHAR},
+      bzjname = #{bzjname,jdbcType=VARCHAR},
+      bbbz = #{bbbz,jdbcType=NUMERIC},
+      tjdtbzj1 = #{tjdtbzj1,jdbcType=NUMERIC},
+      tjdtbzj2 = #{tjdtbzj2,jdbcType=NUMERIC},
+      tjktbzj1 = #{tjktbzj1,jdbcType=NUMERIC},
+      tjktbzj2 = #{tjktbzj2,jdbcType=NUMERIC},
+      tldtbzj1 = #{tldtbzj1,jdbcType=NUMERIC},
+      tldtbzj2 = #{tldtbzj2,jdbcType=NUMERIC},
+      tlktbzj1 = #{tlktbzj1,jdbcType=NUMERIC},
+      tlktbzj2 = #{tlktbzj2,jdbcType=NUMERIC},
+      sqfs = #{sqfs,jdbcType=INTEGER},
+      month = #{month,jdbcType=INTEGER},
+      parentId = #{parentid,jdbcType=INTEGER},
+      bz = #{bz,jdbcType=VARCHAR},
+      userid = #{userid,jdbcType=NUMERIC},
+      agentzh = #{agentzh,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="selectAll" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM bzjmb 
+		ORDER BY id desc
+  </select>
+  <select id="isExist" resultMap="BaseResultMap" >
+	select * from bzjmb 
+	<where>
+		1 = 1
+		<if test="subzhName != null"> AND bzjdm = #{subzhName} </if>
+		<if test="id != null"> AND id != #{id} </if>
+		<if test="parentId != null"> AND parentId = #{parentId} </if>
+	</where>
+  </select>
+  
+</mapper>

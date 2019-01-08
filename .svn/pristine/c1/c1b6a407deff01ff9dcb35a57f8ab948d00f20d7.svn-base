@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcl.tradedao.HisTradeMapper" >
+  <resultMap id="BaseResultMap" type="com.jcl.pojo.DealCj" >
+    
+    <result column="mainzh" property="mainzh" jdbcType="VARCHAR" />
+    <result column="trade_id" property="orderNo" jdbcType="VARCHAR" />
+    <result column="order_id" property="entrustNo" jdbcType="VARCHAR" />
+    <result column="user_id" property="subzh" jdbcType="VARCHAR" />
+    <result column="mark" property="exchangeType" jdbcType="INTEGER" /><!-- ？ -->
+    <result column="code" property="stockCode" jdbcType="CHAR" />
+    <result column="name" property="stockName" jdbcType="NVARCHAR" />
+    <result column="trade_price" property="businessPrice" jdbcType="DOUBLE" />
+    <result column="trade_vol" property="businessVol" jdbcType="DOUBLE" />
+    <result column="order_type" property="ordertype" jdbcType="INTEGER" /><!-- ？ -->
+    <result column="trade_time" property="businessTime" jdbcType="INTEGER" />
+    <result column="occur_balance" property="occurBalance" jdbcType="NUMERIC" />
+    <result column="fee" property="fee" jdbcType="DOUBLE" />
+    <result column="bs_type" property="entrustBs" jdbcType="INTEGER" /><!-- ？ -->
+    <result column="trade_date" property="tradeDate" jdbcType="DATE" />
+    <result column="order_direction" property="directionType" jdbcType="INTEGER" />
+    <!-- <result column="close_id" property="closeId" jdbcType="VARCHAR" />-->
+    <result column="hedge_type" property="hedgeType" jdbcType="INTEGER" /> 
+  </resultMap>
+	
+  <sql id="Base_Column_List" >
+    id, mainzh, trade_id, order_id, user_id, mark, code, name, trade_price, trade_vol, 
+    order_type, trade_time, occur_balance, fee, bs_type, trade_date, order_direction, 
+    close_id, hedge_type
+  </sql>
+ 
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from histrader
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="getDealCjList" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from histrader
+    <where>
+    
+    	<if test="tradedate!=null">
+    	trade_date=#{tradedate,jdbcType=VARCHAR}
+    	or (trade_date=#{ystraday,jdbcType=VARCHAR} and trade_time <![CDATA[ > ]]> 210000)
+    	</if>
+    </where>
+  </select>
+  
+
+  
+</mapper>

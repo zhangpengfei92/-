@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jcl.dao.FeeschemeMenuMapper">
+  <resultMap id="BaseResultMap" type="com.jcl.pojo.FeeschemeMenu">
+    <id column="lsh" jdbcType="INTEGER" property="lsh" />
+    <result column="schemeName" jdbcType="VARCHAR" property="schemename" />
+    <result column="agentzh" jdbcType="VARCHAR" property="agentzh" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    lsh, schemeName, agentzh
+  </sql>
+  <select id="selectByExample" parameterType="com.jcl.pojo.FeeschemeMenuExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from feescheme_menu
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from feescheme_menu
+    where lsh = #{lsh,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from feescheme_menu
+    where lsh = #{lsh,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jcl.pojo.FeeschemeMenuExample">
+    delete from feescheme_menu
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jcl.pojo.FeeschemeMenu">
+    insert into feescheme_menu (lsh, schemeName, agentzh
+      )
+    values (#{lsh,jdbcType=INTEGER}, #{schemename,jdbcType=VARCHAR}, #{agentzh,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jcl.pojo.FeeschemeMenu" useGeneratedKeys="true" keyProperty="lsh">
+    insert into feescheme_menu
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="lsh != null">
+        lsh,
+      </if>
+      <if test="schemename != null">
+        schemeName,
+      </if>
+      <if test="agentzh != null">
+        agentzh,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="lsh != null">
+        #{lsh,jdbcType=INTEGER},
+      </if>
+      <if test="schemename != null">
+        #{schemename,jdbcType=VARCHAR},
+      </if>
+      <if test="agentzh != null">
+        #{agentzh,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jcl.pojo.FeeschemeMenuExample" resultType="java.lang.Long">
+    select count(*) from feescheme_menu
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update feescheme_menu
+    <set>
+      <if test="record.lsh != null">
+        lsh = #{record.lsh,jdbcType=INTEGER},
+      </if>
+      <if test="record.schemename != null">
+        schemeName = #{record.schemename,jdbcType=VARCHAR},
+      </if>
+      <if test="record.agentzh != null">
+        agentzh = #{record.agentzh,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update feescheme_menu
+    set lsh = #{record.lsh,jdbcType=INTEGER},
+      schemeName = #{record.schemename,jdbcType=VARCHAR},
+      agentzh = #{record.agentzh,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jcl.pojo.FeeschemeMenu">
+    update feescheme_menu
+    <set>
+      <if test="schemename != null">
+        schemeName = #{schemename,jdbcType=VARCHAR},
+      </if>
+      <if test="agentzh != null">
+        agentzh = #{agentzh,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where lsh = #{lsh,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jcl.pojo.FeeschemeMenu">
+    update feescheme_menu
+    set schemeName = #{schemename,jdbcType=VARCHAR},
+      agentzh = #{agentzh,jdbcType=VARCHAR}
+    where lsh = #{lsh,jdbcType=INTEGER}
+  </update>
+  
+  <select id="selectAll" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM feescheme_menu 
+		ORDER BY lsh desc
+  </select>
+  <select id="isExist" resultMap="BaseResultMap" >
+	select * from feescheme_menu 
+	<where>
+		1 = 1
+		<if test="subzhName != null"> AND schemeName = #{subzhName} </if>
+		<if test="id != null"> AND lsh != #{id} </if>
+	</where>
+  </select>
+  
+</mapper>

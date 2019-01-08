@@ -1,0 +1,119 @@
+package com.jcl.util.mapay;
+
+
+
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
+
+import com.alibaba.fastjson.JSONObject;
+
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
+public class Demo {
+	private static final String CALLBACK_URL = "http://47.104.154.96:8081/";
+	private static final String SUCCESS_URL = "http://47.104.154.96:8081/";
+	private static final String ERROT_URL = "http://47.104.154.96:8081/";
+	private static final String KEY = "369802CB1674A1";
+	private static OkHttpClient client = new OkHttpClient();
+
+	public static void main(String[] args) {
+		String amount="1";
+		String amount2 = new BigDecimal(amount).setScale(2).toString();
+		System.out.println(amount2);
+		HashMap<String, String> params = new HashMap<String, String>();
+		params.put("account_id", "10377");// �̻�ID
+		params.put("content_type", "json");// ��ҳ����
+		params.put("thoroughfare", "alipay_auto");// ֧��ͨ��
+		params.put("out_trade_no", "201806261212444");// ������Ϣ
+		params.put("robin", "2");// ��ѵ״̬ //2����1�ر�
+		params.put("amount", "0.01");// ֧�����
+		params.put("callback_url", CALLBACK_URL);// �첽֪ͨurl
+		params.put("success_url", SUCCESS_URL);// ֧���ɹ�����ת��url
+		params.put("error_url", ERROT_URL);// ֧��ʧ�ܺ���ת��url
+		String sign = Demo.getSign("0.01", "201806261212444");
+		params.put("sign", sign);// ǩ���㷨
+		params.put("type", "2");// ֧������ //1Ϊ΢�ţ�2Ϊ֧����
+		params.put("keyId", "");// �豸KEY ��ѯ������д
+
+		String order = Demo.post("http://47.92.236.189:8081/gateway/index/checkpoint.do", params);
+		// ��ȡ���
+		System.out.println("result:" + order);
+
+		JSONObject object = JSONObject.parseObject(order);
+		JSONObject object2 = object.getJSONObject("data");
+		String order_id = object2.getString("order_id");
+
+		String result = Demo.get("http://47.104.154.96:8081//gateway/pay/service.do?content_type=json&id="+order_id);
+		System.out.println("result:" + result);
+	}
+
+	/**
+	 * ���sign
+	 * 
+	 * @param amount
+	 *            ���
+	 * @param orderNo
+	 *            ������Ϣ
+	 * @return
+	 */
+	public static String getSign(String amount, String orderNo) {
+		String data = amount + orderNo;
+
+		System.out.println("data:" + data);
+
+		String md5Crypt = MD5Utils.md5(data.getBytes());
+
+		System.out.println("md5Crypt:" + md5Crypt);
+
+		byte[] rc4_string = RC4.encry_RC4_byte(md5Crypt, KEY);
+
+		System.out.println("rc4_string:" + rc4_string);
+
+		String sign = MD5Utils.md5(rc4_string);
+
+		System.out.println("sign:" + sign);
+		return sign;
+	}
+
+	public static String post(String url, Map<String, String> params) {
+		FormBody.Builder builder = new FormBody.Builder();
+		for (String key : params.keySet()) {
+			builder.add(key, params.get(key).toString());
+		}
+
+		RequestBody formBody = builder.build();
+		Request request = new Request.Builder().url(url).post(formBody).build();
+		String result = null;
+		try {
+			Response response = client.newCall(request).execute();
+			int code = response.code();
+			result = response.body().string();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	public static String get(String url) {
+
+		Request request = new Request.Builder().url(url).build();
+		String json = null;
+		okhttp3.Response response = null;
+		try {
+
+			response = client.newCall(request).execute();
+			json = response.body().string();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return json;
+	}
+}

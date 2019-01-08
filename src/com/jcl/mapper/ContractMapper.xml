@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcl.dao.ContractMapper" >
+  <resultMap id="BaseResultMap" type="com.jcl.pojo.Contract" >
+    <id column="cid" property="cid" jdbcType="INTEGER" />
+    <result column="market" property="market" jdbcType="INTEGER" />
+    <result column="hycode" property="hycode" jdbcType="VARCHAR" />
+    <result column="hyname" property="hyname" jdbcType="VARCHAR" />
+    <result column="hynum" property="hynum" jdbcType="NUMERIC" />
+    <result column="minprice" property="minprice" jdbcType="NUMERIC" />
+    <result column="bz" property="bz" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    cid, market, hycode, hyname, hynum, minprice, bz
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jcl.pojo.ContractExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from contract
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from contract
+    where cid = #{cid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from contract
+    where cid = #{cid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jcl.pojo.ContractExample" >
+    delete from contract
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jcl.pojo.Contract" >
+    insert into contract (cid, market, hycode, 
+      hyname, hynum, minprice, 
+      bz)
+    values (#{cid,jdbcType=INTEGER}, #{market,jdbcType=INTEGER}, #{hycode,jdbcType=VARCHAR}, 
+      #{hyname,jdbcType=VARCHAR}, #{hynum,jdbcType=NUMERIC}, #{minprice,jdbcType=NUMERIC}, 
+      #{bz,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jcl.pojo.Contract" >
+    insert into contract
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="cid != null" >
+        cid,
+      </if>
+      <if test="market != null" >
+        market,
+      </if>
+      <if test="hycode != null" >
+        hycode,
+      </if>
+      <if test="hyname != null" >
+        hyname,
+      </if>
+      <if test="hynum != null" >
+        hynum,
+      </if>
+      <if test="minprice != null" >
+        minprice,
+      </if>
+      <if test="bz != null" >
+        bz,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="cid != null" >
+        #{cid,jdbcType=INTEGER},
+      </if>
+      <if test="market != null" >
+        #{market,jdbcType=INTEGER},
+      </if>
+      <if test="hycode != null" >
+        #{hycode,jdbcType=VARCHAR},
+      </if>
+      <if test="hyname != null" >
+        #{hyname,jdbcType=VARCHAR},
+      </if>
+      <if test="hynum != null" >
+        #{hynum,jdbcType=NUMERIC},
+      </if>
+      <if test="minprice != null" >
+        #{minprice,jdbcType=NUMERIC},
+      </if>
+      <if test="bz != null" >
+        #{bz,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jcl.pojo.ContractExample" resultType="java.lang.Integer" >
+    select count(*) from contract
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update contract
+    <set >
+      <if test="record.cid != null" >
+        cid = #{record.cid,jdbcType=INTEGER},
+      </if>
+      <if test="record.market != null" >
+        market = #{record.market,jdbcType=INTEGER},
+      </if>
+      <if test="record.hycode != null" >
+        hycode = #{record.hycode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hyname != null" >
+        hyname = #{record.hyname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hynum != null" >
+        hynum = #{record.hynum,jdbcType=NUMERIC},
+      </if>
+      <if test="record.minprice != null" >
+        minprice = #{record.minprice,jdbcType=NUMERIC},
+      </if>
+      <if test="record.bz != null" >
+        bz = #{record.bz,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update contract
+    set cid = #{record.cid,jdbcType=INTEGER},
+      market = #{record.market,jdbcType=INTEGER},
+      hycode = #{record.hycode,jdbcType=VARCHAR},
+      hyname = #{record.hyname,jdbcType=VARCHAR},
+      hynum = #{record.hynum,jdbcType=NUMERIC},
+      minprice = #{record.minprice,jdbcType=NUMERIC},
+      bz = #{record.bz,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jcl.pojo.Contract" >
+    update contract
+    <set >
+      <if test="market != null" >
+        market = #{market,jdbcType=INTEGER},
+      </if>
+      <if test="hycode != null" >
+        hycode = #{hycode,jdbcType=VARCHAR},
+      </if>
+      <if test="hyname != null" >
+        hyname = #{hyname,jdbcType=VARCHAR},
+      </if>
+      <if test="hynum != null" >
+        hynum = #{hynum,jdbcType=NUMERIC},
+      </if>
+      <if test="minprice != null" >
+        minprice = #{minprice,jdbcType=NUMERIC},
+      </if>
+      <if test="bz != null" >
+        bz = #{bz,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where cid = #{cid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jcl.pojo.Contract" >
+    update contract
+    set market = #{market,jdbcType=INTEGER},
+      hycode = #{hycode,jdbcType=VARCHAR},
+      hyname = #{hyname,jdbcType=VARCHAR},
+      hynum = #{hynum,jdbcType=NUMERIC},
+      minprice = #{minprice,jdbcType=NUMERIC},
+      bz = #{bz,jdbcType=VARCHAR}
+    where cid = #{cid,jdbcType=INTEGER}
+  </update>
+</mapper>

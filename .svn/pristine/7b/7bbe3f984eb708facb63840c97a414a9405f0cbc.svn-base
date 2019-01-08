@@ -1,0 +1,447 @@
+package com.jcl.controller;
+
+import java.math.BigDecimal;
+import java.net.URLEncoder;
+import java.text.DecimalFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.codec.binary.Base64;
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.jcl.pojo.AgentzhfundLog;
+import com.jcl.pojo.Subzh;
+import com.jcl.service.AgentzhfundLogService;
+import com.jcl.service.SubzhService;
+import com.jcl.util.DeployProperties;
+import com.jcl.util.FomaAmount;
+import com.sandepay.agentPay.DemoBaseAgentPay;
+import com.sandgatePay.gateway.demo.DemoBase;
+import com.sandgatePay.gateway.demo.OrderCreateDemo;
+import com.sandgatePay.gateway.demo.OrderCreateDemo.PayMode;
+import cn.com.sandpay.cashier.sdk.util.CertUtil;
+import cn.com.sandpay.cashier.sdk.util.CryptoUtil;
+
+@Controller
+@RequestMapping("/apppay/PhonePay")
+public class PhonePayController {
+	private static Logger log = Logger.getLogger(PhonePayController.class);
+    @Autowired
+    private SubzhService subzhService;
+    private static final Object synObj = "126";
+    
+    @Autowired
+	private AgentzhfundLogService agentzhfundLogService;
+    /*获取项目工程名*/
+    private static final String ProjectName = DeployProperties.getInstance().getPublicProjectePath();
+    //回调
+    private String notifyUrl="/apppay/PhonePay/shandePayCallback";
+    private String frontUrl="/apppay/PhonePay/completePay";
+    
+    @RequestMapping("/PhonePayIndex/{id}")
+    public String PhonePayIndex(@PathVariable("id") String id, Model model,String subzh) {
+    	Subzh bySubzh = subzhService.selectBySubzh(subzh);
+    	if(bySubzh !=null){
+    		//手机号注册的用户
+			String fixSubzh="";
+			if(subzh.length()==11){
+				fixSubzh=subzh.substring(1);
+			}else{
+				fixSubzh=subzh;
+			}
+			model.addAttribute("fixSubzh", fixSubzh);
+			model.addAttribute("subzh", subzh);
+			if("2".equals(id)){
+				return "phonePay/shandecheckpay";
+			}else if("1".equals(id)){
+				return "phonePay/shandecheckpayWeb";
+			}
+    	}
+    	return null;
+    }
+    
+    /*支付完成页面*/
+    @RequestMapping("/completePay")
+    public String completePay() {
+        return "phonePay/sureGold";
+    }
+    
+    
+    /*H5提现申请页面*/
+    @RequestMapping("/withdrawIndex")
+    public String withdrawIndex(String subzh,Model model) {
+    	Subzh subzhEntity=null;
+    	try {
+            /*获取当前用户金币余额*/
+            subzhEntity = subzhService.selectByPrimaryKey(subzh);
+            if (subzhEntity != null) {
+                if (subzhEntity.getFundbalance() == null || subzhEntity.getFundbalance().doubleValue() <0) {
+                    log.info("账户资产不足，非法提交");
+                    return "phonePay/nofund";
+                }
+            } else {
+                return "phonePay/nogold";
+            }
+        } catch (Exception e) {
+            log.error("根据子账户查询账户信息异常：subzh->" + subzh + e.getMessage());
+        }
+    	model.addAttribute("subzh", subzh);
+    	model.addAttribute("money", subzhEntity.getFundbalance());
+        return "phonePay/withdrawaotu";
+    }
+    
+    
+    //提现请求入库页面
+    @RequestMapping("/withdrawend")
+    public String withdrawend(String subzh,String username,String bankCardNo,String cardno,String zhBalance) {
+        //共享线下支付
+        boolean flag = false;
+        try {
+          Subzh  subzhEntity = subzhService.selectByPrimaryKey(subzh);
+            if (subzhEntity != null && subzhEntity.getFundbalance() != null && subzhEntity.getFundbalance().doubleValue() >= Double.parseDouble(zhBalance)) {
+            	AgentzhfundLog fundLog= new AgentzhfundLog();
+                fundLog.setSubzh(subzh);
+                fundLog.setName(username);//xjb写
+                fundLog.setType("3");//提现
+                fundLog.setFund(new BigDecimal(zhBalance));   
+                fundLog.setDescription(bankCardNo);
+                fundLog.setOrderno(cardno);
+                fundLog.setStatus(4);//*状态   2:预提现  3：提现成功   4:提现申请  5：审核通过  6：拒绝*//*
+                fundLog.setModifytime(Calendar.getInstance().getTime());
+               // log.info("提现申请状态：" + agentzhfundLogService.saveAgentzhfundLog(fundLog));
+                try {
+                    synchronized (synObj) {
+                        //subzhEntity.setFundBalance(subzhEntity.getFundbalance().subtract(new BigDecimal(zhBalance)));
+                        //log.info("先扣除账户资产状态：" + subzhService.saveSubzh(subzhEntity));
+                        flag = true;
+                    }
+                } catch (Exception es) {
+                    log.error("先扣除账户资产信息异常：" + es.getMessage());
+                }
+            }
+            //renderText(String.valueOf(flag));
+        } catch (Exception e) {
+            log.error("根据子账户查询账户信息异常：subzh->" + subzh + e.getMessage());
+        }
+        return "phonePay/sureGold";
+    }
+    
+    
+    /**
+     * 共享在线,杉德代付                               
+     * @return
+     */
+    @RequestMapping("/AgentPay")
+    public String AgentPay(Integer qlId) {
+    	String flage="提现失败";
+    	try {
+    		synchronized (synObj) {
+    		AgentzhfundLog agentzhfundLog = agentzhfundLogService.selectByPrimaryKey(qlId);
+    		//status *状态   2:预提现  3：提现成功   4:提现申请  5：审核通过  6：拒绝 7:失败 8：体现中*//*
+    		if(agentzhfundLog !=null && "3".equals(agentzhfundLog.getType()) && agentzhfundLog.getStatus()==4){
+    			//代付
+    		JSONObject request = new JSONObject();
+    		request.put("version", DemoBaseAgentPay.version);								//版本号      
+    		request.put("productId", DemoBaseAgentPay.PRODUCTID_AGENTPAY_TOC);              //产品ID     
+    		request.put("tranTime", DemoBaseAgentPay.getCurrentTime());                     //交易时间     
+    		request.put("orderCode", agentzhfundLog.getOrderno());                  //订单号      
+    		request.put("timeOut", DemoBaseAgentPay.getNextDayTime());                      //订单超时时间  
+    		DecimalFormat df = new DecimalFormat("#");
+    		BigDecimal subtract = agentzhfundLog.getFund().multiply(new BigDecimal(100));
+    		request.put("tranAmt", FomaAmount.getFomaAmount(FomaAmount.getFomaAmount(df.format(subtract))));                                 //金额       
+    		request.put("currencyCode", DemoBaseAgentPay.CURRENCY_CODE);                    //币种       
+    		request.put("accAttr", "0");                                            //账户属性     0-对私   1-对公
+    		request.put("accType", "4");                                            //账号类型      3-公司账户  4-银行卡
+    		request.put("accNo", "6225887856824251");                            //收款人账户号   
+    		request.put("accName", "郭鹤超");                                       	//收款人账户名   
+    		request.put("provNo", "");                                              //收款人开户省份编码
+    		request.put("cityNo", "");                                              //收款人开会城市编码
+    		request.put("bankName", "");                                            //收款账户开户行名称
+    		request.put("bankType", "123456123456");                                //收款人账户联行号 
+    		request.put("remark", "代付");                                          	//摘要       
+    		request.put("channelType", "");                                         //渠道类型   
+    		request.put("reqReserved", "");                                         //请求方保留域  
+    		request.put("extend", "");    
+    		String reqAddr="/agentpay";   //接口报文规范中获取
+    		JSONObject resp = DemoBaseAgentPay.requestServer(request, reqAddr, DemoBaseAgentPay.AGENT_PAY, "16468578", null);
+    		log.info("订单号"+agentzhfundLog.getOrderno()+"体现响应报文"+resp);
+    		if(resp!=null) {
+    			//成功
+    			if("0000".equals(resp.getString("respCode"))){
+    				agentzhfundLog.setStatus(3);
+    				
+    			}else if("00001".equals(resp.getString("respCode"))||"00002".equals(resp.getString("respCode"))){
+    				//00001 银行处理中 00002 银行返回超时  重新查询订单状态 
+    				agentzhfundLog.setStatus(2);
+    			}else if("0003".equals(resp.getString("respCode"))||"0004".equals(resp.getString("respCode"))){
+    				// 处理异常,稍后再试
+    			}else {
+					//处理失败,退还钱
+    				agentzhfundLog.setStatus(7);
+				Subzh subzhEntity = subzhService.selectByPrimaryKey(agentzhfundLog.getSubzh());
+                 BigDecimal balance = subzhEntity.getFundbalance().add(agentzhfundLog.getFund());//失败，则将提现的钱返还给账户
+                 subzhEntity.setFundbalance(balance);
+                 log.info("体现失败账户金额增加：" + subzhService.updateByPrimaryKey(subzhEntity));
+				}
+    			flage=resp.getString("respDesc");
+    			agentzhfundLog.setDescription("提现相应报文:"+resp.toString());
+    			agentzhfundLog.setModifytime(new Date());
+			    //log.info("更改提现流水表状态：" + agentzhfundLogService.saveAgentzhfundLog(agentzhfundLog));
+    		}else {
+    			log.error("服务器请求异常！！！");	
+    		}	
+    		}
+		 }
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	return flage;
+    }
+    
+    
+    /**统一下单接口-银行网关支付
+     * 网关支付
+     */
+    @RequestMapping("/orderPay")
+    public String orderPay(HttpServletRequest req,Model model) {
+    	Map<String, String[]> params = req.getParameterMap();
+		JSONObject reqObj = new JSONObject();
+		Map<String,String> map = new HashMap<String,String>();
+		for (String key : params.keySet()) {
+			String[] values = params.get(key);
+			if (values.length > 0) {
+				reqObj.put(key, values[0]);
+				map.put(key, values[0]);
+			}
+		}
+		OrderCreateDemo demo=new OrderCreateDemo();
+		String reqAddr="/order/pay";   //接口报文规范中获取
+		//设置报文头
+		demo.setHeader(PayMode.bank_pc);
+		demo.body.put("orderCode", map.get("orderCode"));
+		//商户订单号
+		String totalAmount = map.get("totalAmount");
+        DecimalFormat df = new DecimalFormat("#");
+        BigDecimal bigDecimal = new BigDecimal(totalAmount).multiply(new BigDecimal(100));
+        String format = df.format(bigDecimal);
+		demo.body.put("totalAmount", FomaAmount.getFomaAmount(format));                                  //订单金额
+		demo.body.put("subject", "共享在线在线支付商品");                                             //订单标题
+		demo.body.put("body", "用户");                                         //订单描述
+		if(map.get("txnTimeOut")==null || map.get("txnTimeOut")==""){
+			demo.body.put("txnTimeOut", DemoBase.getNextDayTime());                          //订单超时时间
+		}else {
+			demo.body.put("txnTimeOut",map.get("txnTimeOut")); 			                     //订单超时时间
+		}
+		demo.body.put("payMode", "bank_pc");                                           //支付模式
+		JSONObject payExtra=new JSONObject();
+		payExtra.put("payType", "1");	
+		payExtra.put("bankCode", "01050000");	
+		demo.body.put("payExtra", payExtra);    							//支付扩展域
+		demo.body.put("clientIp", "127.0.0.1");                                    //客户端IP
+		demo.body.put("notifyUrl", ProjectName+notifyUrl);                         //异步通知地址
+		demo.body.put("frontUrl", ProjectName+frontUrl);                     //前台通知地址
+		demo.body.put("storeId", "");                               //商户门店编号
+		demo.body.put("terminalId", "");                             //商户终端编号
+		demo.body.put("operatorId", "");                           //操作员编号
+		demo.body.put("clearCycle", "");                  //清算模式
+		demo.body.put("royaltyInfo", "");                  //分账信息
+		demo.body.put("riskRateInfo", "");              //风控信息域
+		demo.body.put("bizExtendParams", "");           //业务扩展参数
+		demo.body.put("merchExtendParams", "");         //商户扩展参数
+		demo.body.put("extend", "");                  //扩展域
+		JSONObject orderCreateResp = DemoBase.requestServer(demo.header, demo.body, reqAddr);
+		if(orderCreateResp.getJSONObject("head").getString("respCode").equals("000000")) {
+			//保存充值信息
+			try {
+			//判断订单是否重复
+			/*AgentzhfundLog findOrderNo = agentzhfundLogService.findOrderNo(map.get("orderCode"));
+			if(findOrderNo !=null){
+				logger.info("订单重复："+map.get("orderCode"));
+				return ;
+			}
+        	AgentzhfundLog fundLog= new AgentzhfundLog();
+        	fundLog.setSubzh(map.get("orderCode").split("_")[0]);
+            fundLog.setName("共享在线在线充值");
+            fundLog.setType("2");//充值
+            fundLog.setBz((short) 1);
+            fundLog.setFund(Double.valueOf(map.get("totalAmount")));  //金额
+            fundLog.setDescription("在线充值报文:" + demo.body+demo.header);  
+            fundLog.setStatus(0);状态   0:预支付  1：支付成功
+            fundLog.setOrderNo(map.get("orderCode")); //订单号
+            fundLog.setPayTime(Calendar.getInstance().getTime());
+            fundLog.setModifytime(Calendar.getInstance().getTime());//订单时间
+            boolean b = agentzhfundLogService.saveAgentzhfundLog(fundLog);
+            log.info(map.get("orderCode")+"订单号入金订单保存状态：" + b);*/
+			/*if(b){*/
+				String credential = orderCreateResp.getJSONObject("body").getString("credential");
+				log.info("生成的支付凭证为："+credential);
+				model.addAttribute("JWP_ATTR", credential);
+			/*}*/
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+        return "phonePay/shandesendpay";
+    }
+    
+    
+    /**
+     * 快捷支付
+     * @param req
+     * @return
+     */
+    @RequestMapping("/fastPay")
+    @ResponseBody
+    public String fastPay(HttpServletRequest req) {
+    	 Map<String, String[]> params = req.getParameterMap();
+         Map<String, String> map = new HashMap<String, String>();
+         for (String key : params.keySet()) {
+             String[] values = params.get(key);
+             if (values.length > 0) {
+                 map.put(key, values[0]);
+             }
+         }
+         // 组后台报文
+         JSONObject head = new JSONObject();
+         head.put("version", map.get("version"));
+         head.put("method", map.get("method"));
+         head.put("productId", map.get("productId"));
+         head.put("accessType", map.get("accessType"));
+         head.put("mid", map.get("mid"));
+         head.put("plMid", map.get("plMid"));
+         head.put("channelType", map.get("channelType"));
+         head.put("reqTime", map.get("reqTime"));
+
+         JSONObject body = new JSONObject();
+         body.put("userId", map.get("userId"));
+         body.put("clearCycle", map.get("clearCycle"));
+         body.put("currencyCode", map.get("currencyCode"));
+         body.put("frontUrl", ProjectName+frontUrl);
+         body.put("notifyUrl", ProjectName+notifyUrl);
+         body.put("orderCode", map.get("orderCode"));
+         body.put("orderTime", map.get("orderTime"));
+         String totalAmount = map.get("totalAmount");
+         DecimalFormat df = new DecimalFormat("#");
+         BigDecimal bigDecimal = new BigDecimal(totalAmount).multiply(new BigDecimal(100));
+         body.put("totalAmount", FomaAmount.getFomaAmount(df.format(bigDecimal)));
+         body.put("body", map.get("body"));
+         body.put("subject", map.get("subject"));
+         body.put("extend", map.get("extend"));
+
+         JSONObject data = new JSONObject();
+         data.put("head", head);
+         data.put("body", body);
+         try {
+         	//判断订单是否重复
+ 			/*AgentzhfundLog findOrderNo = agentzhfundLogService.findOrderNo(map.get("orderCode"));
+ 			if(findOrderNo !=null){
+ 				log.info("订单重复："+map.get("orderCode"));
+ 				return ;
+ 			}
+         	//保存充值信息
+         	AgentzhfundLog fundLog= new AgentzhfundLog();
+         	fundLog.setSubzh(map.get("orderCode").split("_")[0]);
+             fundLog.setName("共享在线在线充值");
+             fundLog.setType("2");//充值
+             fundLog.setBz((short) 1);
+             fundLog.setFund(Double.valueOf(map.get("totalAmount")));  //金额
+             fundLog.setDescription("在线充值报文:" + body);  
+             fundLog.setStatus(0);/*状态   0:预支付  1：支付成功
+             fundLog.setOrderNo(map.get("orderCode")); //订单号
+             fundLog.setPayTime(Calendar.getInstance().getTime());
+             fundLog.setModifytime(Calendar.getInstance().getTime());//订单时间
+             log.info("类-------"+fundLog.toString());
+             boolean b = agentzhfundLogService.saveAgentzhfundLog(fundLog);
+             log.info(map.get("orderCode")+"订单号入金订单保存状态：" + b);*/
+             // 签名
+             String reqSign = URLEncoder.encode(new String(
+                     Base64.encodeBase64(CryptoUtil.digitalSign(JSON.toJSONString(data).getBytes("UTF-8"),
+                             CertUtil.getPrivateKey(), "SHA1WithRSA"))), "UTF-8");
+             JSONObject r = new JSONObject();
+             /*if(b){*/
+             	r.put("data", JSON.toJSONString(data));
+             	r.put("sign", reqSign);// 签名串
+             	return r.toString();
+             /*}*/
+         } catch (Exception e) {
+             e.printStackTrace();
+         }
+        return null;
+    }
+    
+    /**
+     * 共享在线,杉德支付回调处理
+     * @return
+     */
+    @RequestMapping("/shandePayCallback")
+    public void shandePayCallback(HttpServletRequest req) {
+    	String data=req.getParameter("data");
+		String sign=req.getParameter("sign");
+		log.info("接收到后台通知数据："+data);
+		log.info("接收到后台通知签名："+sign);
+		// 验证签名
+			boolean valid;
+			try {
+				valid = CryptoUtil.verifyDigitalSign(data.getBytes("utf-8"), Base64.decodeBase64(sign),
+						CertUtil.getPublicKey(), "SHA1WithRSA");
+				if (!valid) {
+					log.error("verify sign fail.");
+					log.error("签名字符串(data)为：" + data);
+					log.error("签名值(sign)为：" + sign);
+				} else {
+					log.info("verify sign success");
+					JSONObject dataJson = JSONObject.parseObject(data);
+					if (dataJson != null) {
+						/*if (dataJson.getJSONObject("head").getString("respCode").equals("000000")) {
+							String orderNo=dataJson.getJSONObject("body").getString("orderCode");
+							AgentzhfundLog findOrderNo = agentzhfundLogService.findOrderNo(orderNo);
+							if(findOrderNo !=null && "2".equals(findOrderNo.getType()) && findOrderNo.getStatus()==0){
+								//给账户添加充值金额
+								subzhEntity = subzhService.getSubzhBySubid(findOrderNo.getSubzh());
+								synchronized (synObj) {
+									if (subzhEntity.getFundBalance() != null)
+										subzhEntity.setFundBalance(Double.valueOf(subzhEntity.getFundBalance().doubleValue() + findOrderNo.getFund().doubleValue()));
+									else {
+										subzhEntity.setFundBalance(findOrderNo.getFund());
+									}
+									log.info("保存资产状态：" + subzhService.saveSubzh(subzhEntity));
+									findOrderNo.setStatus(1);
+									findOrderNo.setModifytime(Calendar.getInstance().getTime());//订单时间
+									log.info(orderNo+"订单号修改订单状态：" + agentzhfundLogService.saveAgentzhfundLog(findOrderNo));
+									FundPzlog pzlog = new FundPzlog();
+			                        pzlog.setCreatetime(new Date());
+			                        pzlog.setSubzh(findOrderNo.getSubzh());
+			                        pzlog.setFundBalance(findOrderNo.getFund());
+			                        pzlog.setFundtype(FundPzlog.FUNDTYPE_SIX);  //充值
+			                        pzlog.setSetdesc(orderNo);
+			                        log.info(orderNo+"订单号增加资金充值流水：" + fundPzlogService.saveFundPzlog(pzlog));
+								}
+							}else{
+								log.info(orderNo+"未查到订单，或者订单已处理");
+							}
+						}*/
+					} else {
+						log.error("通知数据异常！！！");
+					}
+				}
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+    }
+    
+}

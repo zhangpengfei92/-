@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcl.tradedao.HisOrderMapper" >
+  <resultMap id="BaseResultMap" type="com.jcl.pojo.EntrustOrder" >
+    
+    <result column="mainzh" property="mainzh" jdbcType="VARCHAR" />
+    <result column="order_id" property="eno" jdbcType="VARCHAR" />
+    <result column="user_id" property="subzh" jdbcType="VARCHAR" />
+    <result column="mark" property="exchangeType" jdbcType="INTEGER" /><!-- ？ -->
+    <result column="code" property="stockCode" jdbcType="NCHAR" />
+    <result column="name" property="stockName" jdbcType="VARCHAR" />
+    <result column="price" property="entrustPrice" jdbcType="DOUBLE" />
+    <result column="vol" property="entrustVol" jdbcType="INTEGER" />
+    <result column="order_date" property="entrustDate" jdbcType="INTEGER" />
+    <result column="order_time" property="entrustTime" jdbcType="INTEGER" />
+    <result column="bs_type" property="entrustBs" jdbcType="TINYINT" /><!-- 买卖方向 -->
+    <result column="ordertype" property="ordertype" jdbcType="INTEGER" /><!-- 限价，市价， -->
+    <result column="order_status" property="entrustStatus" jdbcType="TINYINT" />
+    <result column="trade_price" property="businessPrice" jdbcType="DOUBLE" />
+    <result column="trade_vol" property="businessVol" jdbcType="INTEGER" />
+    <result column="trade_time" property="businessTime" jdbcType="INTEGER" />
+    <result column="trade_date" property="businessDate" jdbcType="INTEGER" />
+    <result column="order_direction" property="directionType" jdbcType="INTEGER" /><!-- 开平 -->
+    <!-- <result column="order_way" property="orderWay" jdbcType="INTEGER" />
+    <result column="hedge_type" property="hedgeType" jdbcType="INTEGER" /> -->
+  </resultMap>
+	
+  <sql id="Base_Column_List" >
+    id, mainzh, order_id, user_id, mark, code, name, price, vol, order_date, order_time, 
+    bs_type, ordertype, order_status, trade_price, trade_vol, trade_time, trade_date, 
+    order_direction, order_way, hedge_type
+  </sql>
+ 
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from hisorder
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <!-- 从c++交易库中查询历史委托记录，定时任务只查当天的 -->
+  <select id="getEntrustRecordList" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from hisorder
+    <where>
+    	order_date=#{intday,jdbcType=INTEGER}
+    	or (order_date=#{preday,jdbcType=INTEGER} and order_time <![CDATA[ > ]]> 210000)
+    </where>
+  
+  </select>
+  
+
+
+</mapper>

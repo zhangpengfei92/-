@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jcl.dao.CodefeesetMenuMapper">
+  <resultMap id="BaseResultMap" type="com.jcl.pojo.CodefeesetMenu">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="modifyTime" jdbcType="TIMESTAMP" property="modifytime" />
+    <result column="userid" jdbcType="NUMERIC" property="userid" />
+    <result column="agentzh" jdbcType="VARCHAR" property="agentzh" />
+    <result column="isdefault" jdbcType="INTEGER" property="isdefault" />
+    <result column="percentage" jdbcType="NUMERIC" property="percentage" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, title, modifyTime, userid, agentzh, isdefault, percentage
+  </sql>
+  <select id="selectByExample" parameterType="com.jcl.pojo.CodefeesetMenuExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from codefeeset_menu
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from codefeeset_menu
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from codefeeset_menu
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jcl.pojo.CodefeesetMenuExample">
+    delete from codefeeset_menu
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jcl.pojo.CodefeesetMenu">
+    insert into codefeeset_menu (id, title, modifyTime, 
+      userid, agentzh, isdefault, percentage
+      )
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{modifytime,jdbcType=TIMESTAMP}, 
+      #{userid,jdbcType=NUMERIC}, #{agentzh,jdbcType=VARCHAR}, #{isdefault,jdbcType=INTEGER},
+      #{percentage,jdbcType=NUMERIC}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jcl.pojo.CodefeesetMenu" useGeneratedKeys="true" keyProperty="id">
+    insert into codefeeset_menu
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="modifytime != null">
+        modifyTime,
+      </if>
+      <if test="userid != null">
+        userid,
+      </if>
+      <if test="agentzh != null">
+        agentzh,
+      </if>
+      <if test="isdefault != null">
+        isdefault,
+      </if>
+      <if test="percentage != null">
+        percentage,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="modifytime != null">
+        #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=NUMERIC},
+      </if>
+      <if test="agentzh != null">
+        #{agentzh,jdbcType=VARCHAR},
+      </if>
+      <if test="isdefault != null">
+        #{isdefault,jdbcType=INTEGER},
+      </if>
+      <if test="percentage != null">
+        #{percentage,jdbcType=NUMERIC},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jcl.pojo.CodefeesetMenuExample" resultType="java.lang.Long">
+    select count(*) from codefeeset_menu
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update codefeeset_menu
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.title != null">
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifytime != null">
+        modifyTime = #{record.modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.userid != null">
+        userid = #{record.userid,jdbcType=NUMERIC},
+      </if>
+      <if test="record.agentzh != null">
+        agentzh = #{record.agentzh,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isdefault != null">
+        isdefault = #{record.isdefault,jdbcType=INTEGER},
+      </if>
+      <if test="record.percentage != null">
+        percentage = #{record.percentage,jdbcType=NUMERIC},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update codefeeset_menu
+    set id = #{record.id,jdbcType=INTEGER},
+      title = #{record.title,jdbcType=VARCHAR},
+      modifyTime = #{record.modifytime,jdbcType=TIMESTAMP},
+      userid = #{record.userid,jdbcType=NUMERIC},
+      agentzh = #{record.agentzh,jdbcType=VARCHAR},
+      isdefault = #{record.isdefault,jdbcType=INTEGER},
+      percentage = #{record.percentage,jdbcType=NUMERIC}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jcl.pojo.CodefeesetMenu">
+    update codefeeset_menu
+    <set>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="modifytime != null">
+        modifyTime = #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userid != null">
+        userid = #{userid,jdbcType=NUMERIC},
+      </if>
+      <if test="agentzh != null">
+        agentzh = #{agentzh,jdbcType=VARCHAR},
+      </if>
+      <if test="isdefault != null">
+        isdefault = #{isdefault,jdbcType=INTEGER},
+      </if>
+      <if test="percentage != null">
+        percentage = #{percentage,jdbcType=NUMERIC},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jcl.pojo.CodefeesetMenu">
+    update codefeeset_menu
+    set title = #{title,jdbcType=VARCHAR},
+      modifyTime = #{modifytime,jdbcType=TIMESTAMP},
+      userid = #{userid,jdbcType=NUMERIC},
+      agentzh = #{agentzh,jdbcType=VARCHAR},
+      isdefault = #{isdefault,jdbcType=INTEGER},
+       percentage = #{percentage,jdbcType=NUMERIC}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="selectAll" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM codefeeset_menu 
+		ORDER BY id desc
+  </select>
+  <select id="isExist" resultMap="BaseResultMap" >
+	select * from codefeeset_menu 
+	<where>
+		1 = 1
+		<if test="subzhName != null"> AND title = #{subzhName} </if>
+		<if test="id != null"> AND id != #{id} </if>
+	</where>
+  </select>
+  
+</mapper>

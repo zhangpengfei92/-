@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcl.tradedao.HolderMapper" >
+  <resultMap id="BaseResultMap" type="com.jcl.pojo.Holder" >
+    <result column="holder_date" property="holderDate" jdbcType="INTEGER" />
+    <result column="user_id" property="subzh" jdbcType="VARCHAR" />
+    <result column="mark" property="exchangeType" jdbcType="INTEGER" />
+    <result column="code" property="stockCode" jdbcType="CHAR" />
+    <result column="name" property="stockName" jdbcType="NVARCHAR" />
+    <result column="vol" property="currentVol" jdbcType="INTEGER" />
+    <result column="today_vol" property="todayVol" jdbcType="INTEGER" />
+    <result column="bs_type" property="entrustBs" jdbcType="INTEGER" />
+    <result column="cost_price" property="keepCostPrice" jdbcType="DOUBLE" />
+    <result column="profit" property="profit" jdbcType="DOUBLE" />
+   <result column="today_cost_price" property="todayCostPrice" jdbcType="DOUBLE" />
+  </resultMap>
+  
+	<!-- private Double incomeBalance;//累计盈亏，浮动盈亏
+	private Integer enableVol;//可卖量 -->
+  
+  <sql id="Base_Column_List" >
+    holder_date, user_id, mark, code, name, vol, today_vol, cost_price, today_cost_price,bs_type,profit
+  </sql>
+  
+  
+  <select id="getHoldList" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+  	select
+    <include refid="Base_Column_List" />
+    from holder
+    <where>
+    	<if test="intday!=null">
+    		holder_date=#{intday,jdbcType=INTEGER}
+    	</if>
+    </where>
+  </select>
+ 
+ 
+</mapper>

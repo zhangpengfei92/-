@@ -1,0 +1,54 @@
+@charset "utf-8";
+/* CSS Document */
+html {overflow-y:scroll;background:#fff;-webkit-text-size-adjust:none}
+html, body {overflow-x: hidden;width: 100%; height:100%; padding: 0; margin: 0;}
+body{font-family: "Microsoft YaHei"}
+body,h1,h2,h3,h4,ul,ol,dl,dd,p,input,form,textarea,pre,fieldset,section{ margin:0;font-size:100%;line-height:1;}
+ul,ol,form,textarea,fieldset,legend { padding:0}
+ul,ol { list-style:none}
+img { -ms-interpolation-mode:bicubic;height:auto}
+textarea { overflow-y:auto;resize:none}
+:focus { outline:0 none}
+fieldset,select,input,textarea,img { border:0}
+a{color:#333}
+a,a:hover { text-decoration:none;-webkit-appearance:none;appearance:none}
+.fix:after { content:".";height:0;visibility:hidden;display:block;clear:both}
+.fix { display:block}
+article,aside,details,figcaption,figure,footer,header,hgroup,nav,section,menu,div,main{ display:block}
+em,i { font-style:normal}
+input[type="search"],input[type="submit" ],input[type="reset"],input[type="button"],button { -webkit-appearance:none}
+body {font-size:100%;color:#333;}
+body,input,select{font-family:"helvetica neue","微软雅黑";}
+/*body { -moz-user-select:none; -webkit-user-select:none; -ms-user-select:none; -khtml-user-select:none; user-select:none}*/
+a,div,p,dl,h1,h2,h3,dt,dd,i,em,b,strong,section,header,article,footer,nav,ul,li,span,menu { -webkit-tap-highlight-color:transparent;-webkit-touch-callout:none; -webkit-user-select:none;}
+table{border-collapse: collapse;}
+tr td{ padding:0; margin:0;}
+/*--官网支付--*/
+.grey{ background:#f5f5f5;}
+.category{padding-bottom:6em;width: 100%;margin: 1rem auto 0;max-width: 600px;}
+
+.ls-header-title {font-size:22px;;font-weight: 700;border-bottom: 1px #F1F1F1 solid;line-height: 300%;padding-left: 4rem;}
+#container{ float:right; width:10%; line-height:3rem;}
+
+.paymon {overflow: hidden;padding-top: 2.0rem;width: 80%;margin: 0 auto;}
+.paymon .mtit{ font-size:18px;text-align: left; }
+.paymon .line{height: 3.0rem;}
+.paymon .rmb{float:left;font-size:32px;text-align: left; }
+.paymon input{float:left;/*border-bottom: 1px #ccc solid;*/padding-left: 1.0rem;width: 120px;line-height: 200%;}
+.paymon .bank{float:left;padding-top: 2rem;text-align: left;width: 80%}
+.paymon .bank .icontit2{text-align: left;}
+.Monbox{height:20rem;background: #fff;border-radius:8px;}
+.PMonbox{height:50rem;background: #fff;border-radius:8px;}
+.rebut {background: #3a74c5;color: #fff;text-align: center;border-radius: 4px;padding: 3.2% 0; border:none;width: 90%;font-size:24px;font-family: "Microsoft YaHei";display: block; cursor:pointer;margin: 6rem auto 0;}
+/*--提现--*/
+.yue .num{font-size: 18px;color:#3a74c5; font-weight:600;text-align: center;line-height: 3.0rem;padding-top:0.4rem;}
+.yue{background: #fff;height: 6rem;text-align: center;border-radius:8px;}
+.paybox2{width: 80%;margin: 2.0rem auto 0; }
+.paybox{background: #fff;height: 31rem;border-radius:8px;}
+.paybox2 .payicon p{font-size: 16px;line-height: 200%;}
+.paybox2 h3{font-size:24px;line-height: 3.7em; }
+.paylist .line2{height: 0.6rem;border-bottom: 1px solid #EDEDED;margin-bottom: 0.6rem;}
+.paymon2 p a.consu{padding:3.2% 0; background: #3a74c5;color: #fff;text-align: center;border-radius: 4px; border:none;width: 90%;font-size: 24px;font-family: "Microsoft YaHei";display: block;margin: 4rem auto 0; }
+.paylist .icontit2{font-size: 16px;}
+/*--无法提现--*/
+.paymon3 p a.consu{padding:3.2% 0; background: #3a74c5;color: #fff;text-align: center;border-radius: 4px; border:none;width: 90%;font-size: 24px;font-family: "Microsoft YaHei";display: block;margin: 3rem auto 0; }

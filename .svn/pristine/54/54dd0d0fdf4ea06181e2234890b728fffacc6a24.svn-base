@@ -1,0 +1,44 @@
+public.http.apache=http://test.sqqh.jclkj.cn:8008/img/
+#upload path
+public.file.path=D:/softweb/file
+
+#settle time
+#public.list.settletime=05\:00\:00
+#free version config
+public.freeversion.roleid=1
+public.freeversion.days=7
+
+#default password
+public.default.password=123456
+
+#unspay
+public.unspay.marketno=2120180316170728001
+public.unspay.password=12345678cqc
+public.unspay.quickpay=http://114.80.54.74:8082/quickpay-front/
+public.unspay.paywithdraw=http://pay.unspay.com:8081/delegate-pay-front/
+
+public.unspay.successserver=http\://101.132.105.35/ctpcms/agentzh/agentzh\!getUnspaySuccess.action
+public.unspay.callbackaddr=http\://101.132.105.35/ctpcms/clientshow/phonePay\!callback.action
+
+#code market
+#public.mscode.market=3,4,5,6,24
+#public.mscode.ctpmarket=24
+#public.mscode.url=http://hq.crude.jclkj.cn:8880/FreeHQWebServer/codelist
+#public.mscodem.url=http://hq.crude.jclkj.cn:8880/FreeHQWebServer/
+
+
+#code market
+public.mscode.market=15,16
+public.mscode.ctpmarket=15,16
+public.mscode.url=http://hq.gjqh.jclkj.cn:9001/FreeHQWebServer/codelist
+public.mscodem.url=http://hq.crude.jclkj.cn:8880/FreeHQWebServer/
+
+#ftl
+MOBAN_FILE_PATH_PC = C:/soft/apache-maven-3.5.3/ftp_home/pc
+MOBAN_FILE_PATH_MOBILE =C:/soft/apache-maven-3.5.3/ftp_home/mobile
+PUBLISH_FILE_PATH_PC =C:/soft/apache-maven-3.5.3/ftp_home/pc
+PUBLISH_FILE_PATH_MOBILE =C:/soft/apache-maven-3.5.3/ftp_home/mobile
+
+#spt
+public.http.project=http\://120.26.246.221\:16636/outcrude_ws
+#public.http.project=http\://127.0.0.1\:8088/bitproject

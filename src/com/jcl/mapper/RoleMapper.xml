@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jcl.dao.RoleMapper">
+  <resultMap id="BaseResultMap" type="com.jcl.pojo.Role">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="keyword" jdbcType="VARCHAR" property="keyword" />
+    <result column="desc" jdbcType="VARCHAR" property="desc" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+    <collection property="perlist" ofType="com.jcl.pojo.Permission">
+     	<id column="p_id" jdbcType="INTEGER" property="pId" />
+     	<result column="pri_name" jdbcType="VARCHAR" property="priName" />
+	</collection>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, name, keyword, desc ,createtime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from role
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from role
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.jcl.pojo.Role">
+    insert into role (id, name, keyword, 
+      desc,createtime)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{keyword,jdbcType=VARCHAR}, 
+      #{desc,jdbcType=VARCHAR},#{createtime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jcl.pojo.Role" useGeneratedKeys="true" keyProperty="id">
+    insert into role
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="keyword != null">
+        keyword,
+      </if>
+      <if test="desc != null">
+        desc,
+      </if>
+      <if test="createtime != null">
+        createtime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="keyword != null">
+        #{keyword,jdbcType=VARCHAR},
+      </if>
+      <if test="desc != null">
+        #{desc,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jcl.pojo.Role">
+    update role
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="keyword != null">
+        keyword = #{keyword,jdbcType=VARCHAR},
+      </if>
+      <if test="desc != null">
+        desc = #{desc,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null">
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jcl.pojo.Role">
+    update role
+    set name = #{name,jdbcType=VARCHAR},
+      keyword = #{keyword,jdbcType=VARCHAR},
+      desc = #{desc,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <delete id="deleteRolePerByRoleId" parameterType="Integer">
+	 delete from role_permission where rid=#{roleId}
+  </delete>
+  
+  <insert id="insertRolePer" >
+	insert into role_permission (rid,pid,createTime) values (#{roleId},#{perId},#{createTime})
+  </insert>
+  
+  <select id="getListByLikeName" resultMap="BaseResultMap" >
+	 select * from role 
+	<where>
+		1 = 1
+		<if test="name != null"> AND name like #{name} </if>
+	</where>
+	order by createtime desc
+</select>
+
+<select id="select" resultMap="BaseResultMap">
+	 select r.*,p.pri_name,p.p_id from role r left join role_permission rp on rp.rid=r.lsh left join permission p on p.p_id =rp.pid
+</select>
+
+<select id="selectById" resultMap="BaseResultMap" parameterType="Integer">
+	 select r.*,p.pri_name,p.p_id from role r left join role_permission rp on rp.rid=r.lsh left join permission p on p.p_id =rp.pid where r.lsh = #{id}
+</select>
+
+<select id="isExist" resultMap="BaseResultMap" >
+	 select * from role 
+	<where>
+		1 = 1
+		<if test="name != null"> AND name = #{name} </if>
+	</where>
+</select>
+</mapper>

@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jcl.dao.RiskTempallMapper">
+  <resultMap id="BaseResultMap" type="com.jcl.pojo.RiskTempall">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="newstock" jdbcType="INTEGER" property="newstock" />
+    <result column="newstock_day" jdbcType="INTEGER" property="newstockDay" />
+    <result column="rubbishstock" jdbcType="INTEGER" property="rubbishstock" />
+    <result column="businessplate" jdbcType="INTEGER" property="businessplate" />
+    <result column="modifytime" jdbcType="TIMESTAMP" property="modifytime" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="agentzh" jdbcType="VARCHAR" property="agentzh" />
+    <result column="ine_limit" jdbcType="INTEGER" property="ineLimit" />
+    <result column="warningValue" jdbcType="NUMERIC" property="warningvalue" />
+    <result column="closeoutValue" jdbcType="NUMERIC" property="closeoutvalue" />
+    <result column="crudeoil" jdbcType="INTEGER" property="crudeoil" />
+    <result column="closevalue" jdbcType="NUMERIC" property="closevalue" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, newstock, newstock_day, rubbishstock, businessplate, modifytime, type, agentzh, 
+    ine_limit, warningValue, closeoutValue, crudeoil, closevalue
+  </sql>
+  <select id="selectByExample" parameterType="com.jcl.pojo.RiskTempallExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from risk_tempall
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from risk_tempall
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from risk_tempall
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jcl.pojo.RiskTempallExample">
+    delete from risk_tempall
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jcl.pojo.RiskTempall">
+    insert into risk_tempall (id, newstock, newstock_day, 
+      rubbishstock, businessplate, modifytime, 
+      type, agentzh, ine_limit, 
+      warningValue, closeoutValue, crudeoil, 
+      closevalue)
+    values (#{id,jdbcType=INTEGER}, #{newstock,jdbcType=INTEGER}, #{newstockDay,jdbcType=INTEGER}, 
+      #{rubbishstock,jdbcType=INTEGER}, #{businessplate,jdbcType=INTEGER}, #{modifytime,jdbcType=TIMESTAMP}, 
+      #{type,jdbcType=VARCHAR}, #{agentzh,jdbcType=VARCHAR}, #{ineLimit,jdbcType=INTEGER}, 
+      #{warningvalue,jdbcType=NUMERIC}, #{closeoutvalue,jdbcType=NUMERIC}, #{crudeoil,jdbcType=INTEGER}, 
+      #{closevalue,jdbcType=NUMERIC})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jcl.pojo.RiskTempall" useGeneratedKeys="true" keyProperty="id">
+    insert into risk_tempall
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="newstock != null">
+        newstock,
+      </if>
+      <if test="newstockDay != null">
+        newstock_day,
+      </if>
+      <if test="rubbishstock != null">
+        rubbishstock,
+      </if>
+      <if test="businessplate != null">
+        businessplate,
+      </if>
+      <if test="modifytime != null">
+        modifytime,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="agentzh != null">
+        agentzh,
+      </if>
+      <if test="ineLimit != null">
+        ine_limit,
+      </if>
+      <if test="warningvalue != null">
+        warningValue,
+      </if>
+      <if test="closeoutvalue != null">
+        closeoutValue,
+      </if>
+      <if test="crudeoil != null">
+        crudeoil,
+      </if>
+      <if test="closevalue != null">
+        closevalue,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="newstock != null">
+        #{newstock,jdbcType=INTEGER},
+      </if>
+      <if test="newstockDay != null">
+        #{newstockDay,jdbcType=INTEGER},
+      </if>
+      <if test="rubbishstock != null">
+        #{rubbishstock,jdbcType=INTEGER},
+      </if>
+      <if test="businessplate != null">
+        #{businessplate,jdbcType=INTEGER},
+      </if>
+      <if test="modifytime != null">
+        #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="agentzh != null">
+        #{agentzh,jdbcType=VARCHAR},
+      </if>
+      <if test="ineLimit != null">
+        #{ineLimit,jdbcType=INTEGER},
+      </if>
+      <if test="warningvalue != null">
+        #{warningvalue,jdbcType=NUMERIC},
+      </if>
+      <if test="closeoutvalue != null">
+        #{closeoutvalue,jdbcType=NUMERIC},
+      </if>
+      <if test="crudeoil != null">
+        #{crudeoil,jdbcType=INTEGER},
+      </if>
+      <if test="closevalue != null">
+        #{closevalue,jdbcType=NUMERIC},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jcl.pojo.RiskTempallExample" resultType="java.lang.Long">
+    select count(*) from risk_tempall
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update risk_tempall
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.newstock != null">
+        newstock = #{record.newstock,jdbcType=INTEGER},
+      </if>
+      <if test="record.newstockDay != null">
+        newstock_day = #{record.newstockDay,jdbcType=INTEGER},
+      </if>
+      <if test="record.rubbishstock != null">
+        rubbishstock = #{record.rubbishstock,jdbcType=INTEGER},
+      </if>
+      <if test="record.businessplate != null">
+        businessplate = #{record.businessplate,jdbcType=INTEGER},
+      </if>
+      <if test="record.modifytime != null">
+        modifytime = #{record.modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.agentzh != null">
+        agentzh = #{record.agentzh,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ineLimit != null">
+        ine_limit = #{record.ineLimit,jdbcType=INTEGER},
+      </if>
+      <if test="record.warningvalue != null">
+        warningValue = #{record.warningvalue,jdbcType=NUMERIC},
+      </if>
+      <if test="record.closeoutvalue != null">
+        closeoutValue = #{record.closeoutvalue,jdbcType=NUMERIC},
+      </if>
+      <if test="record.crudeoil != null">
+        crudeoil = #{record.crudeoil,jdbcType=INTEGER},
+      </if>
+      <if test="record.closevalue != null">
+        closevalue = #{record.closevalue,jdbcType=NUMERIC},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update risk_tempall
+    set id = #{record.id,jdbcType=INTEGER},
+      newstock = #{record.newstock,jdbcType=INTEGER},
+      newstock_day = #{record.newstockDay,jdbcType=INTEGER},
+      rubbishstock = #{record.rubbishstock,jdbcType=INTEGER},
+      businessplate = #{record.businessplate,jdbcType=INTEGER},
+      modifytime = #{record.modifytime,jdbcType=TIMESTAMP},
+      type = #{record.type,jdbcType=VARCHAR},
+      agentzh = #{record.agentzh,jdbcType=VARCHAR},
+      ine_limit = #{record.ineLimit,jdbcType=INTEGER},
+      warningValue = #{record.warningvalue,jdbcType=NUMERIC},
+      closeoutValue = #{record.closeoutvalue,jdbcType=NUMERIC},
+      crudeoil = #{record.crudeoil,jdbcType=INTEGER},
+      closevalue = #{record.closevalue,jdbcType=NUMERIC}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jcl.pojo.RiskTempall">
+    update risk_tempall
+    <set>
+      <if test="newstock != null">
+        newstock = #{newstock,jdbcType=INTEGER},
+      </if>
+      <if test="newstockDay != null">
+        newstock_day = #{newstockDay,jdbcType=INTEGER},
+      </if>
+      <if test="rubbishstock != null">
+        rubbishstock = #{rubbishstock,jdbcType=INTEGER},
+      </if>
+      <if test="businessplate != null">
+        businessplate = #{businessplate,jdbcType=INTEGER},
+      </if>
+      <if test="modifytime != null">
+        modifytime = #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="agentzh != null">
+        agentzh = #{agentzh,jdbcType=VARCHAR},
+      </if>
+      <if test="ineLimit != null">
+        ine_limit = #{ineLimit,jdbcType=INTEGER},
+      </if>
+      <if test="warningvalue != null">
+        warningValue = #{warningvalue,jdbcType=NUMERIC},
+      </if>
+      <if test="closeoutvalue != null">
+        closeoutValue = #{closeoutvalue,jdbcType=NUMERIC},
+      </if>
+      <if test="crudeoil != null">
+        crudeoil = #{crudeoil,jdbcType=INTEGER},
+      </if>
+      <if test="closevalue != null">
+        closevalue = #{closevalue,jdbcType=NUMERIC},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jcl.pojo.RiskTempall">
+    update risk_tempall
+    set newstock = #{newstock,jdbcType=INTEGER},
+      newstock_day = #{newstockDay,jdbcType=INTEGER},
+      rubbishstock = #{rubbishstock,jdbcType=INTEGER},
+      businessplate = #{businessplate,jdbcType=INTEGER},
+      modifytime = #{modifytime,jdbcType=TIMESTAMP},
+      type = #{type,jdbcType=VARCHAR},
+      agentzh = #{agentzh,jdbcType=VARCHAR},
+      ine_limit = #{ineLimit,jdbcType=INTEGER},
+      warningValue = #{warningvalue,jdbcType=NUMERIC},
+      closeoutValue = #{closeoutvalue,jdbcType=NUMERIC},
+      crudeoil = #{crudeoil,jdbcType=INTEGER},
+      closevalue = #{closevalue,jdbcType=NUMERIC}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="selectAll" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM risk_tempall 
+		ORDER BY id desc
+  </select>
+  <select id="isExist" resultMap="BaseResultMap" >
+	select * from risk_tempall 
+	<where>
+		1 = 1
+		<if test="subzhName != null"> AND type = #{subzhName} </if>
+		<if test="id != null"> AND id != #{id} </if>
+	</where>
+  </select>
+  
+</mapper>

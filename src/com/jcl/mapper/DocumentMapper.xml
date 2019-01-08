@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcl.dao.DocumentMapper" >
+  <resultMap id="BaseResultMap" type="com.jcl.pojo.Document" >
+    <id column="did" property="did" jdbcType="INTEGER" />
+    <result column="docname" property="docname" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="doctime" property="doctime" jdbcType="TIMESTAMP" />
+    <result column="author" property="author" jdbcType="VARCHAR" />
+    <result column="docstate" property="docstate" jdbcType="INTEGER" />
+    <result column="docurl" property="docurl" jdbcType="VARCHAR" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.jcl.pojo.Document" extends="BaseResultMap" >
+    <result column="doccontext" property="doccontext" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    did, docname, title, doctime, author, docstate, docurl
+  </sql>
+  <sql id="Blob_Column_List" >
+    doccontext
+  </sql>
+  
+  <!--根据文档名称查询  -->
+  <select id="selectByname" resultMap="BaseResultMap" parameterType="java.lang.String">
+  	select 
+  		<include refid="Base_Column_List" />
+  	from document where docname like '%'+#{docname}+'%' ORDER BY did DESC
+  </select>
+  
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.jcl.pojo.DocumentExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from document
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jcl.pojo.DocumentExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from document
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+     ORDER BY did DESC
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from document
+    where did = #{did,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from document
+    where did = #{did,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jcl.pojo.DocumentExample" >
+    delete from document
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jcl.pojo.Document" >
+    insert into document (did, docname, title, 
+      doctime, author, docstate, 
+      docurl, doccontext)
+    values (#{did,jdbcType=INTEGER}, #{docname,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
+      #{doctime,jdbcType=TIMESTAMP}, #{author,jdbcType=VARCHAR}, #{docstate,jdbcType=INTEGER}, 
+      #{docurl,jdbcType=VARCHAR}, #{doccontext,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jcl.pojo.Document" >
+    insert into document
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="did != null" >
+        did,
+      </if>
+      <if test="docname != null" >
+        docname,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="doctime != null" >
+        doctime,
+      </if>
+      <if test="author != null" >
+        author,
+      </if>
+      <if test="docstate != null" >
+        docstate,
+      </if>
+      <if test="docurl != null" >
+        docurl,
+      </if>
+      <if test="doccontext != null" >
+        doccontext,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="did != null" >
+        #{did,jdbcType=INTEGER},
+      </if>
+      <if test="docname != null" >
+        #{docname,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="doctime != null" >
+        #{doctime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="author != null" >
+        #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="docstate != null" >
+        #{docstate,jdbcType=INTEGER},
+      </if>
+      <if test="docurl != null" >
+        #{docurl,jdbcType=VARCHAR},
+      </if>
+      <if test="doccontext != null" >
+        #{doccontext,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jcl.pojo.DocumentExample" resultType="java.lang.Integer" >
+    select count(*) from document
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update document
+    <set >
+      <if test="record.did != null" >
+        did = #{record.did,jdbcType=INTEGER},
+      </if>
+      <if test="record.docname != null" >
+        docname = #{record.docname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.title != null" >
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doctime != null" >
+        doctime = #{record.doctime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.author != null" >
+        author = #{record.author,jdbcType=VARCHAR},
+      </if>
+      <if test="record.docstate != null" >
+        docstate = #{record.docstate,jdbcType=INTEGER},
+      </if>
+      <if test="record.docurl != null" >
+        docurl = #{record.docurl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.doccontext != null" >
+        doccontext = #{record.doccontext,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update document
+    set did = #{record.did,jdbcType=INTEGER},
+      docname = #{record.docname,jdbcType=VARCHAR},
+      title = #{record.title,jdbcType=VARCHAR},
+      doctime = #{record.doctime,jdbcType=TIMESTAMP},
+      author = #{record.author,jdbcType=VARCHAR},
+      docstate = #{record.docstate,jdbcType=INTEGER},
+      docurl = #{record.docurl,jdbcType=VARCHAR},
+      doccontext = #{record.doccontext,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update document
+    set did = #{record.did,jdbcType=INTEGER},
+      docname = #{record.docname,jdbcType=VARCHAR},
+      title = #{record.title,jdbcType=VARCHAR},
+      doctime = #{record.doctime,jdbcType=TIMESTAMP},
+      author = #{record.author,jdbcType=VARCHAR},
+      docstate = #{record.docstate,jdbcType=INTEGER},
+      docurl = #{record.docurl,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jcl.pojo.Document" >
+    update document
+    <set >
+      <if test="docname != null" >
+        docname = #{docname,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="doctime != null" >
+        doctime = #{doctime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="author != null" >
+        author = #{author,jdbcType=VARCHAR},
+      </if>
+      <if test="docstate != null" >
+        docstate = #{docstate,jdbcType=INTEGER},
+      </if>
+      <if test="docurl != null" >
+        docurl = #{docurl,jdbcType=VARCHAR},
+      </if>
+      <if test="doccontext != null" >
+        doccontext = #{doccontext,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where did = #{did,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.jcl.pojo.Document" >
+    update document
+    set docname = #{docname,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      doctime = #{doctime,jdbcType=TIMESTAMP},
+      author = #{author,jdbcType=VARCHAR},
+      docstate = #{docstate,jdbcType=INTEGER},
+      docurl = #{docurl,jdbcType=VARCHAR},
+      doccontext = #{doccontext,jdbcType=LONGVARCHAR}
+    where did = #{did,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jcl.pojo.Document" >
+    update document
+    set docname = #{docname,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      doctime = #{doctime,jdbcType=TIMESTAMP},
+      author = #{author,jdbcType=VARCHAR},
+      docstate = #{docstate,jdbcType=INTEGER},
+      docurl = #{docurl,jdbcType=VARCHAR}
+    where did = #{did,jdbcType=INTEGER}
+  </update>
+</mapper>

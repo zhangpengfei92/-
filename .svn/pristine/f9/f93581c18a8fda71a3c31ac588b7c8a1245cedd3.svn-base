@@ -1,0 +1,327 @@
+package com.jcl.controller;
+
+import java.math.BigDecimal;
+import java.net.URLEncoder;
+import java.text.DecimalFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.codec.binary.Base64;
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.jcl.pojo.AgentzhfundLog;
+import com.jcl.pojo.Subzh;
+import com.jcl.service.AgentzhfundLogService;
+import com.jcl.service.FundService;
+import com.jcl.service.PhonePayService;
+import com.jcl.service.SubzhService;
+import com.jcl.util.DeployProperties;
+import com.jcl.util.FomaAmount;
+import com.sandepay.agentPay.DemoBaseAgentPay;
+import com.sandgatePay.gateway.demo.DemoBase;
+import com.sandgatePay.gateway.demo.OrderCreateDemo;
+import com.sandgatePay.gateway.demo.OrderCreateDemo.PayMode;
+import cn.com.sandpay.cashier.sdk.util.CertUtil;
+import cn.com.sandpay.cashier.sdk.util.CryptoUtil;
+
+@Controller
+@RequestMapping("/apppay/PhonePay")
+public class PhonePayController {
+	private static Logger log = Logger.getLogger(PhonePayController.class);
+	
+    @Autowired
+    private SubzhService subzhService;
+    
+    //查资金协议的接口
+    @Autowired
+    private FundService fundServiceimpl;
+    
+    //衫德支付服务接口
+    @Autowired
+    private PhonePayService phonePayService;
+    
+    private static final Object synObj = "126";
+    
+    @Autowired
+	private AgentzhfundLogService agentzhfundLogService;
+    /*获取项目工程名*/
+    private static final String ProjectName = DeployProperties.getInstance().getPublicProjectePath();
+    //回调
+    private String notifyUrl="/apppay/PhonePay/shandePayCallback";
+    private String frontUrl="/apppay/PhonePay/completePay";
+    
+   @RequestMapping("/PhonePayIndex/{id}")
+    public String PhonePayIndex(@PathVariable("id") String id, Model model,String subzh) {
+			String paypage="";			
+			if("2".equals(id)){//2.快捷 1.网关
+				paypage="phonePay/shandecheckpay";
+			}else if("1".equals(id)){
+				paypage="phonePay/shandecheckpayWeb";				
+			}
+			//判断当前用户是否已经实名认证
+			Map<String, Object> map=isok(subzh, paypage);
+			if((Boolean) map.get("status")) {//true				
+				log.info(map.get("msg"));
+				Subzh sub=(Subzh) map.get("users");
+				if(sub !=null){
+		    		//手机号注册的用户
+					String fixSubzh="";
+					if(subzh.length()==11){
+						fixSubzh=subzh.substring(1);
+					}else{
+						fixSubzh=subzh;
+					}
+					model.addAttribute("fixSubzh", fixSubzh);
+					model.addAttribute("sub", sub);
+					return (String) map.get("payPage");			
+			}
+    	}else {
+			log.info(map.get("msg"));
+			model.addAttribute("msg", map.get("msg"));
+			return (String) map.get("payPage");
+		}
+    	return null;
+    }
+    
+/*    @RequestMapping("/PhonePayIndex/{id}")
+    public String PhonePayIndex(@PathVariable("id") String id, Model model,String subzh) {
+			
+    	return "register_h5/isclose";
+    }*/
+    
+    /*支付完成页面*/
+    @RequestMapping("/completePay")
+    public String completePay() {
+        return "phonePay/sureGold";
+    }
+    
+/*     //H5提现申请页面
+    @RequestMapping("/withdrawIndex")
+    public String withdrawIndex(String subzh,Model model) {
+    	
+    	return "register_h5/isclose";
+    }*/
+    
+  // H5提现申请页面
+    @RequestMapping("/withdrawIndex")
+    public String withdrawIndex(String subzh,Model model) {
+    	
+    	Map<String, Object> map=isok(subzh, "phonePay/withdrawaotu");
+		if((Boolean) map.get("status")) {//true
+			
+			log.info(map.get("msg"));
+			Subzh sub=(Subzh) map.get("users");
+			if(null!=sub&&sub.getIsadmin()==6){
+				BigDecimal fundbalance=fundServiceimpl.getfundbalance(sub);
+			
+				   if (fundbalance== null ||fundbalance.doubleValue() <0) {
+	                    log.info("账户资产不足，非法提交");
+	                    return "phonePay/nofund";
+	                }
+					log.info("用户可提金额 : "+fundbalance.setScale(2, BigDecimal.ROUND_DOWN));
+					sub.setFundbalance(fundbalance);
+			}
+			if(sub.getFundbalance()==null) {
+				sub.setFundbalance(new BigDecimal(0));
+			}else{
+				sub.setFundbalance(sub.getFundbalance().setScale(2, BigDecimal.ROUND_DOWN));
+			}
+			
+			
+			model.addAttribute("sub", sub);
+			return (String) map.get("payPage");
+		
+		}else {
+			log.info(map.get("msg"));
+			model.addAttribute("msg", map.get("msg"));
+			return (String) map.get("payPage");
+		}
+    }
+    
+    
+    //提现请求入库页面
+    @RequestMapping("/withdrawend")
+    public String withdrawend(String subzh,String username,String bankCardNo,String cardno,String zhBalance,Model model) {
+    	Map<String, Object> map = phonePayService.withdrawend(subzh,username,bankCardNo,cardno,zhBalance);   	
+    	if(map!=null&&map.size()>0) {   
+    		log.info(map.toString());
+    		if((Boolean) map.get("status")) {    			
+    			model.addAttribute("msg", map.get("msg"));
+    		}else {
+    			model.addAttribute("msg", map.get("msg"));
+
+    		}
+    	}else {
+    		model.addAttribute("msg", "提现失败");
+    	} 
+        return "phonePay/noneed";
+    }
+    
+    
+    /**
+     *杉德代付                               
+     * @return
+     * 审核通过
+     */
+    @RequestMapping(value="/gopay", produces = "application/json; charset=utf-8")
+    @ResponseBody
+    public String AgentPay(Integer qlId,Integer status) {
+    
+    	Map<String, Object> map = phonePayService.AgentPay(qlId,status);
+    	if(map!=null&&map.size()>0) {   
+    		log.info(map.toString());
+    		if((Boolean) map.get("status")) {    			
+    			return "success";
+    		}else {
+    			
+    			return (String) map.get("msg");	
+    		}
+    	}else {
+    		return "fail";	
+    	}
+    }
+    
+    //拒绝通过审核
+  	@RequestMapping("/checkWithdraw")
+  	@ResponseBody
+  	public String checkWithdraw(Integer id, Integer status) {  			
+  		Map<String, Object>map=fundServiceimpl.checkWithdraw(id,status);
+  		if(null!=map&&map.get("status")=="true") {
+  				return "success";
+  			}else {
+  				return "fail";
+  			}
+  		}
+    
+    /**统一下单接口-银行网关支付
+     * 网关支付
+     */
+    @RequestMapping("/orderPay")
+    public String orderPay(HttpServletRequest req,Model model) {
+    	Map<String, Object> map = phonePayService.orderPay(req);   	
+    	if(map!=null&&map.size()>0) {   
+    		log.info(map.toString());
+    		if((Boolean) map.get("status")) {    			
+    			model.addAttribute("JWP_ATTR", map.get("msg"));
+    			return "phonePay/shandesendpay";
+    		}else {
+    			model.addAttribute("msg", map.get("msg"));
+    			return "phonePay/noneed";	
+    		}
+    	}else {
+    		model.addAttribute("msg","订单异常");
+    		return "phonePay/noneed";	
+    	}       
+    }
+    
+    
+    /**
+     * 快捷支付
+     * @param req
+     * @return
+     */
+    @RequestMapping("/fastPay")
+    @ResponseBody
+    public String fastPay(HttpServletRequest req) {
+    	Map<String, Object> map = phonePayService.fastPay(req);   	
+    	if(map!=null&&map.size()>0) {   
+    		log.info(map.toString());
+    		if((Boolean) map.get("status")) {    			
+    			JSONObject r =  (JSONObject) map.get("msg");
+    			return r.toString();
+    		}else {
+    			
+    			return "fail";	
+    		}
+    	}else {
+    		return "fail";	
+    	} 
+    }
+    
+    /**
+     * 共享在线,杉德支付回调处理
+     * @return
+     */
+    @RequestMapping("/shandePayCallback")
+    public void shandePayCallback(HttpServletRequest req) {
+    	Map<String, Object> map = phonePayService.shandePayCallback(req);
+    }
+    
+  //判断该用户是否能出入金	
+  	public Map<String, Object> isok(String subzh,String payPage){
+  		Map<String, Object>map=new HashMap<String, Object>();
+  		String errorpay="phonePay/noneed";
+  		Subzh sub =null;
+  		if(null==subzh||subzh=="") {
+  			log.info("用户名不存在");
+  			map.put("msg","用户名不存在");
+  			map.put("status",false);
+  			map.put("payPage",errorpay);
+  			return map;
+  		}
+  		try {
+  			sub = subzhService.loginBySubzh(subzh);
+  			//判断用户信息是否存在 			
+  			if(null==sub) {
+  				log.info("用户信息不存在");
+  				map.put("msg","用户信息不存在");
+  				map.put("status",false);
+  				map.put("payPage",errorpay);
+  				log.info("map  :-----------"+map.toString());
+  				return map;
+  			}
+  			//当用户操作充值（网关或者银联）判读用户是否是普通用户
+  			Boolean flag=true;
+  			if(payPage=="phonePay/shandecheckpay"||payPage=="phonePay/shandecheckpayWeb") {
+  				Integer isadmin=sub.getIsadmin();
+  				if(null!=isadmin&&isadmin!=0&&isadmin!=6) {
+  					log.info("非普通用户无法充值");
+  					map.put("msg","非普通用户无法充值");
+  					map.put("status",false);
+  					map.put("payPage",errorpay);
+  					return map;
+  				}
+  			}
+  			//当用户操作的是提现，判读用户是否是普通用户
+  			if(payPage=="phonePay/withdrawaotu") {
+  				Integer isadmin=sub.getIsadmin();
+  				if(null!=isadmin&&isadmin!=0&&isadmin!=6) {//如果用户不是普通用户，则无需实名认证
+  					flag=false;
+  				}
+  			}
+  			
+  			if(flag){//当用户操作提现且不是普通用户时，不必进行是否实名认证的判断
+  			//判断用户是否实名认证
+  			if (sub.getAuthState()!=null&&sub.getAuthState()!=2) {
+  				String msg="";
+  				Integer state=sub.getAuthState();
+  				msg=state==0?"用户未实名认证":state==1?"用户实名认证审核中":"用户实名认证未通过";
+  				map.put("msg",msg);
+  				map.put("status",false);
+  				map.put("payPage",errorpay);
+  				return map;
+  				}
+  			}
+  			map.put("msg","用户已实名认证");
+  			map.put("status",true);
+  			map.put("users",sub);
+  			map.put("payPage",payPage);
+  		} catch (Exception e) {
+  			log.error("查询用户异常");
+  		}
+
+  		return map;
+  	} 
+}

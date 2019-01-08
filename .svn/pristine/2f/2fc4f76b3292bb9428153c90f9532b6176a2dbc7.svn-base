@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jcl.dao.FundPzlogMapper">
+  <resultMap id="BaseResultMap" type="com.jcl.pojo.FundPzlog" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="subzh" property="subzh" jdbcType="VARCHAR" />
+    <result column="fundtype" property="fundtype" jdbcType="INTEGER" />
+    <result column="setpro" property="setpro" jdbcType="INTEGER" />
+    <result column="fundBalance" property="fundbalance" jdbcType="NUMERIC" />
+    <result column="nowBalance" property="nowbalance" jdbcType="NUMERIC" />
+    <result column="yjxBalance" property="yjxbalance" jdbcType="NUMERIC" />
+    <result column="pcxBalance" property="pcxbalance" jdbcType="NUMERIC" />
+    <result column="feeBalance" property="feebalance" jdbcType="NUMERIC" />
+    <result column="againFeeBalance" property="againfeebalance" jdbcType="NUMERIC" />
+    <result column="deferredBalance" property="deferredbalance" jdbcType="NUMERIC" />
+    <result column="setdesc" property="setdesc" jdbcType="VARCHAR" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="orderno" property="orderno" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, subzh, fundtype, setpro, fundBalance, nowBalance, yjxBalance, pcxBalance, feeBalance, 
+    againFeeBalance, deferredBalance, setdesc, createtime, orderno
+  </sql>
+  
+  <select id="selectByExample" parameterType="com.jcl.pojo.FundPzlogExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from fund_pzlog
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from fund_pzlog
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from fund_pzlog
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <delete id="deleteByExample" parameterType="com.jcl.pojo.FundPzlogExample">
+    delete from fund_pzlog
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  
+  <insert id="insert" parameterType="com.jcl.pojo.FundPzlog" >
+    insert into fund_pzlog (id, subzh, fundtype, 
+      setpro, fundBalance, nowBalance, 
+      yjxBalance, pcxBalance, feeBalance, 
+      againFeeBalance, deferredBalance, setdesc, 
+      createtime, orderno)
+    values (#{id,jdbcType=INTEGER}, #{subzh,jdbcType=VARCHAR}, #{fundtype,jdbcType=INTEGER}, 
+      #{setpro,jdbcType=INTEGER}, #{fundbalance,jdbcType=NUMERIC}, #{nowbalance,jdbcType=NUMERIC}, 
+      #{yjxbalance,jdbcType=NUMERIC}, #{pcxbalance,jdbcType=NUMERIC}, #{feebalance,jdbcType=NUMERIC}, 
+      #{againfeebalance,jdbcType=NUMERIC}, #{deferredbalance,jdbcType=NUMERIC}, #{setdesc,jdbcType=VARCHAR}, 
+      #{createtime,jdbcType=TIMESTAMP}, #{orderno,jdbcType=VARCHAR})
+  </insert>
+  	
+  	<insert id="insertSelective" parameterType="com.jcl.pojo.FundPzlog" useGeneratedKeys="true" keyProperty="id">
+    insert into fund_pzlog
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="subzh != null" >
+        subzh,
+      </if>
+      <if test="fundtype != null" >
+        fundtype,
+      </if>
+      <if test="setpro != null" >
+        setpro,
+      </if>
+      <if test="fundbalance != null" >
+        fundBalance,
+      </if>
+      <if test="nowbalance != null" >
+        nowBalance,
+      </if>
+      <if test="yjxbalance != null" >
+        yjxBalance,
+      </if>
+      <if test="pcxbalance != null" >
+        pcxBalance,
+      </if>
+      <if test="feebalance != null" >
+        feeBalance,
+      </if>
+      <if test="againfeebalance != null" >
+        againFeeBalance,
+      </if>
+      <if test="deferredbalance != null" >
+        deferredBalance,
+      </if>
+      <if test="setdesc != null" >
+        setdesc,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+      <if test="orderno != null" >
+        orderno,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="subzh != null" >
+        #{subzh,jdbcType=VARCHAR},
+      </if>
+      <if test="fundtype != null" >
+        #{fundtype,jdbcType=INTEGER},
+      </if>
+      <if test="setpro != null" >
+        #{setpro,jdbcType=INTEGER},
+      </if>
+      <if test="fundbalance != null" >
+        #{fundbalance,jdbcType=NUMERIC},
+      </if>
+      <if test="nowbalance != null" >
+        #{nowbalance,jdbcType=NUMERIC},
+      </if>
+      <if test="yjxbalance != null" >
+        #{yjxbalance,jdbcType=NUMERIC},
+      </if>
+      <if test="pcxbalance != null" >
+        #{pcxbalance,jdbcType=NUMERIC},
+      </if>
+      <if test="feebalance != null" >
+        #{feebalance,jdbcType=NUMERIC},
+      </if>
+      <if test="againfeebalance != null" >
+        #{againfeebalance,jdbcType=NUMERIC},
+      </if>
+      <if test="deferredbalance != null" >
+        #{deferredbalance,jdbcType=NUMERIC},
+      </if>
+      <if test="setdesc != null" >
+        #{setdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderno != null" >
+        #{orderno,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  	
+
+  <select id="countByExample" parameterType="com.jcl.pojo.FundPzlogExample" resultType="java.lang.Long">
+    select count(*) from fund_pzlog
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  
+<update id="updateByExampleSelective" parameterType="map" >
+    update fund_pzlog
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.subzh != null" >
+        subzh = #{record.subzh,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fundtype != null" >
+        fundtype = #{record.fundtype,jdbcType=INTEGER},
+      </if>
+      <if test="record.setpro != null" >
+        setpro = #{record.setpro,jdbcType=INTEGER},
+      </if>
+      <if test="record.fundbalance != null" >
+        fundBalance = #{record.fundbalance,jdbcType=NUMERIC},
+      </if>
+      <if test="record.nowbalance != null" >
+        nowBalance = #{record.nowbalance,jdbcType=NUMERIC},
+      </if>
+      <if test="record.yjxbalance != null" >
+        yjxBalance = #{record.yjxbalance,jdbcType=NUMERIC},
+      </if>
+      <if test="record.pcxbalance != null" >
+        pcxBalance = #{record.pcxbalance,jdbcType=NUMERIC},
+      </if>
+      <if test="record.feebalance != null" >
+        feeBalance = #{record.feebalance,jdbcType=NUMERIC},
+      </if>
+      <if test="record.againfeebalance != null" >
+        againFeeBalance = #{record.againfeebalance,jdbcType=NUMERIC},
+      </if>
+      <if test="record.deferredbalance != null" >
+        deferredBalance = #{record.deferredbalance,jdbcType=NUMERIC},
+      </if>
+      <if test="record.setdesc != null" >
+        setdesc = #{record.setdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createtime != null" >
+        createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.orderno != null" >
+        orderno = #{record.orderno,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update fund_pzlog
+    set id = #{record.id,jdbcType=INTEGER},
+      subzh = #{record.subzh,jdbcType=VARCHAR},
+      fundtype = #{record.fundtype,jdbcType=INTEGER},
+      setpro = #{record.setpro,jdbcType=INTEGER},
+      fundBalance = #{record.fundbalance,jdbcType=NUMERIC},
+      nowBalance = #{record.nowbalance,jdbcType=NUMERIC},
+      yjxBalance = #{record.yjxbalance,jdbcType=NUMERIC},
+      pcxBalance = #{record.pcxbalance,jdbcType=NUMERIC},
+      feeBalance = #{record.feebalance,jdbcType=NUMERIC},
+      againFeeBalance = #{record.againfeebalance,jdbcType=NUMERIC},
+      deferredBalance = #{record.deferredbalance,jdbcType=NUMERIC},
+      setdesc = #{record.setdesc,jdbcType=VARCHAR},
+      createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      orderno = #{record.orderno,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jcl.pojo.FundPzlog" >
+    update fund_pzlog
+    <set >
+      <if test="subzh != null" >
+        subzh = #{subzh,jdbcType=VARCHAR},
+      </if>
+      <if test="fundtype != null" >
+        fundtype = #{fundtype,jdbcType=INTEGER},
+      </if>
+      <if test="setpro != null" >
+        setpro = #{setpro,jdbcType=INTEGER},
+      </if>
+      <if test="fundbalance != null" >
+        fundBalance = #{fundbalance,jdbcType=NUMERIC},
+      </if>
+      <if test="nowbalance != null" >
+        nowBalance = #{nowbalance,jdbcType=NUMERIC},
+      </if>
+      <if test="yjxbalance != null" >
+        yjxBalance = #{yjxbalance,jdbcType=NUMERIC},
+      </if>
+      <if test="pcxbalance != null" >
+        pcxBalance = #{pcxbalance,jdbcType=NUMERIC},
+      </if>
+      <if test="feebalance != null" >
+        feeBalance = #{feebalance,jdbcType=NUMERIC},
+      </if>
+      <if test="againfeebalance != null" >
+        againFeeBalance = #{againfeebalance,jdbcType=NUMERIC},
+      </if>
+      <if test="deferredbalance != null" >
+        deferredBalance = #{deferredbalance,jdbcType=NUMERIC},
+      </if>
+      <if test="setdesc != null" >
+        setdesc = #{setdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderno != null" >
+        orderno = #{orderno,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jcl.pojo.FundPzlog" >
+    update fund_pzlog
+    set subzh = #{subzh,jdbcType=VARCHAR},
+      fundtype = #{fundtype,jdbcType=INTEGER},
+      setpro = #{setpro,jdbcType=INTEGER},
+      fundBalance = #{fundbalance,jdbcType=NUMERIC},
+      nowBalance = #{nowbalance,jdbcType=NUMERIC},
+      yjxBalance = #{yjxbalance,jdbcType=NUMERIC},
+      pcxBalance = #{pcxbalance,jdbcType=NUMERIC},
+      feeBalance = #{feebalance,jdbcType=NUMERIC},
+      againFeeBalance = #{againfeebalance,jdbcType=NUMERIC},
+      deferredBalance = #{deferredbalance,jdbcType=NUMERIC},
+      setdesc = #{setdesc,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      orderno = #{orderno,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+
+  
+  <select id="selectAll" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM fund_pzlog 
+		ORDER BY createtime desc, id desc
+  </select>
+  <select id="isExist" resultMap="BaseResultMap" >
+	select * from fund_pzlog 
+    <where>
+		1 = 1
+		<if test="subzhName != null"> AND subzh = #{subzhName} </if>
+	</where>
+  </select>
+	
+</mapper>

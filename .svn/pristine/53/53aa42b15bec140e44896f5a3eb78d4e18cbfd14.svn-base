@@ -1,0 +1,153 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
+<!DOCTYPE html>
+<html> 
+<head>
+<meta charset="utf-8">
+<title>H5提现</title>
+<meta name="viewport" content="width=320,maximum-scale=1,user-scalable=no">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<!-- <meta content="telephone=no" name="format-detection"> -->
+<meta name="format-detection" content="telephone=yes"/><!-- 打电话 -->
+<link href="${path }/apppay/css/css.css" rel="stylesheet" type="text/css" />
+<link href="${path }/apppay/css/animation.css" rel="stylesheet" type="text/css" />
+<script src="${path }/apppay/js/jquery-1.9.1.min.js" type="text/javascript" ></script>
+<script src="${path }/apppay/js/All.js" type="text/javascript"></script>
+<script type="text/JavaScript" src="${path }/js/DateFormatter.js"></script>
+<script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
+<script type="text/javascript">
+	$(function () {
+	    var nowDate = new Date().format("yyyyMMddhhmmss");
+	    $("#cardno").val($("#subzh").val()+nowDate);
+	});
+	function buy(){
+		var zhBalance = $.trim($("#zhBalance").val());
+    	if (zhBalance.length < 1 || zhBalance.length > 20) {
+        	alert('请输入提现金额长度在2-20之间');
+        	
+            return false;
+        }
+    	var bFlag = true;
+		if(!checkDouble(zhBalance, "提现金额") || zhBalance<=0){
+			bFlag = false;
+	        return false;
+	    }
+		
+		if(zhBalance<=0){
+			alert('提现金额不合法');
+			bFlag = false;
+	        return false;
+	    }
+		
+		var availMoney = $("#availMoney").val();
+		/* if(availMoney*1 < zhBalance*1){
+			bFlag = false;
+			alert('账户资产不足');
+        	
+            return false;
+		} */
+		
+		var qlId = $.trim($("#username").val());
+    	if (qlId.length < 1 || qlId.length > 20) {
+        	alert('请输入姓名');
+            return false;
+        }
+    	
+    	var type = $.trim($("#bankCardNo").val());
+    	if (type.length < 1 || type.length > 20) {
+        	alert('请输入银行卡号');
+        	
+            return false;
+        }
+		
+		if(bFlag){
+			var ip = returnCitySN['cip'];
+			$("#ipvalue").val(ip);
+            $("#infoInputForm").submit();
+		}
+	}
+	
+	//Double验证
+	function checkDouble(strValue, strName) {
+		var pattern = /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/;
+	   if(!pattern.test(strValue)){
+		   alert(strName + "的数值不正确！");
+		   try {
+				javatojs.showToast(strName + "的数值不正确！");
+			} catch (e){ 
+       		window.location.href = "alert://alertInfo?message=" + strName + "的数值不正确！";
+       	}
+	  	   return false;
+	   }
+	   return true;
+	}
+	
+	//消费记录
+	function xfjl(){
+		var subzh = $("#subzh").val();
+		window.location.href="${path}/clientshow/phonePay!xfjl.action?subzh="+subzh;
+	}
+	
+	//判断输入的金额是否为数字
+	function checkNum(num){
+		var b=true;
+		if(isNaN(num)){
+			alter("充值金额必须为数字");
+			$("#zhBalance").val("");
+			return false;
+		}
+		return b;
+	}
+	
+</script>
+</head> 
+<body class="grey">
+    <div class="category">
+    <!-- insder header -->
+    <!-- <header class="ls-header">
+        <div class="ls-header-left">
+            <a href="javascript:history.go(-1)"><i class="iconfont icon-back"></i></a>
+        </div>
+        <div class="ls-header-title">购买金币</div>
+    </header> -->
+    <section class="phonewrap2">
+             <div class="Monbox">
+                   <div class="paymon">
+                   <p>账户资产</p>
+                   <p class="num">${money}</p>
+                   </div>
+             </div>
+             <div class="paybox2">
+                  <h3>提现</h3>
+                  <div class="paymethod2">
+                       <div class="paylist paylist2">
+                        <form action="${path}//apppay/PhonePay/withdrawend" id="infoInputForm" method="post">
+                            <ul>
+                                <li>
+                                    <div class="payicon wpayicon"><p class="icon02"><img src="${path }/apppay/images/jinb.png"></p><p class="icontit2">
+                                    	提现金额：<input type="text" id="zhBalance" name="zhBalance" value="" placeholder="请输入提现金额"
+                                    	onkeyup="checkNum(this.value)" onpaste="checkNum(this.value)"/>元</p><span></span></div>
+                                </li>
+                                <li>
+                                    <div class="payicon wpayicon"><p class="icon02"></p><p class="icontit2">姓名：<input type="text" id="username" name="username" value="" placeholder="请输入姓名"/></p><span></span></div>
+                                </li>
+                                <li>
+                                    <div class="payicon wpayicon"><p class="icon02"></p><p class="icontit2">银行卡号：<input type="text" id="bankCardNo" name="bankCardNo" value="" placeholder="请输入银行卡号"/></p><span></span></div>
+                                </li>
+                            </ul>
+                            <input type="hidden" id="qlId" name="qlId" value=""/>
+             				<input type="hidden" id="subzh" name="subzh" value="${sub.subzh}"/>
+             				<input type="hidden" id="ipvalue" name="ipvalue"/>
+             				<input type="hidden" id="availMoney" name="availMoney" value="${money}"/>
+             				<input type="hidden" id="cardno" name="cardno" value=""/>
+             				<div class="paymon">
+	             				<p><a href="javascript:void(0);" class="consu" onclick="buy()" id="sbn">提交</a></p>
+			                </div>
+                        </form>    
+                       </div>
+                  </div>
+                  <h3>提现时间为周一至周五工作日内，到账时间为T+1日，如遇节假日顺延。提现中如遇到任何问题，请联系客服 <em></em></h3>
+             </div>
+    </section>
+</body>
+</html>

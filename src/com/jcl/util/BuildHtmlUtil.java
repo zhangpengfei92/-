@@ -1,0 +1,88 @@
+package com.jcl.util;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.util.Map;
+import java.util.Properties;
+
+import javax.servlet.http.HttpSession;
+
+import freemarker.template.Configuration;
+import freemarker.template.DefaultObjectWrapper;
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
+import freemarker.template.TemplateExceptionHandler;
+
+public class BuildHtmlUtil {
+	/*** 
+	 * 创建页面
+	 */
+	public static boolean createHtml(Map<String, Object> mm, String templatepath, String fileName,HttpSession session) throws IOException, TemplateException {
+		String fabu = session.getServletContext().getRealPath("/WebRoot");
+		String moban = session.getServletContext().getRealPath("WEB-INF/ftl");
+		Configuration cfg = new Configuration();
+		cfg.setDefaultEncoding("UTF-8");
+		//加载freemarker模板文件     
+		cfg.setDirectoryForTemplateLoading(new File(moban)); 
+		//设置对象包装器     
+		cfg.setObjectWrapper(new DefaultObjectWrapper());
+		//设置异常处理器
+		cfg.setTemplateExceptionHandler(TemplateExceptionHandler.IGNORE_HANDLER);
+
+		Template template = cfg.getTemplate(templatepath);
+		template.setEncoding("UTF-8");
+		try {
+			Writer out = new OutputStreamWriter(new FileOutputStream(fabu+"/"+fileName), "UTF-8");
+			template.process(mm, out);
+			out.close();
+		} catch(Exception e){
+			e.printStackTrace(); 
+			return false;
+		}
+		return true;
+	}
+	public static boolean createHtmlMobile(Map<String, Object> mm, String templatepath, String fileName) throws IOException, TemplateException {
+		String moban = (String) getProperties("properties.properties").get("MOBAN_FILE_PATH_MOBILE");
+		String fabu =  (String) getProperties("properties.properties").get("PUBLISH_FILE_PATH_MOBILE");
+		Configuration cfg = new Configuration();
+		cfg.setDefaultEncoding("UTF-8");
+		//加载freemarker模板文件     
+		cfg.setDirectoryForTemplateLoading(new File(moban)); 
+		//设置对象包装器     
+		cfg.setObjectWrapper(new DefaultObjectWrapper());
+		//设置异常处理器
+		cfg.setTemplateExceptionHandler(TemplateExceptionHandler.IGNORE_HANDLER);
+
+		Template template = cfg.getTemplate(templatepath);
+		template.setEncoding("UTF-8");
+		try {
+			Writer out = new OutputStreamWriter(new FileOutputStream(fabu+"/"+fileName), "UTF-8");
+			template.process(mm, out);
+			out.close();
+		} catch(Exception e){
+			e.printStackTrace(); 
+			return false;
+		}
+		return true;
+	}
+	
+	public static Properties getProperties(String filePath) throws IOException {  
+        InputStream in = Thread.currentThread().getContextClassLoader()  
+                .getResourceAsStream(filePath);  
+        Properties prop = new Properties();  
+        try {  
+            prop.load(in);  
+        } catch (IOException e) {  
+            e.printStackTrace();  
+        } finally {  
+            if (in != null) {  
+                in.close();  
+            }  
+        }  
+        return prop;  
+    } 
+}

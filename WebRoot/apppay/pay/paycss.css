@@ -1,0 +1,51 @@
+@charset "utf-8";
+/* CSS Document */
+*{ margin:0; padding:0;}
+a{text-decoration:none; color:#333;}
+ul,li{list-style-type:none;}
+img{ border:0; vertical-align:middle;}
+em,i{ font-style:normal;}
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,br,pre,form,fieldset,input,textarea,p,blockquote,th,td,img,select,input,a,div,strong,span{ margin: 0;
+padding: 0; font-weight:normal; }
+body{ width:100%;font-family:"微软雅黑",Arial; overflow-x: hidden;padding-bottom: 5rem;background: #fafafa;}
+table {padding: 0;border: 0px;border-collapse: collapse;}
+/*----------------*/
+.bg{width: 99%;max-width: 42rem;background:#fff;margin: 0 auto;padding-bottom: 5rem;}    
+.top{width:98%;max-width: 40rem; height: 10rem;margin: 0.5rem auto;text-align: center;border-radius: 0.4rem;
+	background:-moz-linear-gradient(left top, #d289ff, #7686ff);/*火狐*/ 
+	background:-webkit-gradient(linear, 0% 0%, 100% 100%,from(#d289ff), to(#7686ff));/*谷歌*/
+ 	background-image: -webkit-gradient(linear, right bottom, left top, color-start(0, #d289ff), color-stop(1, #7686ff));/* Safari & Chrome*/
+ 	filter:  progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr='#d289ff', endColorstr='#7686ff'); /*IE6 & IE7*/
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(GradientType=35,startColorstr='#d289ff', endColorstr='#7686ff')"; /* IE8 */}
+.top p{font-size:1.2rem;line-height: 2.2rem;color: #fff;}
+.top .balance i{font-size:1.9rem;}
+.top .balance{padding-top: 3rem;}
+.main .btit{font-size: 1.2rem;text-align: left;line-height: 4rem;padding-left: 2rem;font-weight: 600;}
+.line{width: 98% ;max-width: 40rem;background: #eee;height: 0.4rem;margin: 0 auto;margin-bottom: 0.5rem;}
+.main{width: 98%;max-width: 30rem;height: auto;margin: 0 auto;}
+ 
+.main table td{font-size: 1.0rem;text-align: left;line-height:3rem;color: #333;}
+.main .tit{padding-left: 2rem;}
+
+.main table input{height: 1.6rem;display: inline-block;font-size: 1.2rem;color: #333;width: 12rem;outline: none;border-bottom:0.1rem solid #b3bcff;border-top:none;border-left:none;border-right:none;padding-left: 0.4rem; }
+.main select{width: 12.4rem;height: 1.6rem;outline: none;font-size: 1.2rem;color: #333;border-bottom:0.1rem solid #b3bcff;border-top:none;border-left:none;border-right:none;padding-left: 0.4rem;}
+ .ok{width: 98%;max-width: 40rem;height: 3rem;background: #7686ff;color: #fff;text-align: center;font-size: 1.2rem;line-height: 3.0rem;display: block;margin: 1rem auto;border-radius: 0.4rem;}
+ .ok:hover{background: #4d62fc;}
+/*------------------*/
+.main0{width:98%;max-width: 30rem;height: auto;margin: 0 auto;}
+.main0 table td{font-size: 1.0rem;text-align: left;line-height:3rem;color: #333;}
+.main0 table .tit{padding-left: 2rem;}
+.main0 table .tit0{font-size: 1.6rem;text-align: right;padding-right: 0.5rem;}
+.main0 table input{height: 1.6rem;display: inline-block;font-size: 1.2rem;color: #333;width: 12rem;outline: none;border-bottom:0.1rem solid #b3bcff;border-top:none;border-left:none;border-right:none;padding-left: 0.4rem; }
+.main0 select{width: 12.4rem;height: 1.6rem;outline: none;font-size: 1.2rem;color: #333;border-bottom:0.1rem solid #b3bcff;border-top:none;border-left:none;border-right:none;padding-left: 0.4rem;}
+.main0 .choosebox{padding-top:2rem;overflow: hidden;padding-left: 2rem;padding-bottom:1rem;} 
+
+.main0 .choosebox li{padding-right: 3rem;float: left;}
+.main0 .choosebox input{width: 1rem;height: 1rem;margin-left:5.2rem;position: relative;bottom:1.2rem;}
+.main0 .choosebox .wexin{width: 78px;height: 26px;background: url(images/wechat1.png) no-repeat center center;}
+.main0 .choosebox .zhifub{width: 78px;height: 26px;background: url(images/alipay1.png) no-repeat center center;}
+.main0 .choosebox .card{width: 78px;height: 26px;background: url(images/bankcard1.png) no-repeat center center;}
+ .ok:hover{background: #4d62fc;}
+
+
+

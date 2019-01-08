@@ -1,0 +1,180 @@
+
+.ui-table ::-webkit-scrollbar-button{display:none;}
+
+/*表格操作条样式 */
+.ui-table-optBar{z-index:2;overflow:hidden;position:relative;top:4px;float:left;width:100%;padding-bottom:7px;background:url(img/hr.png) repeat-x left bottom;}
+.ui-table-optBar button{float:left;margin-right:8px;}
+/*** 表格设置按钮 ***/
+.ui-table-optBar .ui-table-setting{float:right;margin-right:-8px;}
+.ui-table-optBar .ui-table-setting button{float:right;}
+.ui-table-optBar .ui-table-setting .ui-select{float:right;margin-right:10px;}
+
+/*表格区域样式 */
+.ui-table-panel{overflow:hidden;z-index:1;position:relative;width:100%;margin-bottom:3px;padding-bottom:1px;}
+
+/*** 表格主要区域内容样式 - 表格头 ***/
+.ui-table-thead{position:relative;height:39px;/*border:1px solid #E1E6EA;*/border-right:0;border-left:0;/*background:#EDF4F9;*/ background:url(../img/skin_/thbg.png);}
+.ui-table-main{z-index:3;position:absolute;left:0;top:0;right:0;overflow:hidden;}
+.ui-table th{height:40px;padding-left:5px;border-left:1px solid #f2f2f2;border-right:0;/*background:#EDF4F9;*/ background:url(../img/skin_/thbg.png); cursor:pointer;}
+.ui-table th:hover{ background:#F2F2F2;}
+.ui-table th:first-child{border-left:0;}
+/* 表格头部名 */
+.ui-table-th{position:relative;padding-right:25px;}
+.ui-table-thTitle{white-space:nowrap;color:#333;}
+.ui-table-th a{position:absolute;right:8px;top:1px;*top:3px;}
+/*排序*/
+.ui-table-th .ui-icon2-sort,.ui-table-th .ui-icon2-sort-asc,.ui-table-th .ui-icon2-sort-desc{right:5px;top:3px;}
+/*拖拽线*/
+.ui-table-drag{position:absolute;right:-1px;top:-6px;width:2px;height:33px;cursor:col-resize;border-right:1px solid transparent;background:transparent;}
+.ui-table-drag.ui-table-dragging{border-right:1px dashed #ff7200;}
+/** 滚动条存在时 **/
+.ui-table-scroll-patch{display:none;position:absolute;right:0;top:0;width:10px;*width:17px;height:33px;border:1px solid #E1E6EA;border-right:0;border-left:0;background:#EDF4F9;}
+.ui-table-hasScroll .ui-table-scroll-patch{display:block;}
+.ui-table-hasScroll .ui-table-thead .ui-table-main{right:10px;*right:17px;}
+
+
+/*** 表格主要区域内容样式 - 表格主体 ***/
+.ui-table-tbody{position:relative;overflow-y:auto;overflow-x:hidden;}
+.ui-table-tbody td{padding:10px 10px 6px 6px;word-wrap:break-word;word-break:break-all;overflow:hidden;border-left:1px dotted #fff;/*border-bottom:1px solid #e6e6e6;*/background:#fff;color:#333;border-bottom:1px solid #ececec;}
+.ui-table-tbody table{margin-top:-39px;*margin-top:-39px;}
+.ui-table-tbody table tr.even{background:#FCFCFC;}
+
+.ui-table-blank{border-left:none;}
+.ui-table-division{z-index:5;position:relative;top:-1px;height:0;border-top:1px solid #e7e7e7;border-bottom:1px solid #f6f6f6;}
+.ui-table-hScroll.ui-table-division{border-top:0;}
+
+/*** 表格主要区域内容样式 - 模拟横滚动条 ***/
+.ui-table-scroll-horizontal{overflow-x:auto;overflow-y:hidden;*height:17px;}
+.ui-table-hasScroll .ui-table-scroll-horizontal{margin-right:10px;*margin-right:17px;}
+.ui-table-scroll-horizontal div{border-top:1px solid transparent;}
+
+
+/***** CHECKBOX冻结 *****/
+.ui-table-fixed-checkbox .table-front-fixed{z-index:2;position:absolute;left:0;top:0;width:52px;overflow:hidden;}
+.ui-table-fixed-checkbox .ui-table-thead .table-front-fixed{border-right:1px solid #f7f7f7;}
+.ui-table-fixed-checkbox .ui-table-checkbox{width:47px;padding-right:0;}
+.ui-table-fixed-checkbox .ui-table-main{left:53px;}
+/*** 表格主体部分 ***/
+.ui-table-fixed-checkbox .ui-table-tbody .table-front-fixed{/*border-right:1px solid #F3F3F3;*/background:#fff;}
+.ui-table-fixed-checkbox .ui-table-tbody .table-front-fixed td{border-left:none;border-bottom:1px solid #ececec;}
+.ui-table-fixed-checkbox .ui-table-tbody .ui-table-checkbox{padding-left:5px;}
+.ui-table-fixed-checkbox .ui-table-tbody .ui-table-main{left:53px;right:0;background:#fff;}
+.ui-table-hasScroll.ui-table-fixed-checkbox .ui-table-tbody .ui-table-main{*right:17px;}
+
+.ui-table-fixed-checkbox .ui-table-scroll-horizontal{margin-left:52px;}
+
+
+/***** 操作列冻结 *****/
+.ui-table-fixed-opt .ui-table-thead .table-finale-fixed{z-index:2;position:absolute;right:0;top:0;border-left:1px solid #f2f2f2;}
+.ui-table-fixed-opt .ui-table-operation{width:47px;padding-right:0;}
+.ui-table-fixed-opt .ui-table-operation>a{margin-left:8px;color:#1890ff;}
+.ui-table-fixed-opt .ui-table-operation>a:first-child{margin-left:0px;}
+.ui-table-fixed-opt .ui-table-operation .ui-table-thTitle{padding-right:0;}
+.ui-table-fixed-opt .ui-table-thead .ui-table-main,.ui-table-fixed-opt .ui-table-tbody .ui-table-main{right:53px;}
+/*** 表格主体部分 ***/
+.ui-table-fixed-opt .ui-table-tbody .table-finale-fixed{z-index:4;position:absolute;right:0;top:0;width:52px;/*border-left:1px solid #F3F3F3;*/background:#fff;}
+.ui-table-fixed-opt .ui-table-tbody .table-finale-fixed td{border-left:none;}
+
+/** 滚动条存在时 **/
+.ui-table-fixed-opt.ui-table-hasScroll .ui-table-thead .ui-table-operation{width:57px;*width:64px;}
+.ui-table-fixed-opt.ui-table-hasScroll .ui-table-thead .ui-table-main{right:63px;*right:70px;}
+.ui-table-fixed-opt.ui-table-hasScroll .ui-table-tbody .ui-table-main{right:53px;*right:0;}
+.ui-table-fixed-opt.ui-table-hasScroll .ui-table-tbody .table-finale-fixed{right:0;*position:relative;*float:right;}
+
+.ui-table-fixed-opt .ui-table-scroll-horizontal{margin-right:52px;}
+.ui-table-hasScroll.ui-table-fixed-opt .ui-table-scroll-horizontal{margin-right:62px;*margin-right:52px;}
+
+
+/***** 不换行的列 *****/
+.ui-table-nowrap.ui-table .ui-table-td{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+
+/*表格无数据 、加载中*/
+.ui-table-tbody .ui-nodata-tip{position:absolute;top:50px;left:50%;margin:35px 0 0 -130px;width:6em; background:url(../img/skin_/no.png) no-repeat 0 8px; padding:8px 30px; font-size:16px; color:#999;}
+.ui-table-loading{position:absolute;top:60px;left:50%;height:64px;margin:35px 0 0 -130px;padding-left:74px;line-height:64px;font-size:24px;color:#C7C7C7;background:url(img/table/loading.gif) no-repeat left center;}
+
+
+
+/*头部阴影*/
+.ui-icon2{display:inline-block;width:16px;height:16px;background-image:url(../img/skin_/uew_icon2.png);}
+
+.ui-icon2-sort{background-position:-16px 0;}
+.ui-icon2-sort-asc{background-position:-32px 0;}
+.ui-icon2-sort-desc{background-position:-48px 0;}
+
+/*头部筛选*/
+.Inputbox{ padding:0 0 25px 0; background:#fff;}
+.Inputbox ul.Sxinput{width:100%;}
+.Inputbox ul.Sxinput li{ float:left; width:24%; padding-bottom:15px;}
+.Inputbox ul.Sxinput li label{ display:inline-block; float:left; width:16%; min-width:80px; line-height:32px;text-align:left;}
+.Inputbox ul.Sxinput li input{ width:50%; min-width:150px; line-height:28px; height:28px; border:#dadada 1px solid; padding:0 13px;vertical-align:middle;-webkit-border-radius:4px; -moz-border-radius:4px;border-radius:4px;behavior: url(js/PIE.htc);position:relative;overflow:hidden;margin-right:30px;float:left;}
+.Inputbox ul.Sxinput li input:hover{border:1px solid #49A9ee;}
+.Inputbox ul.Sxinput li input:focus{border-color: rgba(82, 168, 236, 0.8);outline: thin dotted \9;box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);}
+.Nad{ padding-bottom:30px; width:100%; float:left;}
+/*卡片切换*/
+.cardbox{ padding-top:15px; font-size:14px;background:#fff;}
+.cardbox ul{ border-bottom:1px solid #E4E4E4; overflow:hidden; padding:0 10px;}
+.cardbox ul li{ float:left; padding:0 20px;}
+.cardbox ul li a{ color:#778188; width:80px; display:inline-block; text-align:center; border-bottom:2px solid #fff; padding-bottom:5px;}
+.cardbox ul li a:hover{color:#1890ff;}
+.cardbox ul li a.select{color:#1890ff; border-bottom:2px solid #1890ff;}
+/*列表统计*/
+.Infobox{ border-bottom:20px solid #f2f2f2; background:#fff;}
+.Infobox ul{ overflow:hidden;}
+.Infobox ul li{ float:left; width:33%; text-align:center; margin:28px 0 18px; border-right:1px solid #e4e4e4;}
+.Infobox ul li p{ padding-bottom:5px; font-size:26px; color:#333;}
+.Infobox ul li p.tit{color:#999; font-size:14px;}
+.Infobox ul li p.tit span{ display:inline-block; cursor:pointer; padding:0 5px;}
+/*列表说明*/
+.explain{padding:16px 28px 4px 30px; background:#fff;}
+.explain p{ line-height:32px; color:#6b6b6b; padding-left:34px; border:1px solid #9cd9ff; border-radius:4px;}
+/*标准列表*/
+.Frombox{ width:42%; padding-left:28%; min-width:570px; padding-top:30px;padding-bottom:30px;}
+.inline{ overflow:hidden; width:100%;min-width:660px; padding:10px 0;}
+.inline label{line-height:30px; width:20%; display:block; float:left; padding-right:11px; text-align:right;}
+.inline label.ts{color:#fff;}
+.inline label i.grey{ color:#bfbfbf;}
+.inline input[type="text"]{float:left;width:67%;line-height:30px; height:30px; border:#d9d9d9 1px solid; padding:0 12px;vertical-align:middle;-webkit-border-radius:4px; -moz-border-radius:4px;border-radius:4px;behavior: url(js/PIE.htc);position:relative;overflow:hidden;}
+.inline input:hover{border:1px solid #49A9ee;}
+.inline input:focus{border-color: rgba(82, 168, 236, 0.8);outline: thin dotted \9;box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);}
+.inline textarea{ resize:none; height:100px;border:#d9d9d9 1px solid; padding:10px 12px;vertical-align:middle;width:67%;-webkit-border-radius:4px; -moz-border-radius:4px;border-radius:4px;behavior: url(js/PIE.htc);position:relative;overflow:hidden;}}
+.inline textarea:hover{border:1px solid #49A9ee;}
+.inline textarea:focus{border-color: rgba(82, 168, 236, 0.8);outline: thin dotted \9;box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(82, 168, 236, 0.6);}
+.inline p{ padding:8px 0;color:#999; line-height:14px;font-size:14px;}
+.inlinen p{color:#fff;}
+/*解决input输入文字高亮问题*/
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+color: #bfbfbf; 
+}
+
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+color: #bfbfbf;
+}
+
+input:-ms-input-placeholder,
+textarea:-ms-input-placeholder {
+color: #bfbfbf;
+}
+
+input::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder {
+color: #bfbfbf;
+}/*checkbox样式调整*/
+/* input[type="checkbox"]{ display:none;} */
+input[type="checkbox"] + label {
+    cursor: pointer;
+    font-size: 1em;
+}
+[id^="checkbox-"] + label {
+    background:url(../img/skin_/blue_01.png) no-repeat 0 center;
+    /*border: 1px solid #666666;
+    padding: 9px;
+    border-radius: 3px;*/
+	height:19px;
+	width:19px;
+    display: inline-block;
+    vertical-align: middle;
+}
+input[type="checkbox"] + label:hover { background:url(../img/skin_/blue_03.png) no-repeat 0 center;
+}
+input[type="checkbox"]:checked + label {background:url(../img/skin_/blue_05.png) no-repeat 0 center;}
+

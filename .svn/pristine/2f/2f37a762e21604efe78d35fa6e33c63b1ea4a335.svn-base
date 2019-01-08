@@ -1,0 +1,216 @@
+package com.jcl.pojo;
+
+import java.math.BigDecimal;
+import java.util.Date;
+
+public class FundSettlelog {
+    private Integer id;
+
+    private String subzh;
+
+    private String allocbroker;
+
+    private String allocchannel;
+
+    private String phone;
+
+    private String name;
+
+    private Integer registnum;
+
+    private Integer addfund;
+
+    private BigDecimal addbalance;
+
+    private Integer stockfund;
+
+    private BigDecimal stockbalance;
+
+    private BigDecimal feebalance;
+
+    private BigDecimal deferredbalance;
+
+    private BigDecimal feenextbalance;
+
+    private BigDecimal overbalance;
+
+    private BigDecimal sumbalance;
+
+    private String settledesc;
+
+    private Date settletime;
+
+    private Date createtime;
+
+    private Integer fundtype;
+
+    private String agentzh;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getSubzh() {
+        return subzh;
+    }
+
+    public void setSubzh(String subzh) {
+        this.subzh = subzh == null ? null : subzh.trim();
+    }
+
+    public String getAllocbroker() {
+        return allocbroker;
+    }
+
+    public void setAllocbroker(String allocbroker) {
+        this.allocbroker = allocbroker == null ? null : allocbroker.trim();
+    }
+
+    public String getAllocchannel() {
+        return allocchannel;
+    }
+
+    public void setAllocchannel(String allocchannel) {
+        this.allocchannel = allocchannel == null ? null : allocchannel.trim();
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone == null ? null : phone.trim();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
+    }
+
+    public Integer getRegistnum() {
+        return registnum;
+    }
+
+    public void setRegistnum(Integer registnum) {
+        this.registnum = registnum;
+    }
+
+    public Integer getAddfund() {
+        return addfund;
+    }
+
+    public void setAddfund(Integer addfund) {
+        this.addfund = addfund;
+    }
+
+    public BigDecimal getAddbalance() {
+        return addbalance;
+    }
+
+    public void setAddbalance(BigDecimal addbalance) {
+        this.addbalance = addbalance;
+    }
+
+    public Integer getStockfund() {
+        return stockfund;
+    }
+
+    public void setStockfund(Integer stockfund) {
+        this.stockfund = stockfund;
+    }
+
+    public BigDecimal getStockbalance() {
+        return stockbalance;
+    }
+
+    public void setStockbalance(BigDecimal stockbalance) {
+        this.stockbalance = stockbalance;
+    }
+
+    public BigDecimal getFeebalance() {
+        return feebalance;
+    }
+
+    public void setFeebalance(BigDecimal feebalance) {
+        this.feebalance = feebalance;
+    }
+
+    public BigDecimal getDeferredbalance() {
+        return deferredbalance;
+    }
+
+    public void setDeferredbalance(BigDecimal deferredbalance) {
+        this.deferredbalance = deferredbalance;
+    }
+
+    public BigDecimal getFeenextbalance() {
+        return feenextbalance;
+    }
+
+    public void setFeenextbalance(BigDecimal feenextbalance) {
+        this.feenextbalance = feenextbalance;
+    }
+
+    public BigDecimal getOverbalance() {
+        return overbalance;
+    }
+
+    public void setOverbalance(BigDecimal overbalance) {
+        this.overbalance = overbalance;
+    }
+
+    public BigDecimal getSumbalance() {
+        return sumbalance;
+    }
+
+    public void setSumbalance(BigDecimal sumbalance) {
+        this.sumbalance = sumbalance;
+    }
+
+    public String getSettledesc() {
+        return settledesc;
+    }
+
+    public void setSettledesc(String settledesc) {
+        this.settledesc = settledesc == null ? null : settledesc.trim();
+    }
+
+    public Date getSettletime() {
+        return settletime;
+    }
+
+    public void setSettletime(Date settletime) {
+        this.settletime = settletime;
+    }
+
+    public Date getCreatetime() {
+        return createtime;
+    }
+
+    public void setCreatetime(Date createtime) {
+        this.createtime = createtime;
+    }
+
+    public Integer getFundtype() {
+        return fundtype;
+    }
+
+    public void setFundtype(Integer fundtype) {
+        this.fundtype = fundtype;
+    }
+
+    public String getAgentzh() {
+        return agentzh;
+    }
+
+    public void setAgentzh(String agentzh) {
+        this.agentzh = agentzh == null ? null : agentzh.trim();
+    }
+}

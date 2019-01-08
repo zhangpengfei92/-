@@ -1,0 +1,90 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>确认支付</title>
+<meta name="viewport"
+	content="width=320,maximum-scale=1,user-scalable=no">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta content="telephone=no" name="format-detection">
+<link href="${path }/apppay/css/css.css" rel="stylesheet"
+	type="text/css" />
+<link href="${path }/apppay/css/animation.css" rel="stylesheet"
+	type="text/css" />
+<script type="text/javascript" src="${path}/apppay/js/jquery.js"></script>
+<script type="text/javascript" src="${path}/apppay/js/md5.js"></script>
+<script type="text/javascript" src="${path}/apppay/js/All.js"></script>
+<script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
+<script src="${path}/apppay/js/jquery-1.9.1.min.js"
+	type="text/javascript"></script>
+<script type="text/JavaScript" src="${path }/js/DateFormatter.js"></script>
+<script type="text/javascript">
+// 填充默认的时间字段
+$(function () {
+    var nowDate = new Date().format("yyyyMMddhhmmss");
+    $("#reqTime").val(nowDate);
+    $("#orderTime").val(nowDate);
+    $("#orderCode").val($("#subzh").val()+"_" + nowDate);
+});
+
+function clickSave() {
+	var totalAmount= $("#totalAmount").val();
+	var pattern = /(^[1-9]([0-9]+)?(\.[0-9]{1,2})?$)|(^(0){1}$)|(^[0-9]\.[0-9]([0-9])?$)/;
+	   if(!pattern.test(totalAmount) || totalAmount<=0){
+		   alert("金额不合理");
+	  	   return ;
+	   }
+	
+    $("#orderSignForm").submit();
+}
+</script>
+</head>
+<body class="grey">
+	<div class="category">
+		<section class="phonewrap2">
+			<div class="Monbox">
+				<div class="paymon">
+					<p class="mtit">网关支付</p>
+				</div>
+			</div>
+			<div class="paybox2">
+				<h3>支付方式</h3>
+				<div class="paymethod2">
+					<div class="paylist paylist2">
+						<form action="${path}/apppay/PhonePay/orderPay" method="post"  id="orderSignForm">
+							<ul>
+								<li style="border-bottom: none;">
+									<div class="payicon">
+										<p class="icontit">杉德网关支付</p>
+									</div>
+									<div id="container">
+										<input type="radio" class="input_check" name="radio" value="2"
+											checked="checked">
+									</div>
+								</li>
+								<input type="hidden" name="userId" id="userId" value="${fixSubzh }" />
+								<input type="hidden" name="subzh" id="subzh" value="${subzh }" />
+								<input type="hidden" name="orderCode" id="orderCode" value="" />
+								<li>
+									<div class="payicon wpayicon">
+										<p class="icon02"></p>
+										<p class="icontit2">
+											支付金额： <input type="text" id="totalAmount" name="totalAmount"
+												value="" placeholder="请输入金额"  onkeyup="value=value.replace(/[^\-?\d.]/g,'')"/>
+										</p>
+										<span></span>
+									</div>
+								</li>
+
+								
+							</ul>
+						</form>
+							<button class="rebut rebut2" onclick="clickSave();">确认支付</button>
+					</div>
+				</div>
+			</div>
+		</section>
+</body>
+</html>

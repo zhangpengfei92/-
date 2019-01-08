@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jcl.dao.FeetemplateMapper" >
+  <resultMap id="BaseResultMap" type="com.jcl.pojo.Feetemplate" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="sc" property="sc" jdbcType="INTEGER" />
+    <result column="stockcode" property="stockcode" jdbcType="VARCHAR" />
+    <result column="stockname" property="stockname" jdbcType="VARCHAR" />
+    <result column="bbbz" property="bbbz" jdbcType="NUMERIC" />
+    <result column="jgratio" property="jgratio" jdbcType="NUMERIC" />
+    <result column="qdratio" property="qdratio" jdbcType="NUMERIC" />
+    <result column="dlsratio" property="dlsratio" jdbcType="NUMERIC" />
+    <result column="jjrratio" property="jjrratio" jdbcType="NUMERIC" />
+    <result column="tldtbzj1" property="tldtbzj1" jdbcType="NUMERIC" />
+    <result column="tldtbzj2" property="tldtbzj2" jdbcType="NUMERIC" />
+    <result column="tlktbzj1" property="tlktbzj1" jdbcType="NUMERIC" />
+    <result column="tlktbzj2" property="tlktbzj2" jdbcType="NUMERIC" />
+    <result column="sqfs" property="sqfs" jdbcType="INTEGER" />
+    <result column="month" property="month" jdbcType="INTEGER" />
+    <result column="parentId" property="parentid" jdbcType="INTEGER" />
+    <result column="userid" property="userid" jdbcType="NUMERIC" />
+    <result column="agentzh" property="agentzh" jdbcType="VARCHAR" />
+    <result column="modifytime" property="modifytime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, sc, stockcode, stockname, bbbz, jgratio, qdratio, dlsratio, jjrratio, tldtbzj1, 
+    tldtbzj2, tlktbzj1, tlktbzj2, sqfs, month, parentId, userid, agentzh, modifytime
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jcl.pojo.FeetemplateExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from feetemplate
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from feetemplate
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from feetemplate
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jcl.pojo.FeetemplateExample" >
+    delete from feetemplate
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jcl.pojo.Feetemplate" >
+    insert into feetemplate (id, sc, stockcode, 
+      stockname, bbbz, jgratio, 
+      qdratio, dlsratio, jjrratio, 
+      tldtbzj1, tldtbzj2, tlktbzj1, 
+      tlktbzj2, sqfs, month, 
+      parentId, userid, agentzh, 
+      modifytime)
+    values (#{id,jdbcType=INTEGER}, #{sc,jdbcType=INTEGER}, #{stockcode,jdbcType=VARCHAR}, 
+      #{stockname,jdbcType=VARCHAR}, #{bbbz,jdbcType=NUMERIC}, #{jgratio,jdbcType=NUMERIC}, 
+      #{qdratio,jdbcType=NUMERIC}, #{dlsratio,jdbcType=NUMERIC}, #{jjrratio,jdbcType=NUMERIC}, 
+      #{tldtbzj1,jdbcType=NUMERIC}, #{tldtbzj2,jdbcType=NUMERIC}, #{tlktbzj1,jdbcType=NUMERIC}, 
+      #{tlktbzj2,jdbcType=NUMERIC}, #{sqfs,jdbcType=INTEGER}, #{month,jdbcType=INTEGER}, 
+      #{parentid,jdbcType=INTEGER}, #{userid,jdbcType=NUMERIC}, #{agentzh,jdbcType=VARCHAR}, 
+      #{modifytime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.jcl.pojo.Feetemplate" useGeneratedKeys="true" keyProperty="id">
+    insert into feetemplate
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="sc != null" >
+        sc,
+      </if>
+      <if test="stockcode != null" >
+        stockcode,
+      </if>
+      <if test="stockname != null" >
+        stockname,
+      </if>
+      <if test="bbbz != null" >
+        bbbz,
+      </if>
+      <if test="jgratio != null" >
+        jgratio,
+      </if>
+      <if test="qdratio != null" >
+        qdratio,
+      </if>
+      <if test="dlsratio != null" >
+        dlsratio,
+      </if>
+      <if test="jjrratio != null" >
+        jjrratio,
+      </if>
+      <if test="tldtbzj1 != null" >
+        tldtbzj1,
+      </if>
+      <if test="tldtbzj2 != null" >
+        tldtbzj2,
+      </if>
+      <if test="tlktbzj1 != null" >
+        tlktbzj1,
+      </if>
+      <if test="tlktbzj2 != null" >
+        tlktbzj2,
+      </if>
+      <if test="sqfs != null" >
+        sqfs,
+      </if>
+      <if test="month != null" >
+        month,
+      </if>
+      <if test="parentid != null" >
+        parentId,
+      </if>
+      <if test="userid != null" >
+        userid,
+      </if>
+      <if test="agentzh != null" >
+        agentzh,
+      </if>
+      <if test="modifytime != null" >
+        modifytime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="sc != null" >
+        #{sc,jdbcType=INTEGER},
+      </if>
+      <if test="stockcode != null" >
+        #{stockcode,jdbcType=VARCHAR},
+      </if>
+      <if test="stockname != null" >
+        #{stockname,jdbcType=VARCHAR},
+      </if>
+      <if test="bbbz != null" >
+        #{bbbz,jdbcType=NUMERIC},
+      </if>
+      <if test="jgratio != null" >
+        #{jgratio,jdbcType=NUMERIC},
+      </if>
+      <if test="qdratio != null" >
+        #{qdratio,jdbcType=NUMERIC},
+      </if>
+      <if test="dlsratio != null" >
+        #{dlsratio,jdbcType=NUMERIC},
+      </if>
+      <if test="jjrratio != null" >
+        #{jjrratio,jdbcType=NUMERIC},
+      </if>
+      <if test="tldtbzj1 != null" >
+        #{tldtbzj1,jdbcType=NUMERIC},
+      </if>
+      <if test="tldtbzj2 != null" >
+        #{tldtbzj2,jdbcType=NUMERIC},
+      </if>
+      <if test="tlktbzj1 != null" >
+        #{tlktbzj1,jdbcType=NUMERIC},
+      </if>
+      <if test="tlktbzj2 != null" >
+        #{tlktbzj2,jdbcType=NUMERIC},
+      </if>
+      <if test="sqfs != null" >
+        #{sqfs,jdbcType=INTEGER},
+      </if>
+      <if test="month != null" >
+        #{month,jdbcType=INTEGER},
+      </if>
+      <if test="parentid != null" >
+        #{parentid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=NUMERIC},
+      </if>
+      <if test="agentzh != null" >
+        #{agentzh,jdbcType=VARCHAR},
+      </if>
+      <if test="modifytime != null" >
+        #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jcl.pojo.FeetemplateExample" resultType="java.lang.Integer" >
+    select count(*) from feetemplate
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update feetemplate
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.sc != null" >
+        sc = #{record.sc,jdbcType=INTEGER},
+      </if>
+      <if test="record.stockcode != null" >
+        stockcode = #{record.stockcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stockname != null" >
+        stockname = #{record.stockname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bbbz != null" >
+        bbbz = #{record.bbbz,jdbcType=NUMERIC},
+      </if>
+      <if test="record.jgratio != null" >
+        jgratio = #{record.jgratio,jdbcType=NUMERIC},
+      </if>
+      <if test="record.qdratio != null" >
+        qdratio = #{record.qdratio,jdbcType=NUMERIC},
+      </if>
+      <if test="record.dlsratio != null" >
+        dlsratio = #{record.dlsratio,jdbcType=NUMERIC},
+      </if>
+      <if test="record.jjrratio != null" >
+        jjrratio = #{record.jjrratio,jdbcType=NUMERIC},
+      </if>
+      <if test="record.tldtbzj1 != null" >
+        tldtbzj1 = #{record.tldtbzj1,jdbcType=NUMERIC},
+      </if>
+      <if test="record.tldtbzj2 != null" >
+        tldtbzj2 = #{record.tldtbzj2,jdbcType=NUMERIC},
+      </if>
+      <if test="record.tlktbzj1 != null" >
+        tlktbzj1 = #{record.tlktbzj1,jdbcType=NUMERIC},
+      </if>
+      <if test="record.tlktbzj2 != null" >
+        tlktbzj2 = #{record.tlktbzj2,jdbcType=NUMERIC},
+      </if>
+      <if test="record.sqfs != null" >
+        sqfs = #{record.sqfs,jdbcType=INTEGER},
+      </if>
+      <if test="record.month != null" >
+        month = #{record.month,jdbcType=INTEGER},
+      </if>
+      <if test="record.parentid != null" >
+        parentId = #{record.parentid,jdbcType=INTEGER},
+      </if>
+      <if test="record.userid != null" >
+        userid = #{record.userid,jdbcType=NUMERIC},
+      </if>
+      <if test="record.agentzh != null" >
+        agentzh = #{record.agentzh,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modifytime != null" >
+        modifytime = #{record.modifytime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update feetemplate
+    set id = #{record.id,jdbcType=INTEGER},
+      sc = #{record.sc,jdbcType=INTEGER},
+      stockcode = #{record.stockcode,jdbcType=VARCHAR},
+      stockname = #{record.stockname,jdbcType=VARCHAR},
+      bbbz = #{record.bbbz,jdbcType=NUMERIC},
+      jgratio = #{record.jgratio,jdbcType=NUMERIC},
+      qdratio = #{record.qdratio,jdbcType=NUMERIC},
+      dlsratio = #{record.dlsratio,jdbcType=NUMERIC},
+      jjrratio = #{record.jjrratio,jdbcType=NUMERIC},
+      tldtbzj1 = #{record.tldtbzj1,jdbcType=NUMERIC},
+      tldtbzj2 = #{record.tldtbzj2,jdbcType=NUMERIC},
+      tlktbzj1 = #{record.tlktbzj1,jdbcType=NUMERIC},
+      tlktbzj2 = #{record.tlktbzj2,jdbcType=NUMERIC},
+      sqfs = #{record.sqfs,jdbcType=INTEGER},
+      month = #{record.month,jdbcType=INTEGER},
+      parentId = #{record.parentid,jdbcType=INTEGER},
+      userid = #{record.userid,jdbcType=NUMERIC},
+      agentzh = #{record.agentzh,jdbcType=VARCHAR},
+      modifytime = #{record.modifytime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jcl.pojo.Feetemplate" >
+    update feetemplate
+    <set >
+      <if test="sc != null" >
+        sc = #{sc,jdbcType=INTEGER},
+      </if>
+      <if test="stockcode != null" >
+        stockcode = #{stockcode,jdbcType=VARCHAR},
+      </if>
+      <if test="stockname != null" >
+        stockname = #{stockname,jdbcType=VARCHAR},
+      </if>
+      <if test="bbbz != null" >
+        bbbz = #{bbbz,jdbcType=NUMERIC},
+      </if>
+      <if test="jgratio != null" >
+        jgratio = #{jgratio,jdbcType=NUMERIC},
+      </if>
+      <if test="qdratio != null" >
+        qdratio = #{qdratio,jdbcType=NUMERIC},
+      </if>
+      <if test="dlsratio != null" >
+        dlsratio = #{dlsratio,jdbcType=NUMERIC},
+      </if>
+      <if test="jjrratio != null" >
+        jjrratio = #{jjrratio,jdbcType=NUMERIC},
+      </if>
+      <if test="tldtbzj1 != null" >
+        tldtbzj1 = #{tldtbzj1,jdbcType=NUMERIC},
+      </if>
+      <if test="tldtbzj2 != null" >
+        tldtbzj2 = #{tldtbzj2,jdbcType=NUMERIC},
+      </if>
+      <if test="tlktbzj1 != null" >
+        tlktbzj1 = #{tlktbzj1,jdbcType=NUMERIC},
+      </if>
+      <if test="tlktbzj2 != null" >
+        tlktbzj2 = #{tlktbzj2,jdbcType=NUMERIC},
+      </if>
+      <if test="sqfs != null" >
+        sqfs = #{sqfs,jdbcType=INTEGER},
+      </if>
+      <if test="month != null" >
+        month = #{month,jdbcType=INTEGER},
+      </if>
+      <if test="parentid != null" >
+        parentId = #{parentid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        userid = #{userid,jdbcType=NUMERIC},
+      </if>
+      <if test="agentzh != null" >
+        agentzh = #{agentzh,jdbcType=VARCHAR},
+      </if>
+      <if test="modifytime != null" >
+        modifytime = #{modifytime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jcl.pojo.Feetemplate" >
+    update feetemplate
+    set sc = #{sc,jdbcType=INTEGER},
+      stockcode = #{stockcode,jdbcType=VARCHAR},
+      stockname = #{stockname,jdbcType=VARCHAR},
+      bbbz = #{bbbz,jdbcType=NUMERIC},
+      jgratio = #{jgratio,jdbcType=NUMERIC},
+      qdratio = #{qdratio,jdbcType=NUMERIC},
+      dlsratio = #{dlsratio,jdbcType=NUMERIC},
+      jjrratio = #{jjrratio,jdbcType=NUMERIC},
+      tldtbzj1 = #{tldtbzj1,jdbcType=NUMERIC},
+      tldtbzj2 = #{tldtbzj2,jdbcType=NUMERIC},
+      tlktbzj1 = #{tlktbzj1,jdbcType=NUMERIC},
+      tlktbzj2 = #{tlktbzj2,jdbcType=NUMERIC},
+      sqfs = #{sqfs,jdbcType=INTEGER},
+      month = #{month,jdbcType=INTEGER},
+      parentId = #{parentid,jdbcType=INTEGER},
+      userid = #{userid,jdbcType=NUMERIC},
+      agentzh = #{agentzh,jdbcType=VARCHAR},
+      modifytime = #{modifytime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

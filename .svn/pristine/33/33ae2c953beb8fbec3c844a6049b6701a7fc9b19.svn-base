@@ -1,0 +1,39 @@
+@charset "utf-8";
+/* CSS Document */
+html {overflow-y:scroll;background:#fff;-webkit-text-size-adjust:none}
+html, body {overflow-x: hidden;width: 100%; height:100%; padding: 0; margin: 0;}
+body,h1,h2,h3,h4,ul,ol,dl,dd,p,input,form,textarea,pre,fieldset,section{ margin:0;font-size:100%;line-height:1;}
+ul,ol,form,textarea,fieldset,legend { padding:0}
+ul,ol { list-style:none}
+img { -ms-interpolation-mode:bicubic;height:auto}
+textarea { overflow-y:auto;resize:none}
+:focus { outline:0 none}
+fieldset,select,input,textarea,img { border:0}
+a{color:#333}
+a,a:hover { text-decoration:none;-webkit-appearance:none;appearance:none}
+.fix:after { content:".";height:0;visibility:hidden;display:block;clear:both}
+.fix { display:block}
+article,aside,details,figcaption,figure,footer,header,hgroup,nav,section,menu,div,main{ display:block}
+em,i { font-style:normal}
+input[type="search"],input[type="submit" ],input[type="reset"],input[type="button"],button { -webkit-appearance:none}
+body {font-size:100%;color:#333;}
+body,input,select{font-family:"helvetica neue","微软雅黑";}
+/*body { -moz-user-select:none; -webkit-user-select:none; -ms-user-select:none; -khtml-user-select:none; user-select:none}*/
+a,div,p,dl,h1,h2,h3,dt,dd,i,em,b,strong,section,header,article,footer,nav,ul,li,span,menu { -webkit-tap-highlight-color:transparent;-webkit-touch-callout:none; -webkit-user-select:none;}
+table{border-collapse: collapse;}
+tr td{ padding:0; margin:0;}
+/* Public */
+.mobile_wrap * { -moz-box-sizing:border-box; -webkit-box-sizing:border-box; box-sizing:border-box;}
+.y_array,.y_c,.x_c,.xy_cent { width:100%; display:-webkit-box; display:-moz-box; display:box;}
+.td { -webkit-box-flex:1; -moz-box-flex:1; box-flex:1}/* 定义两个可伸缩的元素 */
+.y_array { -webkit-box-orient:vertical;-moz-box-orient:vertical;box-orient:vertical}/* 从上向下垂直排列子元素 */
+.y_c { -webkit-box-align:center;-moz-box-align:center;box-align:center}/* 子元素垂直居中 */
+.x_c { -webkit-box-pack:center;-moz-box-pack:center;box-pack:center}/* 子元素水平居中 */
+.xy_cent{ -webkit-box-align:center;-moz-box-align:center;box-align:center;-webkit-box-pack:center;-moz-box-pack:center;box-pack:center}
+/*start*/
+.yxbox{ padding:1.0rem 3%;color:#000;}
+.yxbox h3{ text-align:center; font-size:1.7rem; font-weight:normal; padding:1.0rem 0;}
+.yxbox h4{ text-align:center; font-size:1.4rem;font-weight:normal; padding:0 0 1.0rem;}
+.yxbox p{font-size:1.2rem; line-height:180%; text-align:justify;color:#333;}
+.yxbox p.Noin{ text-indent:2rem;}
+.yxbox p.action{ font-weight:bold;}

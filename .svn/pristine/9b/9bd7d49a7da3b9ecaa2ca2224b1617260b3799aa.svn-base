@@ -1,0 +1,73 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
+<!DOCTYPE html>
+<html> 
+<head>
+<meta charset="utf-8">
+<title>无法充值提现</title>
+<meta name="viewport" content="width=320,maximum-scale=1,user-scalable=no">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<!-- <meta content="telephone=no" name="format-detection"> -->
+<meta name="format-detection" content="telephone=yes"/><!-- 打电话 -->
+
+<link href="${path }/apppay/css/css.css" rel="stylesheet" type="text/css" />
+<link href="${path }/apppay/css/animation.css" rel="stylesheet" type="text/css" />
+<script src="${path }/apppay/js/jquery-1.9.1.min.js" type="text/javascript" ></script>
+<script src="${path }/apppay/js/All.js" type="text/javascript"></script>
+
+	<link rel="stylesheet" type="text/css" href="${path}/js/easyui/themes/default/easyui.css" />
+	<link rel="stylesheet" type="text/css" href="${path}/js/easyui/themes/icon.css" />
+
+</head> 
+<body class="grey">
+    <div class="category">
+    <section class="phonewrap2">
+             <div class="paybox2">
+                  <h3>操作有误</h3>
+                  <div class="paymethod2">
+                       <div class="paylist paylist2">
+                        <form action="" id="infoInputForm" method="post" min-height="120px;">
+                            <ul>
+                                <li>
+                                    <div class="payicon wpayicon" >
+                                    <p class="icontit2" style="margin-top:10px;margin-bottom:20px;">
+                                    	<c:if test="${empty flag}">
+					             			无法提现，请联系管理员
+					             		</c:if>
+					             		<c:if test="${flag eq 0}">
+					             			你还未实名认证，不能充值。
+					             		</c:if>
+					             		<c:if test="${flag eq 1}">
+					             			你还未实名认证，不能提现。
+					             		</c:if>
+					             		<c:if test="${flag eq 2}">
+					             			用户不存在，不能提现
+					             		</c:if>
+					             		<c:if test="${flag eq 3}">
+					             			程序出错，不能提现。
+					             		</c:if>
+					             		<c:if test="${flag eq 4}">
+					             			用户有持仓，不能提现
+					             		</c:if>
+					             		<c:if test="${flag eq 5}">
+					             			可用余额不足，不能提现
+					             		</c:if>
+					             		<c:if test="${flag eq 6}">
+					             			非普通用户无法充值
+					             		</c:if>
+					             		<c:if test="${flag eq 7}">
+					             			可用资不足无法提现
+					             		</c:if>
+                                    </p>
+                                    </div>
+                                </li>
+                            </ul>
+             				
+                        </form>    
+                       </div>
+                  </div>
+             </div>
+    </section>
+    </div>
+</body>
+</html>
