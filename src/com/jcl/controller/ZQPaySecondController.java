@@ -33,6 +33,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jcl.service.CxpayService;
 import com.jcl.util.DateUtil;
+import com.jcl.util.PayUtils;
 
 /** 
  * @author zpf
@@ -157,9 +158,10 @@ public class ZQPaySecondController {
 		map.put("payType", "1");
 		map.put("orderPrice", "0.01");
 		map.put("merchantId", "");
-		map.put("productName", "");
-		map.put("remark", "");
-		map.put("sign", "");
+		map.put("productName", "zq");
+		map.put("remark", "test");
+		String sign=PayUtils.md5(map, "=", key);
+		map.put("sign",sign);
 		return "";
 	}
 	
