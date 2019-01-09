@@ -151,7 +151,7 @@ public class ZQPaySecondController {
 		return "cxpay/callback";	
 	}
 	@RequestMapping("/payFive")
-	public String payFive() {
+	public String payFive(Model model) {
 		String key ="4df8b6b63eed56d8dc79c26376fe73e2";
 		HashMap<String, Object> map=new HashMap<String,Object>();
 		map.put("tradeNo", DateUtil.dateFormat(new Date(), "yyyymmddhhss")+"15118953197");
