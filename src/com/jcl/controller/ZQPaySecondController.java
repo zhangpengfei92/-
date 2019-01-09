@@ -34,6 +34,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.jcl.service.CxpayService;
 import com.jcl.util.DateUtil;
 import com.jcl.util.PayUtils;
+import com.jcl.util.pay.HttpClient;
 
 /** 
  * @author zpf
@@ -153,16 +154,19 @@ public class ZQPaySecondController {
 	@RequestMapping("/payFive")
 	public String payFive(Model model) {
 		String key ="4df8b6b63eed56d8dc79c26376fe73e2";
-		HashMap<String, Object> map=new HashMap<String,Object>();
+		HashMap<String, String> map=new HashMap<String,String>();
 		map.put("tradeNo", DateUtil.dateFormat(new Date(), "yyyymmddhhss")+"15118953197");
 		map.put("payType", "1");
 		map.put("orderPrice", "0.01");
-		map.put("merchantId", "");
+		map.put("merchantId", "103");
 		map.put("productName", "zq");
 		map.put("remark", "test");
 		String sign=PayUtils.md5(map, "=", key);
 		map.put("sign",sign);
-		return "";
+		log.info("输入参数："+map.toString());
+		//String post = HttpClient.post("http://test-codepay.open580.com/pay/toPay.do", map);
+		//log.info("返回结果 ： "+post);
+		return "zqpay/index";
 	}
 	
 }

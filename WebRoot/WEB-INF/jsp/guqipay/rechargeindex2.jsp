@@ -9,7 +9,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>网关充值</title>
-<link href="${path }/apppay/pay/pay.css" rel="stylesheet" type="text/css"/>
+<link href="${path }/css/pay/css.css" rel="stylesheet" type="text/css"/>
 <link rel="stylesheet" type="text/css" href="${path}/js/easyui/themes/default/easyui.css" />
 <link rel="stylesheet" type="text/css" href="${path}/js/easyui/themes/icon.css" />
 
@@ -19,6 +19,27 @@
 <script type="text/JavaScript" src="${path }/js/DateFormatter.js"></script>
 <link rel="stylesheet" href="${path}/layui/css/layui.css"  media="all">
 <script src="${path}/layui/layui.js" charset="utf-8"></script>
+<style>
+
+/*修改提示文字的颜色*/
+
+input::-webkit-input-placeholder { /* WebKit browsers */ 
+
+color: #666;font-size:16px; } 
+
+input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */ 
+
+color:#666; font-size:16px; } 
+
+input::-moz-placeholder { /* Mozilla Firefox 19+ */ 
+
+color:#666; font-size:16px; } 
+
+input:-ms-input-placeholder { /* Internet Explorer 10+ */ 
+
+color:#666; font-size:16px; } 
+
+</style>
 <script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
 <script type="text/javascript">
 $(function () {
@@ -68,17 +89,9 @@ $(function () {
 	        return false;
 	    }
 		
-		var chooseCode=$("input[name='choose']:checked").val();
-		 
-		
 		if(bFlag){
-			if(chooseCode==0){
-				$("#fund").val(moneys);
-				$("#payfrm").submit();
-			}else if(chooseCode==1){//线下支付
-				window.location.href="${path}/guqipay/offlinePay";
-			}
-			
+			$("#fund").val(moneys);
+			$("#payfrm").submit();
 		}
 	}
 	
@@ -110,46 +123,39 @@ $(function () {
 </script>
 
 </head>
-<body>
-   <div class="bg">
-	
-		<div class="top">
-			<div class="rechange"></div>
-		</div>
-	
-	
-	<div class="main0">
-		<table class="pay">
-			<tr>
-				<td class="tit1">充值金额：</td>
-				<td><input type="text" placeholder="请输入充值金额" name="Moneys" id="Moneys"  onkeyup="checkNum(this.value)" onpaste="checkNum(this.value)" class="num"/><i>元</i></td>
-			</tr>
-			
-			<tr >
-				<td class="choosebox"><input type="radio" name="choose" value="0" checked="checked"/><i>快捷支付</i></td>
-				
-			</tr>
-			<tr>
-				<td class="choosebox"><input type="radio" name="choose" value="1"  /><i>线下支付</i></td>
-				
-			</tr>
-			
-			
-		</table>
+<body class="grey">
+    <div class="category">
+    <!-- insder header -->
+    
+    <section class="phonewrap2">
 		
-		
-	
-	</div>
-	<div class="line0"></div>
-	<a class="ok" onclick="buy()" href="JavaScript:void(0)">确认支付</a>
-	
-	
-	 <form id="payfrm" action="${path}/guqipay/doPay" method="post">
+             <div class="Monbox" style="height: 35rem">
+				 <div class="ls-header-title">充值</div>
+                   <div class="paymon" >
+			
+						   <ul>
+							<li>
+							   <i class="mtit">充值金额</i>
+							</li>
+							 <div class="line"></div>  
+							<li>
+							   <i class="rmb">￥</i>
+							</li>
+							 <li>
+								<input id="Moneys" name="Moneys" placeholder="请输入充值金额" onkeyup="checkNum(this.value)" onpaste="checkNum(this.value)" type="text"/>
+							</li>
+							<div class="line"></div>  
+						   </ul>	   
+					  </div> 
+             			<p><a href="javascript:void(0);" class="consu rebut" onclick="buy()">确认支付</a></p>
+             </div>             
+    </section>
+    <form id="payfrm" action="${path}/guqipay/doPay" method="post">
     	<input type="hidden" id="subzh" name="subzh" value="${sub.subzh}">
     	<input type="hidden" id="fund" name="fund">
     	<input type="hidden" id="orderno" name="orderno">
     	<input type="hidden" id="bankcode" name="bankcode" value="U_Q_01">
     </form>
-</div>	
+	</div>
 </body>
 </html>

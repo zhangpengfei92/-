@@ -53,7 +53,7 @@ public class GuqiPayController {
 			paypage="guqipay/rechargeindex";
 		}else if ("2".equals(status)) {//status = 2 ---表示提现
 			paypage="guqipay/withdrawalindex";
-		}else if ("3".equals(status)) {//status = 2 ---表示提现
+		}else if ("3".equals(status)) {//status = 3 ---网关
 			paypage="guqipay/gatewayPay";
 		}
 		// 判断当前用户是否已经实名认证
@@ -134,7 +134,12 @@ public class GuqiPayController {
 			return "guqipay/callback";
 		}
 	}
-
+	
+	@RequestMapping("/offlinePay")
+	public String offlinePay() {
+		
+		return "guqipay/fundPage";
+	}
 	
 	// 判断该用户是否能出入金
 		public Map<String, Object> isok(String subzh, String payPage) {

@@ -27,13 +27,13 @@ public class PayUtils {
 	public static Logger log = Logger.getLogger(PayUtils.class);
 	
 	//md5加密
-	public static String md5(Map<String, Object> map,String formatStr,String key) {
+	public static String md5(Map<String, String> map,String formatStr,String key) {
 		   StringBuilder str=new StringBuilder(); 
-		   Set<Entry<String, Object>> entryset= map.entrySet();
-		   Iterator<Entry<String, Object>> it = entryset.iterator();
+		   Set<Entry<String, String>> entryset= map.entrySet();
+		   Iterator<Entry<String, String>> it = entryset.iterator();
 		   
 		   while(it.hasNext()){
-		   Entry<String, Object>  entry =it.next();
+		   Entry<String, String>  entry =it.next();
 		   str.append(entry.getKey()+formatStr+entry.getValue()+"&");
 		   }
 		   log.info("md5加密串--"+str.toString()+"key="+key);
