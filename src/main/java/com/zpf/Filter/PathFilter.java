@@ -18,23 +18,42 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /** 
  * @author zpf
  * @version 1.0
  */
+@WebFilter(filterName="PathFilter",urlPatterns="/*")
 public class PathFilter implements Filter{
 
+	private static final String SESSION_PATH = "path";
+	private static final String SESSION_BASEPATH = "basePath";
+	
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
-		// TODO Auto-generated method stub
 		
+		System.out.println("filter初始化");		
 	}
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		// TODO Auto-generated method stub
+		HttpServletRequest req = (HttpServletRequest) request;
+		HttpServletResponse res = (HttpServletResponse) response;
+		if(null == req.getSession().getAttribute(SESSION_PATH)){
+			String path = req.getContextPath();
+			String basePath = request.getScheme() + "://" + request.getServerName()
+					+ ":" + request.getServerPort() + path;
+			req.getSession().setAttribute(SESSION_PATH, path);
+			req.getSession().setAttribute(SESSION_BASEPATH, basePath);
+			System.out.println(path);
+			System.out.println(basePath);
+		}
+		
+		chain.doFilter(req, res);
 		
 	}
 
@@ -44,6 +63,5 @@ public class PathFilter implements Filter{
 		
 	}
 
-	
 
 }

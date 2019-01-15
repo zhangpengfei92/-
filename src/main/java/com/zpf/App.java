@@ -10,16 +10,18 @@
  */
 package com.zpf;
 
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
+
 
 /** 
  * @author zpf
  * @version 1.0
  */
-@SpringBootApplication
 @ServletComponentScan
+@SpringBootApplication
 public class App {
 	
 	public static void main(String[] args) {

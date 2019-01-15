@@ -18,13 +18,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @author zpf
  * @version 1.0
  */
-@RequestMapping("login")
 @Controller
+@RequestMapping("/login")
 public class LoginController {
 	
-	@RequestMapping("")
+	@RequestMapping("/dologin")
 	public String login(){
+		System.out.println("lll");
 		
-		return "";
+		return "index";
 	}
 }
