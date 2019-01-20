@@ -30,7 +30,7 @@ layui.use('table', function(){
   var table = layui.table; 
   table.render({
     elem: '#test'
-    ,data:'${ulist}'
+    ,url:'${path}/useraction/queryUser'
     ,toolbar: '#toolbarDemo'
     ,title: '用户数据表'
     ,totalRow: true

@@ -16,8 +16,10 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.zpf.pojo.UserInfo;
+import com.zpf.utils.LayuiData;
 
 /** 
  * @author zpf
@@ -41,12 +43,18 @@ public class UserController{
 	
 	@RequestMapping("/userlist")
 	public  String userlist(Model model){
+		
+		return "user/userlist";
+		
+	}
+	@RequestMapping("/queryUser")
+	@ResponseBody
+	public LayuiData queryUser(Integer page,Integer limit){
 		List<UserInfo> ulist = new ArrayList<UserInfo>();
 		for (int i = 0; i < 10; i++) {
 			ulist.add(new UserInfo(i, "李白", "1523659878", "武汉", i, i, "123456"));
 		}
-		model.addAttribute("ulist",ulist);
-		return "user/userlist";
-		
+		System.out.println(ulist.toString());
+		return new LayuiData(0, 10, ulist, "200");
 	}
 }
