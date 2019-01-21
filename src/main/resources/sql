@@ -1,0 +1,21 @@
+--角色表
+CREATE TABLE `role` (
+  `role_id` int(11) NOT NULL AUTO_INCREMENT,
+  `rolename` varchar(30) NOT NULL,
+  `description` varchar(256) DEFAULT NULL,
+  `status` int(11) NOT NULL,
+  `createtime` datetime DEFAULT NULL,
+  `modifytime` datetime DEFAULT NULL,
+  PRIMARY KEY (`role_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--权限表
+CREATE table permission(
+	pid int not null auto_increment PRIMARY key ,
+	pname VARCHAR(64) not null unique,
+	description VARCHAR(255) not null ,
+	url VARCHAR(64) not null unique,
+	perms VARCHAR(16) not null unique,
+	parent_id int(8) nou null,
+	type int(1) not null ,
+)
