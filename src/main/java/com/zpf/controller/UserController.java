@@ -51,10 +51,10 @@ public class UserController{
 	@ResponseBody
 	public LayuiData queryUser(Integer page,Integer limit){
 		List<UserInfo> ulist = new ArrayList<UserInfo>();
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 20; i++) {
 			ulist.add(new UserInfo(i, "李白", "1523659878", "武汉", i, i, "123456"));
 		}
 		System.out.println(ulist.toString());
-		return new LayuiData(0, 10, ulist, "200");
+		return LayuiData.returnData(10,ulist);
 	}
 }

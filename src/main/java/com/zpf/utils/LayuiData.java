@@ -55,15 +55,15 @@ public class LayuiData {
 	}
 	
 
-	public static LayuiData ok(){
+	public static LayuiData returnOk(){
 		return new LayuiData(200,0,null,"ok");
 	}
 	
-	public static LayuiData okCountData(long count,Object data){
+	public static LayuiData returnData(long count,Object data){
 		return new LayuiData(0,count,data,"ok");
 	}
 
-	public static LayuiData failure(String msg) {		
+	public static LayuiData returnFail(String msg) {		
 		 return new LayuiData(500,0,null,msg);
 	}
 }
