@@ -15,6 +15,4 @@ public class HungerSingleton {
 		
 		return singleton;
 	}
-	
-	
 }
