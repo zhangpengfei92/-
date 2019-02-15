@@ -11,6 +11,7 @@
 package com.zpf.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,9 +19,13 @@ import org.springframework.web.bind.annotation.RestController;
  * @author zpf
  * @version 1.0
  */
-@RestController
-@RequestMapping("main")
+@Controller
 public class MainJumpController {
 	
+	@RequestMapping("/jump/graph_flot")
+	public  String  jumping() {
+			
+		return "graph/flot";		
+	}
 	
 }
