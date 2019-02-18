@@ -14,10 +14,13 @@ public class LazySingleton {
 		System.out.println("单例模式-懒汉式的构造方法被调用了"+(++count)+"次");
 	}
 	//对外提供一个获取类对象的静态公共方法
-	public static LazySingleton getInstance(){
+	public static LazySingleton getInstance(){	
 		if(singleton==null) {
-			
-			singleton=new  LazySingleton();
+			synchronized (LazySingleton.class) {
+				if(singleton==null) {
+					singleton=new LazySingleton();	
+				}				
+			}
 		}					
 		return singleton;		
 	}

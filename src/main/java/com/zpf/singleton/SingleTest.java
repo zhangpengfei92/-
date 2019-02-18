@@ -27,7 +27,7 @@ public class SingleTest {
 				"\n singleton1和singleton2的内存地址是否相同 : "+(singleton1==singleton2));
 	}
 	
-	@Test
+	//@Test
 	public void lazyTest() throws InterruptedException {		
 		  Runnable task = ()->{
 	            String threadName = Thread.currentThread().getName();
@@ -38,5 +38,12 @@ public class SingleTest {
 	        for(int i=0;i<1000;i++){
 	            new Thread(task,"" + i).start();
 	        }		
+	}
+	
+	@Test
+	public void t() {
+		String ss = "111";		
+		int hashCode = ss.hashCode();
+		System.out.println(hashCode);
 	}
 }
